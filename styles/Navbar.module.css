@@ -1,0 +1,37 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  /* position: fixed;
+  z-index: 10000; */
+  top: 0;
+  background: whitesmoke;
+  height: 80px;
+}
+.navbarSticky {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  position: fixed !important;
+  z-index: 10000 !important;
+  top: 0 !important;
+  background: whitesmoke;
+  height: 80px;
+}
+
+.storeNavItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.actionNavItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

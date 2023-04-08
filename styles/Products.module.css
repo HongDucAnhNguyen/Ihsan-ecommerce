@@ -1,0 +1,19 @@
+.productImgContainer {
+  position: relative;
+  overflow: hidden;
+}
+.cardImg {
+  width: 100%;
+  height: 325px;
+  transition: transform 0.3s ease-out;
+}
+.cardImg:hover {
+  transform: scale(1.1);
+}
+.cardHeader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+

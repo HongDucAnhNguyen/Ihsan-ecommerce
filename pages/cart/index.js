@@ -1,4 +1,4 @@
 const Cart = () => {
-  return <div style={{ height: "100%"}}>Cart</div>;
+  return <div>Cart</div>;
 };
 export default Cart;

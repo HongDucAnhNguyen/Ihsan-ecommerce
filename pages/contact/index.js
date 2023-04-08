@@ -1,5 +1,4 @@
 const Contact = () => {
-    return <div style={{ height: "100%"}}>Contact</div>;
-  };
-  export default Contact;
-  
+  return <div>Contact</div>;
+};
+export default Contact;

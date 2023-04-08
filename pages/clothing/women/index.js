@@ -1,4 +1,4 @@
 const WomensClothing = () => {
-  return <div style={{ height: "100%"}}>Womens clothing</div>;
+  return <div>Womens clothing</div>;
 };
 export default WomensClothing;

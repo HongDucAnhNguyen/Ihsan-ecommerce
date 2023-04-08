@@ -1,4 +1,4 @@
 const Account = () => {
-  return <div style={{ height: "100%"}}>Account</div>;
+  return <div>Account</div>;
 };
 export default Account;

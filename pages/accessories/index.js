@@ -1,4 +1,4 @@
 const Accessories = () => {
-  return <div style={{ height: "100%"}}>Accessories</div>;
+  return <div>Accessories</div>;
 };
 export default Accessories;

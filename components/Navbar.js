@@ -23,7 +23,7 @@ const Navbar = () => {
   }, []);
   return (
     <nav
-      className={isScrolling ? styles.navbarSticky : styles.navbar}
+      className={`${styles.navbar} ${isScrolling ? styles.navbarSticky : ""}`}
       id="navbar"
     >
       <div className={styles.storeNavItems}>

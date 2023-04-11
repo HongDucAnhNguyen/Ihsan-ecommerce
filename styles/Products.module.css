@@ -3,7 +3,7 @@
   overflow: hidden;
 }
 .cardImg {
-  width: 100%;
+  width: 400px;
   height: 325px;
   transition: transform 0.3s ease-out;
 }
@@ -16,4 +16,3 @@
   right: 0;
   z-index: 10;
 }
-

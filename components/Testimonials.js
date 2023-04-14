@@ -9,7 +9,7 @@ const Testimonials = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "",
+          justifyContent: "center",
           alignItems: "center",
           gap: 20,
         }}

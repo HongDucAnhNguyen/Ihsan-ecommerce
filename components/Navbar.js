@@ -5,17 +5,17 @@ import styles from "../styles/Navbar.module.css";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-
 const Navbar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
-    if (window.scrollY > navbar.offsetTop) {
+    if (window.scrollY > navbar.offsetHeight * 2) {
       setIsScrolling(true);
     } else {
       setIsScrolling(false);
     }
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () =>

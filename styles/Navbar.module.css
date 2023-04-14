@@ -4,17 +4,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  /* position: fixed;
-  z-index: 10000; */
-  top: 0;
   background: whitesmoke;
   height: 80px;
+
+  transition: 0.5s ease-in-out;
 }
 .navbarSticky {
-  position: fixed ;
-  z-index: 10000 ;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  background: rgba(255, 255, 255, 0.818);
+  backdrop-filter: blur(10px);
+  transition: 0.5s ease-in-out;
 }
-
 .storeNavItems {
   display: flex;
   justify-content: center;

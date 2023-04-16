@@ -8,8 +8,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 const Navbar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const handleNavbarStickyOnScroll = () => {
-    const navbar = document.getElementById("navbar");
-    if (window.scrollY > navbar.offsetHeight * 2) {
+    if (window.scrollY >0) {
       setIsScrolling(true);
     } else {
       setIsScrolling(false);

@@ -6,13 +6,12 @@
   padding: 10px;
   background: whitesmoke;
   height: 80px;
-
-  transition: 0.5s ease-in-out;
-}
-.navbarSticky {
   position: fixed;
   top: 0;
   z-index: 10000;
+  transition: 0.5s ease-in-out;
+}
+.navbarSticky {
   background: rgba(255, 255, 255, 0.818);
   backdrop-filter: blur(10px);
   transition: 0.5s ease-in-out;

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const connectMongo = async () => {
   try {
-    if (mongoose.connection.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       //if already connected.
       console.log("already connected to mongo");
       return mongoose.connection.asPromise();

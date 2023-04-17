@@ -8,7 +8,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 const Navbar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const handleNavbarStickyOnScroll = () => {
-    if (window.scrollY >0) {
+    if (window.scrollY > 0) {
       setIsScrolling(true);
     } else {
       setIsScrolling(false);
@@ -102,7 +102,7 @@ const Navbar = () => {
             fontWeight: "bold",
           }}
         >
-          <Avatar size="xs"></Avatar> Account
+          <Avatar size="xs"></Avatar>Account
         </NextLink>
         <NextLink
           href="/cart"

@@ -1,9 +1,11 @@
-import { serialize } from "cookie";
+// import { serialize } from "cookie";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import connectMongo from "@/database/db";
 const handler = async (req, res) => {
   try {
+    connectMongo()
     if (req.method !== "POST") {
       return res
         .status(405)
@@ -29,15 +31,17 @@ const handler = async (req, res) => {
       process.env.JWT_KEY,
       { expiresIn: "4h" }
     );
+    console.log("token", token)
     //config cookie options
-    const cookieOptions = {
-      httpOnly: true,
-      sameSite: "strict",
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-    };
-    res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
-    return res.status(200).json({ message: "logged in" });
+    // const cookieOptions = {
+    //   httpOnly: true,
+    //   sameSite: "strict",
+    //   path: "/",
+    //   secure: process.env.NODE_ENV === "production",
+    // };
+    // res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
+    console.log("logged in");
+    return res.status(200).json({ result: {username: existingUser.username, id: existingUser._id},token:token });
   } catch (error) {
     console.log(error);
     return res

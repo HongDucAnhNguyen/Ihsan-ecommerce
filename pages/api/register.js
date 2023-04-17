@@ -2,8 +2,10 @@ import { serialize } from "cookie";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import connectMongo from "@/database/db";
 const handler = async (req, res) => {
   try {
+    connectMongo();
     if (req.method !== "POST") {
       return res.status(405).send({ message: "Only POST requests allowed" });
     }
@@ -27,18 +29,20 @@ const handler = async (req, res) => {
       process.env.JWT_KEY,
       { expiresIn: "4h" }
     );
+    console.log("token", token);
     //config cookie options
-    const cookieOptions = {
-      httpOnly: true,
-      sameSite: "strict",
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-    };
-    res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
+    // const cookieOptions = {
+    //   httpOnly: true,
+    //   sameSite: "strict",
+    //   path: "/",
+    //   secure: process.env.NODE_ENV === "production",
+    // };
+    // res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
     console.log(newUser);
-    return res.status(200).json({ message: "account created" });
+    console.log("account created");
+    return res.status(200).json({ result: {username: newUser.username, id: newUser._id},token: token });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res.status(500).json("something went wrong with the server");
   }
 };

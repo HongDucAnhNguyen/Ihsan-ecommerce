@@ -1,10 +1,17 @@
-import { Button, ButtonGroup, Heading, Input } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Input,
+  Alert,
+  AlertIcon,
+  CloseButton,
+  Box,
+  AlertDescription,
+} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import styles from "../styles/AuthForm.module.css";
 import useLogin from "@/hooks/useLogin";
 import useRegister from "@/hooks/useRegister";
-// import { useRouter } from "next/router";
-
 const AuthForm = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -12,7 +19,7 @@ const AuthForm = () => {
   });
   const [isRegistering, setIsRegistering] = useState(false);
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setUser(
@@ -20,22 +27,16 @@ const AuthForm = () => {
           ? JSON.parse(localStorage.getItem("userProfile"))
           : null
       );
-      if (user !== null) {
-        setIsAuthenticated(true);
-      }
     }
   }, []);
-  if (isAuthenticated) {
+  if (user !== null) {
     return (
       <div className={styles.container}>
-        <Heading>
-          Welcome {user.result.username}-{user.result.id}{" "}
-        </Heading>
+        <Heading>Welcome {user.result.username}</Heading>
         <Button
           onClick={() => {
             localStorage.clear();
             setUser(null);
-            setIsAuthenticated(false);
           }}
         >
           LOG OUT
@@ -50,16 +51,31 @@ const AuthForm = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (isRegistering) {
-            useRegister(formData, setUser, setIsAuthenticated);
+            useRegister(formData, setUser, setErrorMessage);
           } else {
-            useLogin(formData, setUser, setIsAuthenticated);
+            useLogin(formData, setUser, setErrorMessage);
           }
-          
-
           setFormData({ username: "", password: "" });
         }}
       >
         <Heading>{isRegistering ? "Register" : "Login"}</Heading>
+        {errorMessage && (
+          <Alert
+            sx={{ display: "flex", justifyContent: "space-between" }}
+            status="error"
+          >
+            <Box display="flex">
+              <AlertIcon></AlertIcon>
+              <AlertDescription>{errorMessage}</AlertDescription>
+            </Box>
+            <CloseButton
+              onClick={() => {
+                setErrorMessage(null);
+              }}
+            ></CloseButton>
+          </Alert>
+        )}
+
         <Input
           required
           type="text"
@@ -78,20 +94,17 @@ const AuthForm = () => {
             setFormData({ ...formData, password: e.target.value });
           }}
         />
-        <ButtonGroup spacing={2}>
-          <Button variant="solid" colorScheme="blue" type="submit">
-            {isRegistering ? "Register" : "Login"}
-          </Button>
-          <Button
-            onClick={() => setIsRegistering(!isRegistering)}
-            variant="ghost"
-            colorScheme="blue"
-          >
-            {isRegistering
-              ? "Have an account? Sign in"
-              : "Not a user? Register"}
-          </Button>
-        </ButtonGroup>
+
+        <Button variant="solid" colorScheme="blue" type="submit">
+          {isRegistering ? "Register" : "Login"}
+        </Button>
+        <Button
+          onClick={() => setIsRegistering(!isRegistering)}
+          variant="ghost"
+          colorScheme="blue"
+        >
+          {isRegistering ? "Have an account? Sign in" : "Not a user? Register"}
+        </Button>
       </form>
     </div>
   );

@@ -14,7 +14,7 @@ const handler = async (req, res) => {
     if (existingUser) {
       console.log("User already exists");
       return res
-        .status(403)
+        .status(500)
         .json({ message: "a User with this username already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,17 +30,19 @@ const handler = async (req, res) => {
       { expiresIn: "4h" }
     );
     console.log("token", token);
-    //config cookie options
-    // const cookieOptions = {
-    //   httpOnly: true,
-    //   sameSite: "strict",
-    //   path: "/",
-    //   secure: process.env.NODE_ENV === "production",
-    // };
-    // res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
+    // config cookie options
+    const cookieOptions = {
+      httpOnly: true,
+      sameSite: "strict",
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+    };
+    res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
     console.log(newUser);
     console.log("account created");
-    return res.status(200).json({ result: {username: newUser.username, id: newUser._id},token: token });
+    return res
+      .status(200)
+      .json({ result: { username: newUser.username, id: newUser._id } });
   } catch (error) {
     console.log(error);
     return res.status(500).json("something went wrong with the server");

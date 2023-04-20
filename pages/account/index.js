@@ -6,7 +6,8 @@ import styles from "../../styles/Account.module.css";
 const Account = () => {
   return (
     <div className={styles.container}>
-      <AuthForm></AuthForm>
+      {/* <AuthForm></AuthForm> */}
+      Account Management
     </div>
   );
 };

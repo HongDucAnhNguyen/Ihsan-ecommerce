@@ -1,14 +1,32 @@
 import NextLink from "next/link";
-import { Avatar, Icon, Link } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Icon,
+  Link,
+  Modal,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Navbar.module.css";
-import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  ModalCloseButton,
+  ModalOverlay,
+  ModalContent,
+} from "@chakra-ui/react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import AuthForm from "./AuthForm";
 const Navbar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [isScrolling, setIsScrolling] = useState(false);
   const handleNavbarStickyOnScroll = () => {
-    if (window.scrollY > 0) {
+    const navbar = document.getElementById("navbar");
+    if (window.scrollY > navbar.offsetTop) {
       setIsScrolling(true);
     } else {
       setIsScrolling(false);
@@ -29,8 +47,11 @@ const Navbar = () => {
         <Link
           as={NextLink}
           href="/"
-          style={{
-            padding: 10,
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
             fontWeight: "bold",
           }}
         >
@@ -39,8 +60,11 @@ const Navbar = () => {
         <Link
           as={NextLink}
           href="/Quran"
-          style={{
-            padding: 10,
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
             fontWeight: "bold",
           }}
         >
@@ -48,8 +72,8 @@ const Navbar = () => {
         </Link>
 
         <Menu
-          style={{
-            padding: 10,
+          sx={{
+            p: 4,
             fontWeight: "bold",
           }}
         >
@@ -58,13 +82,31 @@ const Navbar = () => {
           </MenuButton>
           <MenuList>
             <MenuItem>
-              <Link width={"100%"} as={NextLink} href="/clothing/men">
+              <Link
+                sx={{
+                  "&:hover": {
+                    textDecoration: "none",
+                  },
+                }}
+                width={"100%"}
+                as={NextLink}
+                href="/clothing/men"
+              >
                 Men
               </Link>
             </MenuItem>
             <MenuItem>
               {" "}
-              <Link width={"100%"} as={NextLink} href="/clothing/women">
+              <Link
+                sx={{
+                  "&:hover": {
+                    textDecoration: "none",
+                  },
+                }}
+                width={"100%"}
+                as={NextLink}
+                href="/clothing/women"
+              >
                 Women
               </Link>
             </MenuItem>
@@ -74,8 +116,11 @@ const Navbar = () => {
         <Link
           as={NextLink}
           href="/accessories"
-          style={{
-            padding: 10,
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
             fontWeight: "bold",
           }}
         >
@@ -84,8 +129,11 @@ const Navbar = () => {
         <Link
           as={NextLink}
           href="/about"
-          style={{
-            padding: 10,
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
             fontWeight: "bold",
           }}
         >
@@ -93,17 +141,42 @@ const Navbar = () => {
         </Link>
       </div>
       <div className={styles.actionNavItems}>
-        <NextLink
-          href="/account"
-          style={{
-            color: "whitesmoke",
-            backgroundColor: "#ebb434",
-            padding: 10,
-            fontWeight: "bold",
-          }}
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <Avatar size="xs"></Avatar>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={onOpen}>Log In</MenuItem>
+            <MenuItem>
+              {" "}
+              <Link
+                width={"100%"}
+                sx={{
+                  "&:hover": {
+                    textDecoration: "none",
+                  },
+                }}
+                as={NextLink}
+                href="/account"
+              >
+                Settings
+              </Link>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+
+        <Modal
+          isCentered={true}
+          blockScrollOnMount={false}
+          isOpen={isOpen}
+          onClose={onClose}
         >
-          <Avatar size="xs"></Avatar>Account
-        </NextLink>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <AuthForm></AuthForm>
+          </ModalContent>
+        </Modal>
         <NextLink
           href="/cart"
           style={{

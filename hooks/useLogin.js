@@ -1,4 +1,4 @@
-const useLogin = async (formData, setUser, setIsAuthenticated) => {
+const useLogin = async (formData, setUser, setErrorMessage) => {
   try {
     const response = await fetch("/api/login", {
       method: "POST",
@@ -9,9 +9,12 @@ const useLogin = async (formData, setUser, setIsAuthenticated) => {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    localStorage.setItem("userProfile", JSON.stringify(data));
-    setUser(JSON.parse(localStorage.getItem("userProfile")));
-    setIsAuthenticated(true);
+    if (data.message) {
+      setErrorMessage(data.message);
+    } else {
+      localStorage.setItem("userProfile", JSON.stringify(data));
+      setUser(JSON.parse(localStorage.getItem("userProfile")));
+    }
   } catch (error) {
     console.log(error);
   }

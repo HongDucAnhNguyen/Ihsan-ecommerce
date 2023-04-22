@@ -21,7 +21,9 @@ import {
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
+import {  useSelector } from "react-redux";
 const Navbar = () => {
+  const user = useSelector((state) => state.authReducer.authData)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isScrolling, setIsScrolling] = useState(false);
   const handleNavbarStickyOnScroll = () => {
@@ -146,7 +148,7 @@ const Navbar = () => {
             <Avatar size="xs"></Avatar>
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={onOpen}>Log In</MenuItem>
+            <MenuItem onClick={onOpen}>{ user ? user?.result?.username : "Log In"}</MenuItem>
             <MenuItem>
               {" "}
               <Link

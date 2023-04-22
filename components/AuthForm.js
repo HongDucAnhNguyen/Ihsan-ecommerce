@@ -10,33 +10,36 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import styles from "../styles/AuthForm.module.css";
-import useLogin from "@/hooks/useLogin";
-import useRegister from "@/hooks/useRegister";
+import loginAction from "@/actions/loginAction";
+import useRegister from "@/actions/useRegister";
+import { useDispatch, useSelector } from "react-redux";
+import logoutAction from "@/actions/logoutAction";
 const AuthForm = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authReducer.authData);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const [isRegistering, setIsRegistering] = useState(false);
-  const [user, setUser] = useState(null);
+
   const [errorMessage, setErrorMessage] = useState(null);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setUser(
-        localStorage.getItem("userProfile")
-          ? JSON.parse(localStorage.getItem("userProfile"))
-          : null
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     setUser(
+  //       localStorage.getItem("userProfile")
+  //         ? JSON.parse(localStorage.getItem("userProfile"))
+  //         : null
+  //     );
+  //   }
+  // }, []);
   if (user !== null) {
     return (
       <div className={styles.container}>
-        <Heading>Welcome {user.result.username}</Heading>
+        <Heading>Welcome {user?.result?.username}</Heading>
         <Button
           onClick={() => {
-            localStorage.clear();
-            setUser(null);
+            dispatch(logoutAction());
           }}
         >
           LOG OUT
@@ -53,7 +56,7 @@ const AuthForm = () => {
           if (isRegistering) {
             useRegister(formData, setUser, setErrorMessage);
           } else {
-            useLogin(formData, setUser, setErrorMessage);
+            dispatch(loginAction(formData, setErrorMessage));
           }
           setFormData({ username: "", password: "" });
         }}

@@ -1,6 +1,11 @@
 .productImgContainer {
   position: relative;
   overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+.productImgContainer:hover {
+  transition: all 0.5s ease-in-out;
+  filter: brightness(70%);
 }
 .cardImg {
   width: 400px;

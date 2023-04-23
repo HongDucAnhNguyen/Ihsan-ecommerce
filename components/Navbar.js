@@ -21,11 +21,15 @@ import {
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 const Navbar = () => {
-  const user = useSelector((state) => state.authReducer.authData)
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const [userPersist, setUserPersist] = useState(typeof window !== 'undefined' && localStorage.getItem('userPorf'));
+  const userState = useSelector((state) => state.authReducer.authData);
+  const [user, setUser] = useState(null);
+
   const [isScrolling, setIsScrolling] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetTop) {
@@ -36,10 +40,18 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    console.log(userState);
+    const storedUser = localStorage.getItem("userProfile");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      setUser(userState);
+    }
+
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () =>
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
-  }, []);
+  }, [userState]);
   return (
     <nav
       className={`${styles.navbar} ${isScrolling ? styles.navbarSticky : ""}`}
@@ -148,7 +160,9 @@ const Navbar = () => {
             <Avatar size="xs"></Avatar>
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={onOpen}>{ user ? user?.result?.username : "Log In"}</MenuItem>
+            <MenuItem onClick={onOpen}>
+              {user ? user?.result?.username : "Log In"}
+            </MenuItem>
             <MenuItem>
               {" "}
               <Link
@@ -202,6 +216,22 @@ const Navbar = () => {
         >
           Contact
         </NextLink>
+        {user && user?.result?.id === "6444b7e5c1115af830ba3746" ? (
+          <Link
+            href="/admin"
+            style={{
+              color: "whitesmoke",
+              backgroundColor: "#ebb434",
+              padding: 10,
+              fontWeight: "bold",
+              borderRadius: 4,
+            }}
+          >
+            Admin
+          </Link>
+        ) : (
+          <></>
+        )}
       </div>
     </nav>
   );

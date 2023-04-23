@@ -1,4 +1,4 @@
-const useRegister = async (formData, setUser, setErrorMessage) => {
+const useRegister = (formData, setErrorMessage) => async (dispatch) => {
   try {
     const response = await fetch("/api/register", {
       method: "POST",
@@ -12,8 +12,7 @@ const useRegister = async (formData, setUser, setErrorMessage) => {
     if (data.message) {
       setErrorMessage(data.message);
     } else {
-      localStorage.setItem("userProfile", JSON.stringify(data));
-      setUser(JSON.parse(localStorage.getItem("userProfile")));
+      dispatch({ type: "AUTH", data: data });
     }
   } catch (error) {
     console.log(error);

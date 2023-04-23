@@ -1,5 +1,4 @@
-import AuthForm from "@/components/AuthForm";
-import styles from "../../styles/Account.module.css";
+import styles from "../../styles/Layout.module.css";
 // import { useEffect, useState } from "react";
 // import { Button, Heading } from "@chakra-ui/react";
 // import { useRouter } from "next/router";

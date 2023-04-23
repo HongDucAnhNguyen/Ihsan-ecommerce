@@ -11,12 +11,13 @@ import {
 import React, { useState, useEffect } from "react";
 import styles from "../styles/AuthForm.module.css";
 import loginAction from "@/actions/loginAction";
-import useRegister from "@/actions/useRegister";
+import registerAction from "@/actions/registerAction";
 import { useDispatch, useSelector } from "react-redux";
 import logoutAction from "@/actions/logoutAction";
 const AuthForm = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authReducer.authData);
+  const userState = useSelector((state) => state.authReducer.authData);
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -24,15 +25,15 @@ const AuthForm = () => {
   const [isRegistering, setIsRegistering] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     setUser(
-  //       localStorage.getItem("userProfile")
-  //         ? JSON.parse(localStorage.getItem("userProfile"))
-  //         : null
-  //     );
-  //   }
-  // }, []);
+  useEffect(() => {
+    console.log(userState);
+    const storedUser = localStorage.getItem("userProfile");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      setUser(userState);
+    }
+  }, [userState]);
   if (user !== null) {
     return (
       <div className={styles.container}>
@@ -54,7 +55,7 @@ const AuthForm = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (isRegistering) {
-            useRegister(formData, setUser, setErrorMessage);
+            dispatch(registerAction(formData, setErrorMessage));
           } else {
             dispatch(loginAction(formData, setErrorMessage));
           }

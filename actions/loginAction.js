@@ -1,4 +1,4 @@
-const loginAction =  (formData, setErrorMessage) => async (dispatch) => {
+const loginAction = (formData, setErrorMessage) => async (dispatch) => {
   try {
     const response = await fetch("/api/login", {
       method: "POST",
@@ -9,6 +9,7 @@ const loginAction =  (formData, setErrorMessage) => async (dispatch) => {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
+
     if (data.message) {
       setErrorMessage(data.message);
     } else {

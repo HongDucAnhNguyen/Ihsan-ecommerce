@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 // import Image from "next/image";
 // import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import styles from "../styles/Home.module.css";
 import { Divider } from "@chakra-ui/react";
 import Testimonials from "@/components/Testimonials";
 import OnSaleProducts from "@/components/OnSaleProducts";
@@ -18,7 +18,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main className={styles.container}>
         <HeroSection></HeroSection>
         <FeaturedProducts></FeaturedProducts>
         <Divider></Divider>

@@ -26,13 +26,12 @@ const AuthForm = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useEffect(() => {
-    console.log(userState);
-    const storedUser = localStorage.getItem("userProfile");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      setUser(userState);
-    }
+    // console.log(userState);
+    // const storedUser = localStorage.getItem("userProfile");
+    // if (storedUser) {
+    //   setUser(JSON.parse(storedUser));
+    // } else {}
+    setUser(userState);
   }, [userState]);
   if (user !== null) {
     return (

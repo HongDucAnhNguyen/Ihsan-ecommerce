@@ -40,14 +40,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log(userState);
-    const storedUser = localStorage.getItem("userProfile");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      setUser(userState);
-    }
-
+    // console.log(userState);
+    // const storedUser = localStorage.getItem("userProfile");
+    // if (storedUser) {
+    //   setUser(JSON.parse(storedUser));
+    // } else {}
+    setUser(userState);
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () =>
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
@@ -163,21 +161,23 @@ const Navbar = () => {
             <MenuItem onClick={onOpen}>
               {user ? user?.result?.username : "Log In"}
             </MenuItem>
-            <MenuItem>
-              {" "}
-              <Link
-                width={"100%"}
-                sx={{
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                }}
-                as={NextLink}
-                href="/account"
-              >
-                Settings
-              </Link>
-            </MenuItem>
+            {user && (
+              <MenuItem>
+                {" "}
+                <Link
+                  width={"100%"}
+                  sx={{
+                    "&:hover": {
+                      textDecoration: "none",
+                    },
+                  }}
+                  as={NextLink}
+                  href="/account"
+                >
+                  Account
+                </Link>
+              </MenuItem>
+            )}
           </MenuList>
         </Menu>
 
@@ -217,7 +217,7 @@ const Navbar = () => {
           Contact
         </NextLink>
         {user && user?.result?.id === "6444b7e5c1115af830ba3746" ? (
-          <Link
+          <NextLink
             href="/admin"
             style={{
               color: "whitesmoke",
@@ -228,7 +228,7 @@ const Navbar = () => {
             }}
           >
             Admin
-          </Link>
+          </NextLink>
         ) : (
           <></>
         )}

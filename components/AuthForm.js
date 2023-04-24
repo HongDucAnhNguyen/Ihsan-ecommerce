@@ -24,7 +24,7 @@ const AuthForm = () => {
   });
   const [isRegistering, setIsRegistering] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [message, setMessage] = useState(null);
   useEffect(() => {
     // console.log(userState);
     // const storedUser = localStorage.getItem("userProfile");
@@ -54,26 +54,26 @@ const AuthForm = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (isRegistering) {
-            dispatch(registerAction(formData, setErrorMessage));
+            dispatch(registerAction(formData, setMessage));
           } else {
-            dispatch(loginAction(formData, setErrorMessage));
+            dispatch(loginAction(formData, setMessage));
           }
           setFormData({ username: "", password: "" });
         }}
       >
         <Heading>{isRegistering ? "Register" : "Login"}</Heading>
-        {errorMessage && (
+        {message && (
           <Alert
             sx={{ display: "flex", justifyContent: "space-between" }}
             status="error"
           >
             <Box display="flex">
               <AlertIcon></AlertIcon>
-              <AlertDescription>{errorMessage}</AlertDescription>
+              <AlertDescription>{message}</AlertDescription>
             </Box>
             <CloseButton
               onClick={() => {
-                setErrorMessage(null);
+                setMessage(null);
               }}
             ></CloseButton>
           </Alert>

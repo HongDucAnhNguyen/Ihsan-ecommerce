@@ -159,7 +159,7 @@ const Navbar = () => {
           </MenuButton>
           <MenuList>
             <MenuItem onClick={onOpen}>
-              {user ? user?.result?.username : "Log In"}
+              {user ? user?.result?.username : "Log In/Register"}
             </MenuItem>
             {user && (
               <MenuItem>

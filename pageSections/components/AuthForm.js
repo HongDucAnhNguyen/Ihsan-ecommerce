@@ -9,7 +9,7 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import styles from "../styles/AuthForm.module.css";
+import styles from "../../styles/AuthForm.module.css";
 import loginAction from "@/actions/loginAction";
 import registerAction from "@/actions/registerAction";
 import { useDispatch, useSelector } from "react-redux";

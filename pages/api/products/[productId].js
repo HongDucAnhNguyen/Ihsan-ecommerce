@@ -3,17 +3,21 @@ import Product from "@/models/Product";
 
 const handler = async (req, res) => {
   try {
-    connectMongo()
+    if (req.method === "GET") {
+      const { productId } = req.query;
+      const productDetails = await Product.findById(productId);
+      return res.status(200).json(productDetails);
+    }
     if (req.method === "PUT" || req.method === "PATCH") {
       const updatedData = req.body;
       const { productId } = req.query;
-      const productsOnSale = await Product.findByIdAndUpdate(
+      const updatedProduct = await Product.findByIdAndUpdate(
         productId,
         updatedData,
         { new: true }
       );
       console.log("updated product successfully");
-      return res.status(200).json(productsOnSale);
+      return res.status(200).json(updatedProduct);
     }
     if (req.method === "DELETE") {
       const { productId } = req.query;

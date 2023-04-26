@@ -3,7 +3,6 @@ import User from "@/models/User";
 
 const handler = async (req, res) => {
   try {
-    connectMongo();
     const { userId } = req.query;
     if (req.method === "DELETE") {
       console.log(userId);

@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Navbar.module.css";
+import styles from "../../styles/Navbar.module.css";
 import {
   Menu,
   MenuButton,
@@ -28,17 +28,25 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
 
   const [isScrolling, setIsScrolling] = useState(false);
+  const [smoothSlideDown, setSmoothSlideDown] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
-    if (window.scrollY > navbar.offsetTop) {
+    if (window.scrollY > navbar.offsetHeight * 2) {
       setIsScrolling(true);
+      setSmoothSlideDown(true);
     } else {
       setIsScrolling(false);
+      setSmoothSlideDown(false);
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleNavbarStickyOnScroll);
+    return () =>
+      window.removeEventListener("scroll", handleNavbarStickyOnScroll);
+  }, []);
   useEffect(() => {
     // console.log(userState);
     // const storedUser = localStorage.getItem("userProfile");
@@ -46,13 +54,12 @@ const Navbar = () => {
     //   setUser(JSON.parse(storedUser));
     // } else {}
     setUser(userState);
-    window.addEventListener("scroll", handleNavbarStickyOnScroll);
-    return () =>
-      window.removeEventListener("scroll", handleNavbarStickyOnScroll);
   }, [userState]);
   return (
     <nav
-      className={`${styles.navbar} ${isScrolling ? styles.navbarSticky : ""}`}
+      className={`${styles.navbar} ${isScrolling && styles.navbarSticky} ${
+        smoothSlideDown && styles.navbarStickyAfter
+      }`}
       id="navbar"
     >
       <div className={styles.storeNavItems}>

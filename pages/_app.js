@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/pageSections/components/Navbar";
 import { ChakraProvider } from "@chakra-ui/react";
-import Footer from "@/components/Footer";
+import Footer from "@/pageSections/Footer";
 import { useRouter } from "next/router";
 import connectMongo from "@/database/db";
 import { applyMiddleware, createStore, compose } from "redux";
@@ -11,8 +11,7 @@ import { Provider } from "react-redux";
 import Head from "next/head";
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
-// connectMongo();
-
+connectMongo();
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
@@ -31,7 +30,7 @@ export default function App({ Component, pageProps }) {
             <link rel="icon" href="/favicon.ico" /> */}
         </Head>
         <Component {...pageProps} />
-        {(router.pathname !== "/account" && router.pathname !== "admin") && (
+        {router.pathname !== "/account" && router.pathname !== "admin" && (
           <Footer></Footer>
         )}
       </ChakraProvider>

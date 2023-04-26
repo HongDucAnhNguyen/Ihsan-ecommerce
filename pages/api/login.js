@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import connectMongo from "@/database/db";
 const handler = async (req, res) => {
   try {
-    connectMongo();
     if (req.method !== "POST") {
       return res
         .status(405)

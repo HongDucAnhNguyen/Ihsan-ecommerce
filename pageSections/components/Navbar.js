@@ -28,17 +28,14 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
 
   const [isScrolling, setIsScrolling] = useState(false);
-  const [smoothSlideDown, setSmoothSlideDown] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetHeight * 2) {
       setIsScrolling(true);
-      setSmoothSlideDown(true);
     } else {
       setIsScrolling(false);
-      setSmoothSlideDown(false);
     }
   };
 
@@ -48,18 +45,11 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
   }, []);
   useEffect(() => {
-    // console.log(userState);
-    // const storedUser = localStorage.getItem("userProfile");
-    // if (storedUser) {
-    //   setUser(JSON.parse(storedUser));
-    // } else {}
     setUser(userState);
   }, [userState]);
   return (
     <nav
-      className={`${styles.navbar} ${isScrolling && styles.navbarSticky} ${
-        smoothSlideDown && styles.navbarStickyAfter
-      }`}
+      className={`${styles.navbar} ${isScrolling && styles.navbarSticky} `}
       id="navbar"
     >
       <div className={styles.storeNavItems}>

@@ -10,10 +10,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/AuthForm.module.css";
-import loginAction from "@/actions/loginAction";
-import registerAction from "@/actions/registerAction";
+import loginAction from "@/actions/auth/loginAction";
+import registerAction from "@/actions/auth/registerAction";
 import { useDispatch, useSelector } from "react-redux";
-import logoutAction from "@/actions/logoutAction";
+import logoutAction from "@/actions/auth/logoutAction";
 const AuthForm = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.authReducer.authData);

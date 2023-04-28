@@ -13,6 +13,12 @@ const authReducer = (
       //just incase i want to add more to auth state down the line
       localStorage.setItem("userProfile", JSON.stringify(action?.data));
       return { ...state, authData: action?.data };
+    case "RESET_ACCOUNT":
+      return;
+    case "UPDATE_ACCOUNT":
+      console.log(action?.data);
+      localStorage.setItem("userProfile", JSON.stringify(action?.data));
+      return { ...state, authData: action?.data };
     case "LOGOUT":
       console.log("LOGOUT");
       localStorage.clear();

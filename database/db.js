@@ -7,8 +7,8 @@ const connectMongo = async () => {
       return mongoose.connection.asPromise();
     }
     await mongoose.connect(
-      // "mongodb+srv://ihsanstore2023:IhsanIslamicGiftShop2023@ihsan-ecommerce.fynawzc.mongodb.net/Ihsan-ecommerce?retryWrites=true&w=majority",
-      //no prefix since this is on the backend
+      
+      
       process.env.MONGODB_URI_IHSAN,
       {
         useNewUrlParser: true,

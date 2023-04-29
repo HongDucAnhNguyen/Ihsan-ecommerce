@@ -9,35 +9,43 @@ import {
   Button,
   CloseButton,
   Heading,
+  IconButton,
   Input,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import deleteAccountAction from "@/actions/auth/deleteAccountAction";
 import updateAccountAction from "@/actions/auth/updateAccountAction";
-// import { Button, Heading } from "@chakra-ui/react";
-// import { useRouter } from "next/router";
+import { EditIcon } from "@chakra-ui/icons";
+
 const Account = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    newPassword: "",
   });
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
-    // console.log(userState);
-
-    // const storedUser = localStorage.getItem("userProfile");
-    // if (storedUser) {
-    //   setUser(JSON.parse(storedUser));
-    // } else {
-
     setUser(userState);
+    setFormData({
+      ...formData,
+      username: userState ? userState.result.username : "",
+    });
   }, [userState]);
 
   return (
     <div className={styles.container}>
-      {/* <AuthForm></AuthForm> */}
       {message ? (
         <Alert
           sx={{
@@ -45,7 +53,7 @@ const Account = () => {
             display: "flex",
             justifyContent: "space-between",
           }}
-          status="success"
+          // status={message.includes("invalid") ? "error" : "success"}
         >
           <Box display="flex">
             <AlertIcon></AlertIcon>
@@ -63,54 +71,89 @@ const Account = () => {
             <>
               <Heading>Account Management</Heading>
               <br />
-              <Heading size="lg">Profile</Heading>
+              <Box display="flex">
+                <Heading size="lg">Profile</Heading>
+                <IconButton
+                  onClick={() => {
+                    setIsEditing(!isEditing);
+                  }}
+                >
+                  <EditIcon></EditIcon>
+                </IconButton>
+              </Box>
+              {isEditing && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    dispatch(
+                      updateAccountAction(formData, user.result.id, setMessage)
+                    );
+                    setFormData({ username: "", password: "" });
+                  }}
+                >
+                  <Input
+                    required
+                    type="text"
+                    placeholder="New Username*"
+                    value={formData.username}
+                    onChange={(e) => {
+                      setFormData({ ...formData, username: e.target.value });
+                    }}
+                  />
+                  <Input
+                    required
+                    type="password"
+                    placeholder="Password*"
+                    value={formData.password}
+                    onChange={(e) => {
+                      setFormData({ ...formData, password: e.target.value });
+                    }}
+                  />
+                  <Input
+                    required
+                    type="password"
+                    placeholder="New Password*"
+                    value={formData.newPassword}
+                    onChange={(e) => {
+                      setFormData({ ...formData, newPassword: e.target.value });
+                    }}
+                  />
+                  <Button type="submit">Update Account</Button>
+                </form>
+              )}
 
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  dispatch(
-                    updateAccountAction(formData, user.result.id, setMessage)
-                  );
-                  setFormData({ username: "", password: "" });
-                }}
+              <Button onClick={onOpen}>Delete Account</Button>
+              <Modal
+                isCentered={true}
+                blockScrollOnMount={false}
+                isOpen={isOpen}
+                onClose={onClose}
               >
-                <Input
-                  required
-                  type="text"
-                  placeholder="Username*"
-                  value={formData.username}
-                  onChange={(e) => {
-                    setFormData({ ...formData, username: e.target.value });
-                  }}
-                />
-                {/* <Input
-                  required
-                  type="password"
-                  placeholder="Password*"
-                  value={formData.password}
-                  onChange={(e) => {
-                    setFormData({ ...formData, password: e.target.value });
-                  }}
-                /> */}
-                <Input
-                  required
-                  type="password"
-                  placeholder="New Password*"
-                  value={formData.password}
-                  onChange={(e) => {
-                    setFormData({ ...formData, password: e.target.value });
-                  }}
-                />
-                <Button type="submit">Update Account</Button>
-              </form>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Delete Account</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </ModalBody>
 
-              <Button
-                onClick={() => {
-                  dispatch(deleteAccountAction(user.result.id, setMessage));
-                }}
-              >
-                Delete Account
-              </Button>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={() => {
+                        dispatch(
+                          deleteAccountAction(user.result.id, setMessage)
+                        );
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </>
           ) : (
             <Heading>Please Log In or Register Account</Heading>

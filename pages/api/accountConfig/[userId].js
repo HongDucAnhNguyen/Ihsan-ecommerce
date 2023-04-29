@@ -13,10 +13,24 @@ const handler = async (req, res) => {
     }
     if (req.method === "PUT" || req.method === "PATCH") {
       const updatedUserData = req.body;
-      const hashedPassword = await bcrypt.hash(updatedUserData.password, 10);
+      const existingUser = await User.findById(userId);
+      const validPassword = await bcrypt.compare(
+        updatedUserData.password,
+        existingUser.password
+      );
+      if (!validPassword) {
+        return res
+          .status(403)
+          .json({ message: "invalid password, update failed" });
+      }
+      //else, if authorized
+      const hashedNewPassword = await bcrypt.hash(
+        updatedUserData.newPassword,
+        10
+      );
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { ...updatedUserData, password: hashedPassword },
+        { username: updatedUserData.username, password: hashedNewPassword },
         { new: true }
       );
       console.log("updated user account");

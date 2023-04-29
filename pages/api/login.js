@@ -2,7 +2,6 @@ import { serialize } from "cookie";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import connectMongo from "@/database/db";
 const handler = async (req, res) => {
   try {
     if (req.method !== "POST") {

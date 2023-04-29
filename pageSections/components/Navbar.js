@@ -21,15 +21,16 @@ import {
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import getTokenAction from "@/actions/auth/getTokenAction";
 const Navbar = () => {
-  // const [userPersist, setUserPersist] = useState(typeof window !== 'undefined' && localStorage.getItem('userPorf'));
   const userState = useSelector((state) => state.authReducer.authData);
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
-
   const [isScrolling, setIsScrolling] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const router = useRouter();
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetHeight * 2) {
@@ -39,10 +40,18 @@ const Navbar = () => {
     }
   };
 
+  const checkSession = (url) => {
+    console.log("Route changed to:", url);
+    dispatch(getTokenAction(userState));
+  };
+
   useEffect(() => {
+    router.events.on("routeChangeComplete", checkSession);
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
-    return () =>
+    return () => {
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
+      router.events.off("routeChangeComplete", checkSession);
+    };
   }, []);
   useEffect(() => {
     setUser(userState);

@@ -7,8 +7,6 @@ const connectMongo = async () => {
       return mongoose.connection.asPromise();
     }
     await mongoose.connect(
-      
-      
       process.env.MONGODB_URI_IHSAN,
       {
         useNewUrlParser: true,

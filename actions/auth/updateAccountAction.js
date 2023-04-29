@@ -12,9 +12,10 @@ const updateAccountAction =
       const data = await response.json();
 
       setMessage(data.message);
-
       console.log(data.result);
-      dispatch({ type: "UPDATE_ACCOUNT", data: data.result });
+      if (data.result) {
+        dispatch({ type: "UPDATE_ACCOUNT", data: data.result });
+      }
     } catch (error) {
       console.log(error);
     }

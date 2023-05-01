@@ -35,6 +35,7 @@ const Footer = () => {
             <Heading fontSize="3xl">Services</Heading>
             <Text>Account</Text>
           </div>
+          
         </div>
       </div>
       <Divider></Divider>

@@ -30,7 +30,7 @@ const Account = () => {
   const [message, setMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
+    username: userState ? userState.result.username : "",
     password: "",
     newPassword: "",
   });
@@ -38,10 +38,6 @@ const Account = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     setUser(userState);
-    setFormData({
-      ...formData,
-      username: userState ? userState.result.username : "",
-    });
   }, [userState]);
 
   return (
@@ -88,7 +84,7 @@ const Account = () => {
                     dispatch(
                       updateAccountAction(formData, user.result.id, setMessage)
                     );
-                    setFormData({ username: "", password: "" });
+                    setFormData({ username: userState ? userState.result.username : "", password: "", newPassword: "" });
                   }}
                 >
                   <Input

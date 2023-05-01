@@ -128,6 +128,21 @@ const Navbar = () => {
                 Women
               </Link>
             </MenuItem>
+            <MenuItem>
+              {" "}
+              <Link
+                sx={{
+                  "&:hover": {
+                    textDecoration: "none",
+                  },
+                }}
+                width={"100%"}
+                as={NextLink}
+                href="/clothing"
+              >
+                All
+              </Link>
+            </MenuItem>
           </MenuList>
         </Menu>
 
@@ -222,7 +237,7 @@ const Navbar = () => {
         >
           Contact
         </NextLink>
-        {user && user?.result?.id === "6444b7e5c1115af830ba3746" ? (
+        {user && user?.result?.id === "6446ddb6685eec4e5df21f7b" ? (
           <NextLink
             href="/admin"
             style={{

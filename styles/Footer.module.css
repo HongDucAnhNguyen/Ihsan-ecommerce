@@ -1,0 +1,29 @@
+.footerContainer {
+  background: rgba(128, 128, 128, 0.806);
+}
+.footerSectionsContainer {
+  display: flex;
+  min-height: 200px;
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.footerLeftSection {
+  display: block;
+  padding: 20px;
+}
+.footerRightSection {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+}
+.footerRightSection div {
+  display: block;
+  padding: 20px;
+}
+.paymentsContainer {
+  display: flex;
+  gap: 10px;
+}

@@ -16,7 +16,7 @@ const Admin = () => {
 
     setUser(userState);
   }, [userState]);
-  if (!user || user?.result?.id !== process.env.NEXT_PUBLIC_ADMIN_ID) {
+  if (!user || user?.result?.id !== '6446ddb6685eec4e5df21f7b') {
     return <div className={styles.container}>Unauthorized</div>;
   }
   return (

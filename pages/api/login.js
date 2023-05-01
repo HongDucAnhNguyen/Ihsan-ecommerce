@@ -29,7 +29,7 @@ const handler = async (req, res) => {
       process.env.JWT_KEY,
       { expiresIn: "4h" }
     );
-    console.log("token", token);
+
     //config cookie options
     const cookieOptions = {
       httpOnly: true,

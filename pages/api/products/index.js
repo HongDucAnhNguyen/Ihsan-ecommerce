@@ -4,11 +4,13 @@ const handler = async (req, res) => {
     if (req.method === "GET") {
       const allProducts = await Product.find();
       return res.status(200).json(allProducts);
-    }
-    if (req.method === "POST") {
+    } else if (req.method === "POST") {
       const productData = req.body;
       const newProduct = await Product.create(productData);
+      console.log("created product successfully");
       return res.status(200).json(newProduct);
+    } else {
+      return res.status(403).json({ message: "invalid request" });
     }
   } catch (error) {
     console.log(error);

@@ -7,8 +7,7 @@ const handler = async (req, res) => {
       const { productId } = req.query;
       const productDetails = await Product.findById(productId);
       return res.status(200).json(productDetails);
-    }
-    if (req.method === "PUT" || req.method === "PATCH") {
+    } else if (req.method === "PUT" || req.method === "PATCH") {
       const updatedData = req.body;
       const { productId } = req.query;
       const updatedProduct = await Product.findByIdAndUpdate(
@@ -18,12 +17,13 @@ const handler = async (req, res) => {
       );
       console.log("updated product successfully");
       return res.status(200).json(updatedProduct);
-    }
-    if (req.method === "DELETE") {
+    } else if (req.method === "DELETE") {
       const { productId } = req.query;
       await Product.findByIdAndDelete(productId);
       console.log("deleted product successfully");
       return res.status(200).end();
+    } else {
+      return res.status(403).json({ message: "invalid request" });
     }
   } catch (error) {
     return res

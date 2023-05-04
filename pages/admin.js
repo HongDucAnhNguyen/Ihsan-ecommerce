@@ -9,7 +9,7 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-import createProductAction from "@/actions/products/createProductAction";
+import { createProductAction } from "@/actions/productsActions";
 const Admin = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const [user, setUser] = useState(null);

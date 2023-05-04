@@ -1,21 +1,8 @@
-import mongoose from "mongoose";
 const connectMongo = async () => {
   try {
-    if (mongoose.connection && mongoose.connection.readyState === 1) {
-      //if already connected.
-      console.log("already connected to mongo");
-      return mongoose.connection.asPromise();
-    }
-    await mongoose.connect(
-      process.env.MONGODB_URI_IHSAN,
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
-    console.log("connection established");
+    await fetch("http://localhost:3000//api/connectDB");
   } catch (error) {
-    console.log("connection error: " + error);
+    console.log(error);
   }
 };
 export default connectMongo;

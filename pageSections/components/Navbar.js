@@ -24,8 +24,8 @@ import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
-import logoutAction from "@/actions/auth/logoutAction";
 import { decode } from "jsonwebtoken";
+import { logoutAction } from "@/actions/authActions";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-const createProductAction = (productFormData) => async (dispatch) => {
+export const createProductAction = (productFormData) => async (dispatch) => {
   try {
     const response = await fetch("/api/products", {
       method: "POST",
@@ -10,9 +10,8 @@ const createProductAction = (productFormData) => async (dispatch) => {
     });
     const data = await response.json();
     // dispatch({ type: "CREATE_PRODUCT", data: data });
-    console.log(data)
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
 };
-export default createProductAction;

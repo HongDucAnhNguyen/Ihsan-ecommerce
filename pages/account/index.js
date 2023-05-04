@@ -20,8 +20,10 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import deleteAccountAction from "@/actions/auth/deleteAccountAction";
-import updateAccountAction from "@/actions/auth/updateAccountAction";
+import {
+  updateAccountAction,
+  deleteAccountAction,
+} from "@/actions/authActions";
 import { EditIcon } from "@chakra-ui/icons";
 
 const Account = () => {
@@ -84,7 +86,11 @@ const Account = () => {
                     dispatch(
                       updateAccountAction(formData, user.result.id, setMessage)
                     );
-                    setFormData({ username: userState ? userState.result.username : "", password: "", newPassword: "" });
+                    setFormData({
+                      username: userState ? userState.result.username : "",
+                      password: "",
+                      newPassword: "",
+                    });
                   }}
                 >
                   <Input

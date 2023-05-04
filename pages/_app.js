@@ -9,9 +9,9 @@ import thunk from "redux-thunk";
 import reducers from "../reducers/combinedReducers";
 import { Provider } from "react-redux";
 import Head from "next/head";
+connectMongo();
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
-connectMongo();
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 

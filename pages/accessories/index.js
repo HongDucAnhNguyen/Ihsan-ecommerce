@@ -1,4 +1,6 @@
+import styles from "../../styles/Layout.module.css";
+
 const Accessories = () => {
-  return <div>Accessories</div>;
+  return <div className={styles.container}>Accessories</div>;
 };
 export default Accessories;

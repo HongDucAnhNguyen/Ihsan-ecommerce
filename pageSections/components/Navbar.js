@@ -23,14 +23,17 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import getTokenAction from "@/actions/auth/getTokenAction";
+import { useToast } from "@chakra-ui/react";
+import logoutAction from "@/actions/auth/logoutAction";
+import { decode } from "jsonwebtoken";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
-  const [isScrolling, setIsScrolling] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
+  const toast = useToast();
+  const [user, setUser] = useState(null);
+  const [isScrolling, setIsScrolling] = useState(false);
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetHeight * 2) {
@@ -40,9 +43,31 @@ const Navbar = () => {
     }
   };
 
-  const checkSession = (url) => {
-    console.log("Route changed to:", url);
-    dispatch(getTokenAction(userState));
+  const checkSession = async (url) => {
+    try {
+      console.log("route changed to: ", url);
+      const response = await fetch("/api/getToken");
+      const data = await response.json();
+      if (data) {
+        const decodedToken = decode(data);
+        if (decodedToken.exp * 1000 < new Date().getTime()) {
+          dispatch(logoutAction());
+          sessionAlert();
+        }
+      }
+    } catch (error) {
+      console.log("something went wrong");
+    }
+  };
+
+  const sessionAlert = () => {
+    toast({
+      position: "bottom-left",
+      title: "Logged Out.",
+      description: "Session Ended, automatically logged out",
+      duration: 9000,
+      isClosable: true,
+    });
   };
 
   useEffect(() => {

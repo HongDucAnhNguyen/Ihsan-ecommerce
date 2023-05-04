@@ -27,7 +27,7 @@ const handler = async (req, res) => {
     const token = jwt.sign(
       { username: username, id: existingUser._id },
       process.env.JWT_KEY,
-      { expiresIn: "4h" }
+      { expiresIn: "10s" }
     );
 
     //config cookie options

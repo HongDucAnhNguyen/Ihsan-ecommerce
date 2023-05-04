@@ -1,7 +1,7 @@
-import React from "react";
+import styles from "../../styles/Layout.module.css";
 
 const Clothing = () => {
-  return <div>Clothing</div>;
+  return <div className={styles.container}>Clothing</div>;
 };
 
 export default Clothing;

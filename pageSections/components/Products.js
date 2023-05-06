@@ -1,8 +1,20 @@
+import { SimpleGrid } from "@chakra-ui/react";
+import Product from "./Product";
 
-const Products = () => {
+const Products = ({ products }) => {
   return (
-    <div>Products</div>
-  )
-}
+    <>
+      <SimpleGrid
+        spacing={4}
+        templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+      >
+        {/**iterate through array to render products */}
+        {products.map((product) => (
+          <Product key={product._id} product={product}></Product>
+        ))}
+      </SimpleGrid>
+    </>
+  );
+};
 
-export default Products
+export default Products;

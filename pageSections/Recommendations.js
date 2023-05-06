@@ -13,7 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import styles from "../styles/Products.module.css";
+import styles from "../styles/Product.module.css";
 import { StarIcon } from "@chakra-ui/icons";
 
 const Recommendations = () => {

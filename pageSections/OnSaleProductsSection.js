@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import React from "react";
-import styles from "../styles/Products.module.css";
+import styles from "../styles/Product.module.css";
 const OnSaleProductsSection = () => {
   return (
     <Box sx={{ p: 5 }}>

@@ -2,7 +2,6 @@ import { serialize } from "cookie";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import connectMongo from "@/database/db";
 const handler = async (req, res) => {
   try {
     if (req.method !== "POST") {
@@ -28,13 +27,14 @@ const handler = async (req, res) => {
       process.env.JWT_KEY,
       { expiresIn: "4h" }
     );
-    console.log("token", token);
+
     // config cookie options
     const cookieOptions = {
       httpOnly: true,
       sameSite: "strict",
       path: "/",
       secure: process.env.NODE_ENV === "production",
+      maxAge: 3600000 * 4,
     };
     res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
     console.log(newUser);

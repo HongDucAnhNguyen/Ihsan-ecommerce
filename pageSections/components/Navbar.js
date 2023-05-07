@@ -30,7 +30,7 @@ const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+  // const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState(null);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -43,13 +43,14 @@ const Navbar = () => {
     }
   };
 
-  const checkSession = async (url) => {
+  const checkSession = async () => {
     try {
-      console.log("route changed to: ", url);
+      
       const response = await fetch("/api/getToken");
       const data = await response.json();
       if (data) {
         const decodedToken = decode(data);
+
         if (decodedToken.exp * 1000 < new Date().getTime()) {
           dispatch(logoutAction());
           sessionAlert();
@@ -65,17 +66,17 @@ const Navbar = () => {
       position: "bottom-left",
       title: "Logged Out.",
       description: "Session Ended, automatically logged out",
-      duration: 9000,
+      duration: 5000,
       isClosable: true,
     });
   };
 
   useEffect(() => {
-    router.events.on("routeChangeComplete", checkSession);
+    const checkInterval = setInterval(checkSession, 9000);
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () => {
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
-      router.events.off("routeChangeComplete", checkSession);
+      clearInterval(checkInterval);
     };
   }, []);
   useEffect(() => {

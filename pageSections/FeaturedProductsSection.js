@@ -1,9 +1,4 @@
-import {
-  Box,
-  
-  Heading,
- 
-} from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import Products from "./components/Products";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +7,7 @@ import { getFeaturedProductsAction } from "@/actions/productsActions";
 const FeaturedProductsSection = () => {
   const dispatch = useDispatch();
   const featuredProducts = useSelector(
-    (state) => state.productReducer.products
+    (state) => state.productReducer.featuredProducts
   );
   useEffect(() => {
     dispatch(getFeaturedProductsAction());
@@ -21,16 +16,11 @@ const FeaturedProductsSection = () => {
     <Box sx={{ padding: 5 }}>
       <Heading>Featured Products</Heading>
       <br />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 5,
-          overflowX: "auto",
-        }}
-      >
+      
         <Products products={featuredProducts}></Products>
-        {/* <Card minW="sm">
+      
+
+      {/* <Card minW="sm">
           <CardHeader className={styles.cardHeader}>
             <IconButton bg="beige">
               <StarIcon></StarIcon>
@@ -138,7 +128,6 @@ const FeaturedProductsSection = () => {
           </CardFooter>
         </Card>
       */}
-      </Box>
     </Box>
   );
 };

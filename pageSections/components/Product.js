@@ -6,6 +6,7 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Flex,
   Heading,
   IconButton,
   Image,
@@ -14,8 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 const Product = ({ product }) => {
- 
+  const userState = useSelector((state) => state.authReducer.authData);
+  // const [user,setUser] = useState(null)
+  // useEffect(() => {
+  //   setUser(userState);
+  // }, [userState]);
   return (
     <Card minW="sm">
       <CardHeader className={styles.cardHeader}>
@@ -41,9 +48,20 @@ const Product = ({ product }) => {
         <Stack mt="6" spacing="3">
           <Heading size="md">{product.title}</Heading>
           <Text>{product.description}</Text>
-          <Text color="blue.600" fontSize="1xl">
-            ${product.price}
-          </Text>
+          <Flex gap={3}>
+            <Text
+              color="blue.600"
+              fontSize="1xl"
+              sx={{ textDecorationLine: product.salePrice && "line-through" }}
+            >
+              ${product.price}
+            </Text>
+            {product.salePrice && (
+              <Text color="blue.600" fontSize="1xl" fontWeight="bold">
+                ${product.salePrice}
+              </Text>
+            )}
+          </Flex>
         </Stack>
       </CardBody>
       <CardFooter>
@@ -54,6 +72,11 @@ const Product = ({ product }) => {
           <Button variant="ghost" colorScheme="blue">
             Add to Cart
           </Button>
+          {userState?.result?.id === "6446ddb6685eec4e5df21f7b" && (
+            <Button variant="solid" colorScheme="red">
+              Delete Item
+            </Button>
+          )}
         </ButtonGroup>
       </CardFooter>
     </Card>

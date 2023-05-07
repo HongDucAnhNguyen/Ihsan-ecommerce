@@ -7,8 +7,10 @@ import { Divider } from "@chakra-ui/react";
 import Testimonials from "@/pageSections/Testimonials";
 import OnSaleProductsSection from "@/pageSections/OnSaleProductsSection";
 import Recommendations from "@/pageSections/Recommendations";
+import { useEffect } from "react";
 
 export default function Home() {
+  
   return (
     <>
       <main className={styles.container}>

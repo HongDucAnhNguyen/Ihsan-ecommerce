@@ -3,7 +3,7 @@ const handler = async (req, res) => {
   try {
     //get the token from cookies
     const cookies = parse(req.headers.cookie || "");
-    const token = cookies.token;
+    const token = cookies?.token;
     return res.status(200).json(token ? token : "");
   } catch (error) {
     return res

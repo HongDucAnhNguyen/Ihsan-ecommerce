@@ -9,21 +9,31 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-import { createProductAction } from "@/actions/productsActions";
+import {
+  createProductAction,
+  getAllProductsAction,
+} from "@/actions/productsActions";
+import Products from "@/pageSections/components/Products";
 const Admin = () => {
   const userState = useSelector((state) => state.authReducer.authData);
+  const allProducts = useSelector(
+    (state) => state.productReducer.products
+  );
   const [user, setUser] = useState(null);
   const [productFormData, setProductFormData] = useState({
     imgUrl: "",
     category: "",
     title: "",
     description: "",
-    price: '',
-    salePrice: '',
+    price: "",
+    salePrice: "",
     isFeatured: false,
     isOnSale: false,
   });
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllProductsAction());
+  }, []);
   useEffect(() => {
     setUser(userState);
   }, [userState]);
@@ -34,6 +44,7 @@ const Admin = () => {
     <div className={styles.container}>
       <Box>
         <Heading>Products Management</Heading>
+        <Products products={allProducts}></Products>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -43,8 +54,8 @@ const Admin = () => {
               category: "",
               title: "",
               description: "",
-              price: '',
-              salePrice: '',
+              price: "",
+              salePrice: "",
               isFeatured: false,
               isOnSale: false,
             });

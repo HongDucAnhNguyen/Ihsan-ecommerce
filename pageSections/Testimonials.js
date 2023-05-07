@@ -31,7 +31,7 @@ const Testimonials = () => {
             </Flex>
           </CardHeader>
           <CardBody>
-            <Text>Amazing shop so many pretty Abayyah to choose from</Text>
+            <Text>dfgsdfgsdfgdsfg</Text>
           </CardBody>
         </Card>
         <Card>
@@ -45,7 +45,7 @@ const Testimonials = () => {
             </Flex>
           </CardHeader>
           <CardBody>
-            <Text>Amazing shop so many pretty Abayyah to choose from</Text>
+            <Text>sdfsdfsdfsdf</Text>
           </CardBody>
         </Card>
         <Card>
@@ -59,7 +59,7 @@ const Testimonials = () => {
             </Flex>
           </CardHeader>
           <CardBody>
-            <Text>Amazing shop so many pretty Abayyah to choose from</Text>
+            <Text>asdfasgasgsag</Text>
           </CardBody>
         </Card>
         <Card>
@@ -73,7 +73,7 @@ const Testimonials = () => {
             </Flex>
           </CardHeader>
           <CardBody>
-            <Text>Amazing shop so many pretty Abayyah to choose from</Text>
+            <Text>asgsadfweasgsgewag</Text>
           </CardBody>
         </Card>
       </SimpleGrid>

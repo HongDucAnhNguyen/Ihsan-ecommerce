@@ -36,6 +36,7 @@ const handler = async (req, res) => {
       sameSite: "strict",
       path: "/",
       secure: process.env.NODE_ENV === "production",
+      maxAge: 3600000 * 4,
     };
     res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
     console.log("logged in");

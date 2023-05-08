@@ -3,7 +3,7 @@ import Navbar from "@/pageSections/components/Navbar";
 import { ChakraProvider } from "@chakra-ui/react";
 import Footer from "@/pageSections/Footer";
 import { useRouter } from "next/router";
-import connectMongo from "@/database/db";
+import connectMongo from "@/actions/database/db";
 import { applyMiddleware, createStore, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "../reducers/combinedReducers";

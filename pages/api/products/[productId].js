@@ -1,4 +1,4 @@
-import connectMongo from "@/database/db";
+import connectMongo from "@/actions/database/db";
 import Product from "@/models/Product";
 
 const handler = async (req, res) => {

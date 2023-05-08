@@ -42,3 +42,12 @@ export const getProductsOnSaleAction = () => async (dispatch) => {
     console.log(error);
   }
 };
+export const deleteProductAction = (productId) => async (dispatch) => {
+  try {
+    await fetch(`/api/products/${productId}`, {method:"DELETE"})
+    dispatch({type:"DELETE_PRODUCT", data:productId})
+    
+  } catch (error) {
+    console.log(error);
+  }
+}

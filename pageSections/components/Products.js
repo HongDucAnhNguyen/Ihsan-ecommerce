@@ -6,7 +6,7 @@ const Products = ({ products }) => {
   return (
     <>
       <SimpleGrid
-        spacing={4}
+        spacing={3}
         templateColumns="repeat(auto-fill, minmax(400px,1fr))"
       >
         {/**iterate through array to render products */}

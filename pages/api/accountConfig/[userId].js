@@ -1,4 +1,4 @@
-import connectMongo from "@/database/db";
+import connectMongo from "@/actions/database/db";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 const handler = async (req, res) => {

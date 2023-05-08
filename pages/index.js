@@ -13,7 +13,7 @@ export default function Home() {
   
   return (
     <>
-      <main className={styles.container}>
+      <main className={styles.main}>
         <HeroSection></HeroSection>
         <FeaturedProductsSection></FeaturedProductsSection>
         <Divider></Divider>

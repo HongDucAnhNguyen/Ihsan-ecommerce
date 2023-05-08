@@ -72,11 +72,11 @@ const Product = ({ product }) => {
           <Button variant="ghost" colorScheme="blue">
             Add to Cart
           </Button>
-          {userState?.result?.id === "6446ddb6685eec4e5df21f7b" && (
+          {/* {userState?.result?.id === "6446ddb6685eec4e5df21f7b" && (
             <Button variant="solid" colorScheme="red">
               Delete Item
             </Button>
-          )}
+          )} */}
         </ButtonGroup>
       </CardFooter>
     </Card>

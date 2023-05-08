@@ -11,15 +11,17 @@ import {
 } from "@chakra-ui/react";
 import {
   createProductAction,
+  deleteProductAction,
   getAllProductsAction,
 } from "@/actions/productsActions";
 import Products from "@/pageSections/components/Products";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+//add password checker to authorize access to content of adminpage
 const Admin = () => {
   const userState = useSelector((state) => state.authReducer.authData);
-  const allProducts = useSelector(
-    (state) => state.productReducer.products
-  );
+  const allProducts = useSelector((state) => state.productReducer.products);
   const [user, setUser] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [productFormData, setProductFormData] = useState({
     imgUrl: "",
     category: "",
@@ -31,9 +33,21 @@ const Admin = () => {
     isOnSale: false,
   });
   const dispatch = useDispatch();
+  const clearForm = () => {
+    setProductFormData({
+      imgUrl: "",
+      category: "",
+      title: "",
+      description: "",
+      price: "",
+      salePrice: "",
+      isFeatured: false,
+      isOnSale: false,
+    });
+  };
   useEffect(() => {
     dispatch(getAllProductsAction());
-  }, []);
+  }, [allProducts]);
   useEffect(() => {
     setUser(userState);
   }, [userState]);
@@ -43,22 +57,45 @@ const Admin = () => {
   return (
     <div className={styles.container}>
       <Box>
-        <Heading>Products Management</Heading>
-        <Products products={allProducts}></Products>
+        <Heading>Inventory Management</Heading>
+        {allProducts.map((product) => (
+          <div
+            style={{
+              margin: "5px",
+              padding: "5px",
+              border: "1px solid orange",
+            }}
+            key={product._id}
+          >
+            <p>Item Id: {product._id}</p>
+            <p>Title: {product.title}</p>
+            <p>Description: {product.description}</p>
+            <p>Category: {product.category}</p>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                setProductFormData(product);
+                setIsEditing(true);
+              }}
+            >
+              <EditIcon></EditIcon>
+            </Button>
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                dispatch(deleteProductAction(product._id));
+              }}
+            >
+              <DeleteIcon></DeleteIcon>
+            </Button>
+          </div>
+        ))}
+        <Heading>{isEditing ? "Edit" : "Add"} Product</Heading>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             dispatch(createProductAction(productFormData));
-            setProductFormData({
-              imgUrl: "",
-              category: "",
-              title: "",
-              description: "",
-              price: "",
-              salePrice: "",
-              isFeatured: false,
-              isOnSale: false,
-            });
+            clearForm();
           }}
         >
           <Input
@@ -165,6 +202,17 @@ const Admin = () => {
             Put Product as Featured
           </Checkbox>
           <Button type="submit">Submit</Button>
+          {isEditing && (
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                setIsEditing(false);
+                clearForm();
+              }}
+            >
+              Cancel
+            </Button>
+          )}
         </form>
       </Box>
     </div>

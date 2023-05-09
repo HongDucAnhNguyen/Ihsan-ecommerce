@@ -44,10 +44,25 @@ export const getProductsOnSaleAction = () => async (dispatch) => {
 };
 export const deleteProductAction = (productId) => async (dispatch) => {
   try {
-    await fetch(`/api/products/${productId}`, {method:"DELETE"})
-    dispatch({type:"DELETE_PRODUCT", data:productId})
-    
+    await fetch(`/api/products/${productId}`, { method: "DELETE" });
+    dispatch({ type: "DELETE_PRODUCT", data: productId });
   } catch (error) {
     console.log(error);
   }
-}
+};
+export const updateProductAction =
+  (productId, productFormData) => async (dispatch) => {
+    try {
+      const updatedProduct = await fetch(`/api/products/${productId}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productFormData),
+      });
+      dispatch({ type: "UPDATE_PRODUCT", data: updatedProduct });
+    } catch (error) {
+      console.log(error);
+    }
+  };

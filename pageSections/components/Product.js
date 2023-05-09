@@ -52,11 +52,11 @@ const Product = ({ product }) => {
             <Text
               color="blue.600"
               fontSize="1xl"
-              sx={{ textDecorationLine: product.salePrice && "line-through" }}
+              sx={{ textDecorationLine: product.isOnSale && "line-through" }}
             >
               ${product.price}
             </Text>
-            {product.salePrice && (
+            {product.isOnSale && (
               <Text color="blue.600" fontSize="1xl" fontWeight="bold">
                 ${product.salePrice}
               </Text>

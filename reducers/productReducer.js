@@ -11,6 +11,13 @@ const productReducer = (
       return { ...state, featuredProducts: action?.data };
     case "GET_PRODUCTS_ON_SALE":
       return { ...state, productsOnSale: action?.data };
+    case "UPDATE_PRODUCT":
+      return {
+        ...state,
+        products: products.map((product) =>
+          product._id === action?.data._id ? action.data : product
+        ),
+      };
     case "DELETE_PRODUCT":
       return {
         ...state,

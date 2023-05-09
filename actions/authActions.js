@@ -83,3 +83,22 @@ export const deleteAccountAction = (userId, setMessage) => async (dispatch) => {
     setMessage(error.message);
   }
 };
+/**this function authorizes only admin to interact with the admin page*/
+export const adminAuthorizeAction = (providedCreds) => async (dispatch) => {
+  try {
+    const response = await fetch("/api/adminAuthorize", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(providedCreds),
+    });
+
+    if (response.ok) {
+      dispatch({ type: "ADMIN_AUTHORIZE", data: true });
+    } else dispatch({ type: "ADMIN_AUTHORIZE", data: false });
+  } catch (error) {
+    console.log(error);
+  }
+};

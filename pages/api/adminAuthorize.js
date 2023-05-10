@@ -13,7 +13,7 @@ const handler = async (req, res) => {
       username: username,
     });
     if (!existingUser) {
-      console.log("invalid creds");
+      
       return res.status(401).json({ message: "invalid username" });
     }
     const passwordsMatch = await bcrypt.compare(

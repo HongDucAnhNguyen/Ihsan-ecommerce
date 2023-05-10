@@ -41,7 +41,11 @@ const handler = async (req, res) => {
     res.setHeader("Set-Cookie", serialize("token", token, cookieOptions));
     console.log("logged in");
     return res.status(200).json({
-      result: { username: existingUser.username, id: existingUser._id },
+      result: {
+        username: existingUser.username,
+        id: existingUser._id,
+        role: existingUser.role,
+      },
     });
   } catch (error) {
     console.log(error);

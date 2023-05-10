@@ -19,7 +19,8 @@ const handler = async (req, res) => {
 
     const newUser = await User.create({
       username: username,
-      password: hashedPassword, //no hashing yet
+      password: hashedPassword,
+      role: "user",
     });
 
     const token = jwt.sign(
@@ -41,7 +42,13 @@ const handler = async (req, res) => {
     console.log("account created");
     return res
       .status(200)
-      .json({ result: { username: newUser.username, id: newUser._id } });
+      .json({
+        result: {
+          username: newUser.username,
+          id: newUser._id,
+          role: newUser.role,
+        },
+      });
   } catch (error) {
     console.log(error);
     return res.status(500).json("something went wrong with the server");

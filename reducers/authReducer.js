@@ -4,10 +4,7 @@ const authReducer = (
       typeof window !== "undefined" && localStorage.getItem("userProfile")
         ? JSON.parse(localStorage.getItem("userProfile"))
         : null,
-    isAuthorizedAsAdmin:
-      typeof window !== "undefined" && localStorage.getItem("authorizedAsAdmin")
-        ? JSON.parse(localStorage.getItem("authorizedAsAdmin"))
-        : null,
+    isAuthorizedAsAdmin: null,
   },
   action
 ) => {
@@ -20,7 +17,7 @@ const authReducer = (
     case "ADMIN_AUTHORIZE":
       console.log("ADMIN_AUTHORIZE");
       //just incase i want to add more to auth state down the line
-      localStorage.setItem("authorizedAsAdmin", JSON.stringify(action?.data));
+      
       return { ...state, isAuthorizedAsAdmin: action?.data };
     case "RESET_ACCOUNT":
       return;

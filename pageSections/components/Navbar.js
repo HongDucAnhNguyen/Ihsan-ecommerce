@@ -45,7 +45,6 @@ const Navbar = () => {
 
   const checkSession = async () => {
     try {
-      
       const response = await fetch("/api/getToken");
       const data = await response.json();
       if (data) {
@@ -263,7 +262,7 @@ const Navbar = () => {
         >
           Contact
         </NextLink>
-        {user && user?.result?.id === "6446ddb6685eec4e5df21f7b" ? (
+        {user && user?.result?.role === "admin" ? (
           <NextLink
             href="/admin"
             style={{

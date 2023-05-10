@@ -2,9 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Layout.module.css";
 import { useState, useEffect } from "react";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   Checkbox,
+  CloseButton,
   Heading,
   Input,
   Select,
@@ -27,6 +31,7 @@ const Admin = () => {
   const allProducts = useSelector((state) => state.productReducer.products);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState("");
   const [adminCreds, setAdminCreds] = useState({ username: "", password: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [productFormData, setProductFormData] = useState({
@@ -248,11 +253,32 @@ const Admin = () => {
         </Box>
       ) : (
         <Box maxW="50%">
+          {message && (
+            <Alert
+              sx={{
+                maxWidth: 400,
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+              status="error"
+            >
+              <Box display="flex">
+                <AlertIcon></AlertIcon>
+                <AlertDescription>{message}</AlertDescription>
+              </Box>
+              <CloseButton
+                onClick={() => {
+                  setMessage(null);
+                }}
+              ></CloseButton>
+            </Alert>
+          )}
+
           <Heading>Verify as Admin to access content</Heading>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              dispatch(adminAuthorizeAction(adminCreds));
+              dispatch(adminAuthorizeAction(adminCreds, setMessage));
               setAdminCreds({ username: "", password: "" });
             }}
           >

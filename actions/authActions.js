@@ -84,21 +84,27 @@ export const deleteAccountAction = (userId, setMessage) => async (dispatch) => {
   }
 };
 /**this function authorizes only admin to interact with the admin page*/
-export const adminAuthorizeAction = (providedCreds) => async (dispatch) => {
-  try {
-    const response = await fetch("/api/adminAuthorize", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(providedCreds),
-    });
+export const adminAuthorizeAction =
+  (providedCreds, setMessage) => async (dispatch) => {
+    try {
+      const response = await fetch("/api/adminAuthorize", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(providedCreds),
+      });
 
-    if (response.ok) {
-      dispatch({ type: "ADMIN_AUTHORIZE", data: true });
-    } else dispatch({ type: "ADMIN_AUTHORIZE", data: false });
-  } catch (error) {
-    console.log(error);
-  }
-};
+      if (response.ok) {
+        dispatch({ type: "ADMIN_AUTHORIZE", data: true });
+      } else {
+        const data = await response.json();
+        setMessage(data.message);
+        dispatch({ type: "ADMIN_AUTHORIZE", data: false });
+      }
+    } catch (error) {
+      console.log(error);
+      s;
+    }
+  };

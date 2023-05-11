@@ -43,6 +43,7 @@ const Admin = () => {
     salePrice: "",
     isFeatured: false,
     isOnSale: false,
+    clothingSizes: [],
   });
   const dispatch = useDispatch();
   const clearForm = () => {
@@ -55,6 +56,7 @@ const Admin = () => {
       isFeatured: false,
       isOnSale: false,
       salePrice: "",
+      clothingSizes: [],
     });
   };
   useEffect(() => {
@@ -237,6 +239,7 @@ const Admin = () => {
             >
               Put Product as Featured
             </Checkbox>
+            
             <Button type="submit">Submit</Button>
             {isEditing && (
               <Button

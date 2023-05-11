@@ -32,7 +32,7 @@ const Account = () => {
   const [message, setMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    username: userState ? userState.result.username : "",
+    username:  "",
     password: "",
     newPassword: "",
   });
@@ -87,7 +87,7 @@ const Account = () => {
                       updateAccountAction(formData, user.result.id, setMessage)
                     );
                     setFormData({
-                      username: userState ? userState.result.username : "",
+                      username:  "",
                       password: "",
                       newPassword: "",
                     });
@@ -123,8 +123,10 @@ const Account = () => {
                   <Button type="submit">Update Account</Button>
                 </form>
               )}
+              {user?.result?.role !== "admin" && (
+                <Button onClick={onOpen}>Delete Account</Button>
+              )}
 
-              <Button onClick={onOpen}>Delete Account</Button>
               <Modal
                 isCentered={true}
                 blockScrollOnMount={false}

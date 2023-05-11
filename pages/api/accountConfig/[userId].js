@@ -1,4 +1,3 @@
-import connectMongo from "@/actions/database/db";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 const handler = async (req, res) => {
@@ -30,13 +29,21 @@ const handler = async (req, res) => {
       );
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { username: updatedUserData.username, password: hashedNewPassword },
+        {
+          username: updatedUserData.username,
+          password: hashedNewPassword,
+          role: existingUser.role,
+        },
         { new: true }
       );
       console.log("updated user account");
       return res.status(200).json({
         result: {
-          result: { username: updatedUser.username, id: updatedUser._id },
+          result: {
+            username: updatedUser.username,
+            id: updatedUser._id,
+            role: existingUser.role,
+          },
         },
         message: "account updated successfully",
       });

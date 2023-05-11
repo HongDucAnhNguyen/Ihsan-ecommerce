@@ -17,14 +17,16 @@ import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
   // const [user,setUser] = useState(null)
   // useEffect(() => {
   //   setUser(userState);
   // }, [userState]);
+  const router = useRouter();
   return (
-    <Card minW="sm">
+    <Card minWidth="sm" maxWidth="md" mb={4}>
       <CardHeader className={styles.cardHeader}>
         <IconButton
           bg="beige"
@@ -66,10 +68,22 @@ const Product = ({ product }) => {
       </CardBody>
       <CardFooter>
         <ButtonGroup spacing={2}>
-          <Button variant="solid" colorScheme="blue">
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            onClick={() => {
+              router.push("/checkout");
+            }}
+          >
             Buy Now
           </Button>
-          <Button variant="ghost" colorScheme="blue">
+          <Button
+            variant="ghost"
+            colorScheme="blue"
+            onClick={() => {
+              router.push("/cart");
+            }}
+          >
             Add to Cart
           </Button>
           {/* {userState?.result?.id === "6446ddb6685eec4e5df21f7b" && (

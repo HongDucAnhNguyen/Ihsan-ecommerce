@@ -8,6 +8,7 @@
   height: 80px;
   z-index: 10000;
   position: absolute;
+  overflow: hidden;
 }
 .navbarSticky {
   top: -80px;
@@ -20,13 +21,11 @@
 
 .storeNavItems {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   gap: 10px;
 }
 .actionNavItems {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   gap: 10px;
 }

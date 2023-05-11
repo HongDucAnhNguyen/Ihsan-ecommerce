@@ -1,20 +1,30 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Product from "./Product";
-import { useEffect } from "react";
 
 const Products = ({ products }) => {
   return (
-    <>
-      <SimpleGrid
-        spacing={4}
-        templateColumns="repeat(auto-fill, minmax(400px,1fr))"
-      >
-        {/**iterate through array to render products */}
-        {products.map((product) => (
-          <Product key={product._id} product={product}></Product>
-        ))}
-      </SimpleGrid>
-    </>
+    <Flex
+      gap={5}
+      overflowX="auto"
+      borderRadius={10}
+      sx={{
+        "&::-webkit-scrollbar": {
+          height: "9px",
+          borderRadius: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "gray.100",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "gray.600",
+          borderRadius: "8px",
+        },
+      }}
+    >
+      {products.map((product) => (
+        <Product key={product._id} product={product}></Product>
+      ))}
+    </Flex>
   );
 };
 

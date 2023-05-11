@@ -33,34 +33,24 @@ const OnSaleProductsSection = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        p: 5,
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <Box maxW="100%" width={1200}>
-        <Heading mb={4}>Products On Sale!</Heading>
-
-        <Tabs>
-          <TabList>
-            <Tab>Quran</Tab>
-            <Tab>Clothing</Tab>
-            <Tab>Accessories</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>Qurans</TabPanel>
-            <TabPanel>Modest Clothing for Men and Women</TabPanel>
-            <TabPanel>
-              <Products products={productsOnSale}></Products>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <br />
-      </Box>
-    </Box>
+    <>
+      
+      <Heading mb={4}>Products On Sale!</Heading>
+      <Tabs>
+        <TabList>
+          <Tab>Quran</Tab>
+          <Tab>Clothing</Tab>
+          <Tab>Accessories</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>Qurans</TabPanel>
+          <TabPanel>Modest Clothing for Men and Women</TabPanel>
+          <TabPanel>
+            <Products products={productsOnSale}></Products>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </>
   );
 };
 

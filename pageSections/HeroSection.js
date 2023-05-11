@@ -4,7 +4,9 @@ import styles from "@/styles/Home.module.css";
 import { Button, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import heroImg from "../public/heroImg.jpg";
+import { useRouter } from "next/router";
 const HeroSection = () => {
+  const router = useRouter();
   return (
     <div className={styles.heroSection}>
       <Image className={styles.heroImg} src={heroImg} alt="quran"></Image>
@@ -25,17 +27,20 @@ const HeroSection = () => {
           </Text>
         </div>
         <br></br>
-        <Link href="/Quran">
-          <Button
-            sx={{
-              border: "1px solid white",
-              background: "transparent",
-              "&:hover": { background: "black" },
-            }}
-          >
-            Shop Now
-          </Button>
-        </Link>
+
+        <Button
+          size="lg"
+          onClick={() => {
+            router.push("/Quran");
+          }}
+          sx={{
+            border: "1px solid white",
+            background: "transparent",
+            "&:hover": { background: "black" },
+          }}
+        >
+          Shop Now
+        </Button>
       </div>
     </div>
   );

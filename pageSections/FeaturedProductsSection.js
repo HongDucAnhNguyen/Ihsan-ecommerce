@@ -13,19 +13,12 @@ const FeaturedProductsSection = () => {
     dispatch(getFeaturedProductsAction());
   }, []);
   return (
-    <Box
-      sx={{
-        width: "100%",
-        p: 5,
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <Box maxW="100%" width={1200}>
+   
+      <>
         <Heading mb={4}>Featured Products</Heading>
         <Products products={featuredProducts}></Products>
-      </Box>
-    </Box>
+      </>
+    
   );
 };
 

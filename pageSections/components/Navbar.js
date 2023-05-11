@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import {
   Avatar,
   Button,
+  Flex,
   Icon,
   Link,
   Modal,
@@ -22,7 +23,6 @@ import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import { decode } from "jsonwebtoken";
 import { logoutAction } from "@/actions/authActions";
@@ -86,7 +86,7 @@ const Navbar = () => {
       className={`${styles.navbar} ${isScrolling && styles.navbarSticky} `}
       id="navbar"
     >
-      <div className={styles.storeNavItems}>
+      <div>
         <Link
           as={NextLink}
           href="/"
@@ -198,7 +198,7 @@ const Navbar = () => {
           About
         </Link>
       </div>
-      <div className={styles.actionNavItems}>
+      <div>
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
             <Avatar size="xs"></Avatar>
@@ -239,42 +239,46 @@ const Navbar = () => {
             <AuthForm></AuthForm>
           </ModalContent>
         </Modal>
-        <NextLink
+        <Link
+          as={NextLink}
           href="/cart"
-          style={{
-            color: "whitesmoke",
-            backgroundColor: "#ebb434",
-            padding: 10,
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
             fontWeight: "bold",
           }}
         >
           <Icon as={MdOutlineAddShoppingCart}></Icon> Cart
-        </NextLink>
-        <NextLink
+        </Link>
+        <Link
+          as={NextLink}
           href="/contact"
-          style={{
-            color: "whitesmoke",
-            backgroundColor: "#ebb434",
-            padding: 10,
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
             fontWeight: "bold",
-            borderRadius: 4,
           }}
         >
           Contact
-        </NextLink>
+        </Link>
         {user && user?.result?.role === "admin" ? (
-          <NextLink
+          <Link
+            as={NextLink}
             href="/admin"
-            style={{
-              color: "whitesmoke",
-              backgroundColor: "#ebb434",
-              padding: 10,
+            sx={{
+              "&:hover": {
+                textDecoration: "none",
+              },
+              p: 2,
               fontWeight: "bold",
-              borderRadius: 4,
             }}
           >
             Admin
-          </NextLink>
+          </Link>
         ) : (
           <></>
         )}

@@ -15,14 +15,9 @@ const Testimonials = () => {
   return (
     //pull data from backend
     //data that does not update frequently
-    <Box
-      sx={{
-        p: 5,
-        display: "flex",
-        justifyContent: "center",
-      }}
+    <
     >
-      <Box width={1200}>
+      
         <Heading mb={4}>Testimonials</Heading>
         <SimpleGrid spacing={4} templateColumns="repeat(3, 1fr)">
           <Card>
@@ -31,7 +26,7 @@ const Testimonials = () => {
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                   <Avatar size="sm" />
 
-                  <Heading size="sm">Ahmed</Heading>
+                  <Heading size="sm">Abdullah</Heading>
                 </Flex>
               </Flex>
             </CardHeader>
@@ -82,8 +77,8 @@ const Testimonials = () => {
             </CardBody>
           </Card>
         </SimpleGrid>
-      </Box>
-    </Box>
+      
+    </>
   );
 };
 

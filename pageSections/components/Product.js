@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 const Product = ({ product }) => {
@@ -28,14 +27,26 @@ const Product = ({ product }) => {
   return (
     <Card minWidth="sm" maxWidth="md" mb={4}>
       <CardHeader className={styles.cardHeader}>
-        <IconButton
-          bg="beige"
-          onClick={() => {
-            console.log("you liked this item");
-          }}
-        >
-          <StarIcon></StarIcon>
-        </IconButton>
+        <ButtonGroup>
+          <Button
+            onClick={() => {
+              router.push({
+                pathname: "/details",
+                query: { productId: product._id },
+              });
+            }}
+          >
+            View Item
+          </Button>
+          <IconButton
+            bg="beige"
+            onClick={() => {
+              console.log("you liked this item");
+            }}
+          >
+            <StarIcon></StarIcon>
+          </IconButton>
+        </ButtonGroup>
       </CardHeader>
       <Box className={styles.productImgContainer}>
         <Image

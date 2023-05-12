@@ -19,6 +19,12 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Flex,
+  Card,
+  CardHeader,
+  CardBody,
+  Text,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import {
   updateAccountAction,
@@ -32,7 +38,7 @@ const Account = () => {
   const [message, setMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    username:  "",
+    newUsername: "",
     password: "",
     newPassword: "",
   });
@@ -67,97 +73,118 @@ const Account = () => {
         <div>
           {user ? (
             <>
-              <Heading>Account Management</Heading>
-              <br />
-              <Box display="flex">
-                <Heading size="lg">Profile</Heading>
-                <IconButton
-                  onClick={() => {
-                    setIsEditing(!isEditing);
-                  }}
-                >
-                  <EditIcon></EditIcon>
-                </IconButton>
-              </Box>
-              {isEditing && (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    dispatch(
-                      updateAccountAction(formData, user.result.id, setMessage)
-                    );
-                    setFormData({
-                      username:  "",
-                      password: "",
-                      newPassword: "",
-                    });
-                  }}
-                >
-                  <Input
-                    required
-                    type="text"
-                    placeholder="New Username*"
-                    value={formData.username}
-                    onChange={(e) => {
-                      setFormData({ ...formData, username: e.target.value });
-                    }}
-                  />
-                  <Input
-                    required
-                    type="password"
-                    placeholder="Password*"
-                    value={formData.password}
-                    onChange={(e) => {
-                      setFormData({ ...formData, password: e.target.value });
-                    }}
-                  />
-                  <Input
-                    required
-                    type="password"
-                    placeholder="New Password*"
-                    value={formData.newPassword}
-                    onChange={(e) => {
-                      setFormData({ ...formData, newPassword: e.target.value });
-                    }}
-                  />
-                  <Button type="submit">Update Account</Button>
-                </form>
-              )}
-              {user?.result?.role !== "admin" && (
-                <Button onClick={onOpen}>Delete Account</Button>
-              )}
-
-              <Modal
-                isCentered={true}
-                blockScrollOnMount={false}
-                isOpen={isOpen}
-                onClose={onClose}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Delete Account</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    Are you sure? You can't undo this action afterwards.
-                  </ModalBody>
-
-                  <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button
-                      colorScheme="red"
+              <Card minW="sm" maxW="md">
+                <CardHeader>
+                  <Flex justifyContent="space-between">
+                    <Heading>Manage Profile</Heading>
+                    <IconButton
+                      title="Edit Profile"
                       onClick={() => {
-                        dispatch(
-                          deleteAccountAction(user.result.id, setMessage)
-                        );
+                        setIsEditing(!isEditing);
                       }}
                     >
-                      Delete
-                    </Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
+                      <EditIcon></EditIcon>
+                    </IconButton>
+                  </Flex>
+                </CardHeader>
+
+                {isEditing && (
+                  <CardBody>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        dispatch(
+                          updateAccountAction(
+                            formData,
+                            user.result.id,
+                            setMessage
+                          )
+                        );
+                        setFormData({
+                          newUsername: "",
+                          password: "",
+                          newPassword: "",
+                        });
+                      }}
+                    >
+                      <Input
+                        required
+                        type="text"
+                        placeholder="New Username*"
+                        value={formData.username}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            newUsername: e.target.value,
+                          });
+                        }}
+                      />
+                      <Input
+                        required
+                        type="password"
+                        placeholder="Password*"
+                        value={formData.password}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            password: e.target.value,
+                          });
+                        }}
+                      />
+                      <Input
+                        required
+                        type="password"
+                        placeholder="New Password*"
+                        value={formData.newPassword}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            newPassword: e.target.value,
+                          });
+                        }}
+                      />
+                      <ButtonGroup>
+                        <Button type="submit">Update Account</Button>
+                        {user?.result?.role !== "admin" && (
+                          <Button onClick={onOpen}>Delete Account</Button>
+                        )}
+                      </ButtonGroup>
+                    </form>
+                  </CardBody>
+                )}
+
+                <Modal
+                  isCentered={true}
+                  blockScrollOnMount={false}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Delete Account</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      Are you sure? You can't undo this action afterwards.
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        onClick={() => {
+                          dispatch(
+                            deleteAccountAction(user.result.id, setMessage)
+                          );
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </Card>
             </>
           ) : (
             <Heading>Please Log In or Register Account</Heading>

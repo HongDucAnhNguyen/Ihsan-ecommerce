@@ -5,12 +5,36 @@ import { Button, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import heroImg from "../public/heroImg.jpg";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
+
 const HeroSection = () => {
   const router = useRouter();
+  // Define the animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 1 } },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 1 } },
+  };
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+  };
   return (
-    <div className={styles.heroSection}>
-      <Image className={styles.heroImg} src={heroImg} alt="quran"></Image>
-      <div className={styles.heroDescription}>
+    <motion.div
+      className={styles.heroSection}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div variants={imageVariants}>
+        <Image className={styles.heroImg} src={heroImg} alt="quran"></Image>
+      </motion.div>
+      <motion.div variants={textVariants} className={styles.heroDescription}>
         <Heading fontSize={48} flexGrow={1}>
           Islamic Gift Shop.
         </Heading>
@@ -41,8 +65,8 @@ const HeroSection = () => {
         >
           Shop Now
         </Button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

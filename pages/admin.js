@@ -7,7 +7,9 @@ import {
   AlertIcon,
   Box,
   Button,
+  ButtonGroup,
   Checkbox,
+  CheckboxGroup,
   CloseButton,
   Heading,
   Input,
@@ -78,44 +80,48 @@ const Admin = () => {
   return (
     <div className={styles.container}>
       {isAuthorized ? (
-        <Box>
+        <Box maxW="lg">
           <Heading>Inventory Management</Heading>
-          {allProducts.map((product) => (
-            <div
-              style={{
-                margin: "5px",
-                padding: "5px",
-                border: "1px solid orange",
-              }}
-              key={product._id}
-            >
-              <p>Item Id: {product._id}</p>
-              <p>Item On Sale: {product.isOnSale.toString()}</p>
-              <p>Item Featured: {product.isFeatured.toString()}</p>
-              <p>Title: {product.title}</p>
-              <p>Description: {product.description}</p>
-              <p>Category: {product.category}</p>
-              <p>Price: {product.price}</p>
-              {product.isOnSale && <p>Sale Price: {product.salePrice}</p>}
-              <Button
-                colorScheme="blue"
-                onClick={() => {
-                  setProductFormData(product);
-                  setIsEditing(true);
+          <Box maxH="lg" overflow="auto">
+            {allProducts.map((product) => (
+              <div
+                style={{
+                  margin: "5px",
+                  padding: "5px",
+                  border: "1px solid orange",
                 }}
+                key={product._id}
               >
-                <EditIcon></EditIcon>
-              </Button>
-              <Button
-                colorScheme="red"
-                onClick={() => {
-                  dispatch(deleteProductAction(product._id));
-                }}
-              >
-                <DeleteIcon></DeleteIcon>
-              </Button>
-            </div>
-          ))}
+                <p>Item Id: {product._id}</p>
+                <p>Item On Sale: {product.isOnSale.toString()}</p>
+                <p>Item Featured: {product.isFeatured.toString()}</p>
+                <p>Title: {product.title}</p>
+                <p>Description: {product.description}</p>
+                <p>Category: {product.category}</p>
+                <p>Price: {product.price}</p>
+                {product.isOnSale && <p>Sale Price: {product.salePrice}</p>}
+                <ButtonGroup>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => {
+                      setProductFormData(product);
+                      setIsEditing(true);
+                    }}
+                  >
+                    <EditIcon></EditIcon>
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    onClick={() => {
+                      dispatch(deleteProductAction(product._id));
+                    }}
+                  >
+                    <DeleteIcon></DeleteIcon>
+                  </Button>
+                </ButtonGroup>
+              </div>
+            ))}
+          </Box>
           <Heading>{isEditing ? "Edit" : "Add"} Product</Heading>
           <form
             onSubmit={(e) => {
@@ -213,45 +219,48 @@ const Admin = () => {
                 }}
               />
             )}
-
-            <Checkbox
-              isChecked={productFormData.isOnSale}
-              onChange={() => {
-                setProductFormData({
-                  ...productFormData,
-                  isOnSale: !productFormData.isOnSale,
-                  salePrice: productFormData.isOnSale
-                    ? productFormData.salePrice
-                    : "",
-                });
-              }}
-            >
-              Put Product on Sale
-            </Checkbox>
-            <Checkbox
-              isChecked={productFormData.isFeatured}
-              onChange={() => {
-                setProductFormData({
-                  ...productFormData,
-                  isFeatured: !productFormData.isFeatured,
-                });
-              }}
-            >
-              Put Product as Featured
-            </Checkbox>
-            
-            <Button type="submit">Submit</Button>
-            {isEditing && (
-              <Button
-                colorScheme="red"
-                onClick={() => {
-                  setIsEditing(false);
-                  clearForm();
+            <CheckboxGroup>
+              <Checkbox
+                isChecked={productFormData.isOnSale}
+                onChange={() => {
+                  setProductFormData({
+                    ...productFormData,
+                    isOnSale: !productFormData.isOnSale,
+                    salePrice: productFormData.isOnSale
+                      ? productFormData.salePrice
+                      : "",
+                  });
                 }}
               >
-                Cancel
-              </Button>
-            )}
+                Put Product on Sale
+              </Checkbox>
+              <Checkbox
+                isChecked={productFormData.isFeatured}
+                onChange={() => {
+                  setProductFormData({
+                    ...productFormData,
+                    isFeatured: !productFormData.isFeatured,
+                  });
+                }}
+              >
+                Put Product as Featured
+              </Checkbox>
+            </CheckboxGroup>
+            <br></br>
+            <ButtonGroup>
+              <Button type="submit">Submit</Button>
+              {isEditing && (
+                <Button
+                  colorScheme="red"
+                  onClick={() => {
+                    setIsEditing(false);
+                    clearForm();
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+            </ButtonGroup>
           </form>
         </Box>
       ) : (

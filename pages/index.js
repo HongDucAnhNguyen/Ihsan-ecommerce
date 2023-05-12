@@ -21,7 +21,7 @@ export default function Home() {
           justifyContent: "center",
         }}
       >
-        <Box maxW="100%">
+        <Box maxW="100%" width={1200}>
           <FeaturedProductsSection></FeaturedProductsSection>
           <Divider></Divider>
           <OnSaleProductsSection></OnSaleProductsSection>

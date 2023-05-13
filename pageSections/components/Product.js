@@ -28,7 +28,7 @@ const Product = ({ product }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   return (
-    <Card minWidth="sm" maxWidth="md" mb={4}>
+    <Card minW="sm" maxW="sm" mb={4}>
       <CardHeader className={styles.cardHeader}>
         <ButtonGroup>
           <Button

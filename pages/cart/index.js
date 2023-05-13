@@ -16,6 +16,7 @@ const Cart = () => {
   }, [itemsInCart]);
   useEffect(() => {
     dispatch(getItemsInCartAction("645ec315624de563a4b83200"));
+    setCart(itemsInCart);
   }, []);
   if (cart.length === 0) {
     return (

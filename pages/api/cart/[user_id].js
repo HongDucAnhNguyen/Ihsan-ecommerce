@@ -7,7 +7,7 @@ const handler = async (req, res) => {
       const user = await User.findById(user_id);
       const itemsInCart = user.itemsInCart;
       if (itemsInCart.length === 0) {
-        return res.status(200).json({ message: "cart is empty" });
+        return res.status(200).json([]);
       }
       //get items in cart with the data of the productObjects
       const itemsInCartPromises = itemsInCart.map((itemId) => {
@@ -33,6 +33,7 @@ const handler = async (req, res) => {
       });
       const itemsInCartData = await Promise.all(itemsInCartPromises);
       console.log("added item to cart");
+      return res.status(200).json(itemsInCartData);
     } else {
       return res.status(404).json({ message: "Invalid Method" });
     }

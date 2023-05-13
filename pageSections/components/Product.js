@@ -15,15 +15,18 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { addItemToCart, addItemToCartAction } from "@/actions/cartActions";
+import { useEffect, useState } from "react";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
-  // const [user,setUser] = useState(null)
-  // useEffect(() => {
-  //   setUser(userState);
-  // }, [userState]);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    setUser(userState);
+  }, [userState]);
   const router = useRouter();
+  const dispatch = useDispatch();
   return (
     <Card minWidth="sm" maxWidth="md" mb={4}>
       <CardHeader className={styles.cardHeader}>
@@ -92,6 +95,7 @@ const Product = ({ product }) => {
             variant="ghost"
             colorScheme="blue"
             onClick={() => {
+              dispatch(addItemToCartAction(product._id, user?.result?.id));
               router.push("/cart");
             }}
           >

@@ -77,3 +77,12 @@ export const getProductsByCategoryAction = (category) => async (dispatch) => {
     console.log(error);
   }
 };
+export const getProductAction = (productId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/products/${productId}`);
+    const individualProduct = await response.json();
+    dispatch({ type: "GET_PRODUCT", data: individualProduct });
+  } catch (error) {
+    console.log(error);
+  }
+};

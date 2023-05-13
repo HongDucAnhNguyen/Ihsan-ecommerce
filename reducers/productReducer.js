@@ -4,7 +4,7 @@ const productReducer = (
 ) => {
   switch (action.type) {
     case "CREATE_PRODUCT":
-      return { ...state, products: [action?.data, ...products] };
+      return { ...state, products: [action?.data, ...state.products] };
     case "GET_ALL_PRODUCTS":
       return { ...state, products: action?.data };
     case "GET_FEATURED_PRODUCTS":
@@ -16,14 +16,16 @@ const productReducer = (
     case "UPDATE_PRODUCT":
       return {
         ...state,
-        products: products.map((product) =>
+        products: state.products.map((product) =>
           product._id === action?.data._id ? action.data : product
         ),
       };
     case "DELETE_PRODUCT":
       return {
         ...state,
-        products: products.filter((product) => product._id !== action?.data),
+        products: state.products.filter(
+          (product) => product._id !== action?.data
+        ),
       };
     default:
       return state;

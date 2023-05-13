@@ -71,7 +71,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const checkInterval = setInterval(checkSession, 9000);
+    const checkInterval = setInterval(checkSession, 6000);
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () => {
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
@@ -121,7 +121,7 @@ const Navbar = () => {
           }}
         >
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            Modest Clothing
+            Clothing
           </MenuButton>
           <MenuList>
             <MenuItem>

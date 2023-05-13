@@ -14,6 +14,7 @@ import {
   Heading,
   Input,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import {
   createProductAction,
@@ -63,7 +64,7 @@ const Admin = () => {
   };
   useEffect(() => {
     dispatch(getAllProductsAction());
-  }, [allProducts]);
+  }, [allProducts, dispatch]);
   useEffect(() => {
     setIsAuthorized(authorizedStatus);
   }, [authorizedStatus]);
@@ -82,46 +83,52 @@ const Admin = () => {
       {isAuthorized ? (
         <Box maxW="lg">
           <Heading>Inventory Management</Heading>
-          <Box maxH="lg" overflow="auto">
-            {allProducts.map((product) => (
-              <div
-                style={{
-                  margin: "5px",
-                  padding: "5px",
-                  border: "1px solid orange",
-                }}
-                key={product._id}
-              >
-                <p>Item Id: {product._id}</p>
-                <p>Item On Sale: {product.isOnSale.toString()}</p>
-                <p>Item Featured: {product.isFeatured.toString()}</p>
-                <p>Title: {product.title}</p>
-                <p>Description: {product.description}</p>
-                <p>Category: {product.category}</p>
-                <p>Price: {product.price}</p>
-                {product.isOnSale && <p>Sale Price: {product.salePrice}</p>}
-                <ButtonGroup>
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => {
-                      setProductFormData(product);
-                      setIsEditing(true);
-                    }}
-                  >
-                    <EditIcon></EditIcon>
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    onClick={() => {
-                      dispatch(deleteProductAction(product._id));
-                    }}
-                  >
-                    <DeleteIcon></DeleteIcon>
-                  </Button>
-                </ButtonGroup>
-              </div>
-            ))}
-          </Box>
+          {allProducts.length > 0 ? (
+            <Box maxH="lg" overflow="auto">
+              {allProducts.map((product) => (
+                <div
+                  style={{
+                    margin: "5px",
+                    padding: "5px",
+                    border: "1px solid orange",
+                  }}
+                  key={product._id}
+                >
+                  <p>Item Id: {product._id}</p>
+                  <p>Item On Sale: {product.isOnSale.toString()}</p>
+                  <p>Item Featured: {product.isFeatured.toString()}</p>
+                  <p>Title: {product.title}</p>
+                  <p>Description: {product.description}</p>
+                  <p>Category: {product.category}</p>
+                  <p>Price: {product.price}</p>
+                  {product.isOnSale && <p>Sale Price: {product.salePrice}</p>}
+                  <ButtonGroup>
+                    <Button
+                      colorScheme="blue"
+                      onClick={() => {
+                        setProductFormData(product);
+                        setIsEditing(true);
+                      }}
+                    >
+                      <EditIcon></EditIcon>
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={() => {
+                        dispatch(deleteProductAction(product._id));
+                        dispatch(getAllProductsAction());
+                      }}
+                    >
+                      <DeleteIcon></DeleteIcon>
+                    </Button>
+                  </ButtonGroup>
+                </div>
+              ))}
+            </Box>
+          ) : (
+            <Text color="red">Add some products</Text>
+          )}
+
           <Heading>{isEditing ? "Edit" : "Add"} Product</Heading>
           <form
             onSubmit={(e) => {
@@ -131,8 +138,10 @@ const Admin = () => {
                 dispatch(
                   updateProductAction(productFormData._id, productFormData)
                 );
+                dispatch(getAllProductsAction());
               } else {
                 dispatch(createProductAction(productFormData));
+                dispatch(getAllProductsAction());
               }
 
               clearForm();

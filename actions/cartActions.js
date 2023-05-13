@@ -13,7 +13,6 @@ export const addItemToCartAction = (productId, user_id) => async (dispatch) => {
 
     const data = await response.json();
     if (data.message) {
-      console.log(data.message);
       return;
     }
     dispatch({ type: "ADD_TO_CART", data: data });
@@ -33,3 +32,20 @@ export const getItemsInCartAction = (user_id) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const removeItemInCartAction =
+  (productId, user_id) => async (dispatch) => {
+    try {
+      await fetch(`/api/cart/remove/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productId),
+      });
+      dispatch({ type: "REMOVE_FROM_CART", data: productId });
+    } catch (error) {
+      console.log(error);
+    }
+  };

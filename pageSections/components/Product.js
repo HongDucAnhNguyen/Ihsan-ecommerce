@@ -17,7 +17,7 @@ import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { addItemToCart, addItemToCartAction } from "@/actions/cartActions";
+import {  addItemToCartAction } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);

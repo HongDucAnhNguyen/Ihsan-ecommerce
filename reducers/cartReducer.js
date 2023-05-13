@@ -1,9 +1,6 @@
 const cartReducer = (
   state = {
-    itemsInCart:
-      typeof window !== "undefined" && localStorage.getItem("itemsInCart")
-        ? JSON.parse(localStorage.getItem("itemsInCart"))
-        : [],
+    itemsInCart: [],
   },
   action
 ) => {
@@ -12,8 +9,19 @@ const cartReducer = (
       localStorage.setItem("itemsInCart", JSON.stringify(action?.data));
       return { ...state, itemsInCart: action?.data };
     case "ADD_TO_CART":
-      localStorage.setItem("itemsInCart", JSON.stringify(action?.data));
-      return { ...state, itemsInCart: action?.data };
+      return { ...state, itemsInCart: [action?.data, ...state.itemsInCart] };
+    case "REMOVE_FROM_CART":
+      const currentCart = JSON.parse(localStorage.getItem("itemsInCart"));
+      const updatedCart = currentCart.filter(
+        (item) => item._id !== action?.data
+      );
+      localStorage.setItem("itemsInCart", JSON.stringify(updatedCart));
+      return {
+        ...state,
+        itemsInCart: state.itemsInCart.filter(
+          (item) => item._id !== action?.data
+        ),
+      };
     default:
       return state;
   }

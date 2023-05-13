@@ -9,7 +9,6 @@ export const loginAction = (formData, setErrorMessage) => async (dispatch) => {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-
     if (data.message) {
       setErrorMessage(data.message);
     } else {
@@ -31,6 +30,7 @@ export const registerAction =
         body: JSON.stringify(formData),
       });
       const data = await response.json();
+
       if (data.message) {
         setErrorMessage(data.message);
       } else {

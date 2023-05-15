@@ -1,5 +1,9 @@
 const productReducer = (
-  state = { products: [], featuredProducts: [], productsOnSale: [] },
+  state = {
+    products: [],
+    featuredProducts: [],
+    productsOnSale: [],
+  },
   action
 ) => {
   switch (action.type) {
@@ -7,6 +11,7 @@ const productReducer = (
       return { ...state, products: [action?.data, ...state.products] };
     case "GET_ALL_PRODUCTS":
       return { ...state, products: action?.data };
+
     case "GET_FEATURED_PRODUCTS":
       return { ...state, featuredProducts: action?.data };
     case "GET_PRODUCTS_ON_SALE":

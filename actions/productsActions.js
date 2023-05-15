@@ -9,7 +9,7 @@ export const createProductAction = (productFormData) => async (dispatch) => {
       body: JSON.stringify(productFormData),
     });
     const data = await response.json();
-    // dispatch({ type: "CREATE_PRODUCT", data: data });
+    dispatch({ type: "CREATE_PRODUCT", data: data });
     console.log(data);
   } catch (error) {
     console.log(error);
@@ -24,6 +24,7 @@ export const getAllProductsAction = () => async (dispatch) => {
     console.log(error);
   }
 };
+
 export const getFeaturedProductsAction = () => async (dispatch) => {
   try {
     const response = await fetch("/api/products/featuredProducts");
@@ -77,12 +78,13 @@ export const getProductsByCategoryAction = (category) => async (dispatch) => {
     console.log(error);
   }
 };
-export const getProductAction = (productId) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/products/${productId}`);
-    const individualProduct = await response.json();
-    dispatch({ type: "GET_PRODUCT", data: individualProduct });
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const getProductAction = (productId) => async (dispatch) => {
+//   try {
+//     const response = await fetch(`/api/products/${productId}`);
+//     const data = await response.json();
+//     console.log(data);
+//     dispatch({ type: "GET_PRODUCT", data: data });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

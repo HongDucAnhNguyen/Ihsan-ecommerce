@@ -30,11 +30,7 @@ const Footer = () => {
             <Text>Contact</Text>
             <Text>About the Developer</Text>
           </div>
-          <div>
-            {" "}
-            <Heading fontSize="3xl">Services</Heading>
-            <Text>Account</Text>
-          </div>
+          
         </div>
       </div>
       <Divider></Divider>

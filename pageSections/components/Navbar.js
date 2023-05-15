@@ -4,8 +4,10 @@ import {
   Button,
   Flex,
   Icon,
+  IconButton,
   Link,
   Modal,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -19,18 +21,19 @@ import {
   ModalOverlay,
   ModalContent,
 } from "@chakra-ui/react";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { AiOutlineShopping } from "react-icons/ai";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { decode } from "jsonwebtoken";
 import { logoutAction } from "@/actions/authActions";
+import { useRouter } from "next/router";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const router = useRouter();
+  const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState(null);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -227,31 +230,14 @@ const Navbar = () => {
           </MenuList>
         </Menu>
 
-        <Modal
-          isCentered={true}
-          blockScrollOnMount={false}
-          isOpen={isOpen}
-          onClose={onClose}
-        >
+        <Modal isCentered={true} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalCloseButton />
             <AuthForm></AuthForm>
           </ModalContent>
         </Modal>
-        <Link
-          as={NextLink}
-          href="/cart"
-          sx={{
-            "&:hover": {
-              textDecoration: "none",
-            },
-            p: 2,
-            fontWeight: "bold",
-          }}
-        >
-          <Icon as={MdOutlineAddShoppingCart}></Icon> Cart
-        </Link>
+
         <Link
           as={NextLink}
           href="/contact"
@@ -282,6 +268,14 @@ const Navbar = () => {
         ) : (
           <></>
         )}
+        <Button
+          onClick={() => {
+            router.push("/cart");
+          }}
+          rightIcon={<Icon fontSize="xl" as={AiOutlineShopping}></Icon>}
+        >
+          Cart
+        </Button>
       </div>
     </nav>
   );

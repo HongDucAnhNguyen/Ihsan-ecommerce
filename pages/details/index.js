@@ -1,10 +1,25 @@
-import { useRouter } from "next/router";
 import styles from "../../styles/Layout.module.css";
-const Details = () => {
-  const router = useRouter();
-  const { productId } = router.query;
+import ProductDetails from "@/pageSections/components/ProductDetails";
 
-  return <div className={styles.container}>Details for product: {productId}</div>;
+const Details = ({ product }) => {
+  return (
+    <div className={styles.container}>
+      <ProductDetails product={product}></ProductDetails>
+    </div>
+  );
 };
 
 export default Details;
+
+export async function getServerSideProps({ query }) {
+  const { productId } = query; // get the product ID from the URL parameters
+  const response = await fetch(
+    `http://localhost:3000/api/products/${productId}`
+  );
+  const product = await response.json();
+  return {
+    props: {
+      product,
+    },
+  };
+}

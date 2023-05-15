@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 import Products from "./components/Products";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +12,16 @@ const FeaturedProductsSection = () => {
   useEffect(() => {
     dispatch(getFeaturedProductsAction());
   }, []);
+
   return (
-   
-      <>
-        <Heading mb={4}>Featured Products</Heading>
+    <>
+      <Heading mb={4}>Featured Products</Heading>
+      {featuredProducts.length > 0 ? (
         <Products products={featuredProducts}></Products>
-      </>
-    
+      ) : (
+        <Text mb={3} fontSize="2xl">{process.env.NEXT_PUBLIC_EMPTY_MESSAGE}</Text>
+      )}
+    </>
   );
 };
 

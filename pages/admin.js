@@ -46,7 +46,9 @@ const Admin = () => {
     salePrice: "",
     isFeatured: false,
     isOnSale: false,
-    clothingSizes: [],
+    // clothingSizes: [],
+    maxQuantityPerPurchase: "",
+    availableStock: "",
   });
   const dispatch = useDispatch();
   const clearForm = () => {
@@ -60,6 +62,8 @@ const Admin = () => {
       isOnSale: false,
       salePrice: "",
       clothingSizes: [],
+      maxQuantityPerPurchase: "",
+      availableStock: "",
     });
   };
   useEffect(() => {
@@ -99,6 +103,10 @@ const Admin = () => {
                   <p>Item Featured: {product.isFeatured.toString()}</p>
                   <p>Title: {product.title}</p>
                   <p>Description: {product.description}</p>
+                  <p>
+                    max Quantity per Purchase: {product.maxQuantityPerPurchase}
+                  </p>
+                  <p>available Stock: {product.availableStock}</p>
                   <p>Category: {product.category}</p>
                   <p>Price: {product.price}</p>
                   {product.isOnSale && <p>Sale Price: {product.salePrice}</p>}
@@ -138,10 +146,8 @@ const Admin = () => {
                 dispatch(
                   updateProductAction(productFormData._id, productFormData)
                 );
-                dispatch(getAllProductsAction());
               } else {
                 dispatch(createProductAction(productFormData));
-                dispatch(getAllProductsAction());
               }
 
               clearForm();
@@ -172,9 +178,9 @@ const Admin = () => {
               }}
             >
               <option value="Quran">Qur'an</option>
-              <option value="MClothing">Men's Clothing</option>
-              <option value="FClothing">Women's Clothing</option>
-              <option value="Accessories">Accessories</option>
+              <option value="mclothing">Men's Clothing</option>
+              <option value="fclothing">Women's Clothing</option>
+              <option value="accessories">Accessories</option>
             </Select>
             <Input
               required
@@ -200,11 +206,38 @@ const Admin = () => {
                 });
               }}
             />
+
             <Input
               required
               type="number"
               min={1}
-              placeholder="Price [value >=0]*"
+              placeholder="max Quantity per purchase*"
+              value={productFormData.maxQuantityPerPurchase}
+              onChange={(e) => {
+                setProductFormData({
+                  ...productFormData,
+                  maxQuantityPerPurchase: e.target.value,
+                });
+              }}
+            />
+            <Input
+              required
+              type="number"
+              min={0}
+              placeholder="available Stock*"
+              value={productFormData.availableStock}
+              onChange={(e) => {
+                setProductFormData({
+                  ...productFormData,
+                  availableStock: e.target.value,
+                });
+              }}
+            />
+            <Input
+              required
+              type="number"
+              min={1}
+              placeholder="Price [value > 0]*"
               value={productFormData.price}
               onChange={(e) => {
                 setProductFormData({
@@ -218,7 +251,7 @@ const Admin = () => {
                 required
                 type="number"
                 min={1}
-                placeholder="Sale Price [value >=0]*"
+                placeholder="Sale Price [value > 0]*"
                 value={productFormData.salePrice}
                 onChange={(e) => {
                   setProductFormData({

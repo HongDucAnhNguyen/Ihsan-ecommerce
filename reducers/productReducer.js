@@ -3,10 +3,15 @@ const productReducer = (
     products: [],
     featuredProducts: [],
     productsOnSale: [],
+    isLoading: true,
   },
   action
 ) => {
   switch (action.type) {
+    case "LOADING":
+      return { ...state, isLoading: true };
+    case "END_LOADING":
+      return { ...state, isLoading: false };
     case "CREATE_PRODUCT":
       return { ...state, products: [action?.data, ...state.products] };
     case "GET_ALL_PRODUCTS":

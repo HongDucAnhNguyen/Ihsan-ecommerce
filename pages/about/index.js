@@ -23,7 +23,7 @@ const About = () => {
   return (
     <Box className={styles.container}>
       <motion.div
-        style={{ maxWidth:"90%" }}
+        style={{ maxWidth:"50%" }}
         variants={containerVariants}
         initial="hidden"
         animate="visible"

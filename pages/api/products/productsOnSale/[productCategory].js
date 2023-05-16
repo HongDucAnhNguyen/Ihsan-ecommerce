@@ -3,7 +3,15 @@ import Product from "@/models/Product";
 const handler = async (req, res) => {
   try {
     if (req.method === "GET") {
-      const productsOnSale = await Product.find({ isOnSale: true });
+      const { productCategory } = req.query;
+      const productsOnSale = await Product.find({
+        $and: [
+          {
+            isOnSale: true,
+          },
+          { category: productCategory },
+        ],
+      });
       return res.status(200).json(productsOnSale);
     }
   } catch (error) {

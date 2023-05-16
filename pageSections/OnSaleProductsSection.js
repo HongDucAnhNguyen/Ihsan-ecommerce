@@ -18,7 +18,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Product.module.css";
 import Products from "./components/Products";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,23 +28,43 @@ const OnSaleProductsSection = () => {
   const productsOnSale = useSelector(
     (state) => state.productReducer.productsOnSale
   );
+  const [selectedTab, setSelectedTab] = useState(0);
+  const handleTabChange = (index) => {
+    setSelectedTab(index);
+  };
   useEffect(() => {
-    dispatch(getProductsOnSaleAction());
-  }, []);
+    switch (selectedTab) {
+      case 0:
+        dispatch(getProductsOnSaleAction("Quran"));
+        break;
+      case 1:
+        dispatch(getProductsOnSaleAction("fclothing"));
+        break;
+      case 2:
+        dispatch(getProductsOnSaleAction("accessories"));
+        break;
+      default:
+        break;
+    }
+  }, [selectedTab]);
 
   return (
     <>
-      
       <Heading mb={4}>Products On Sale!</Heading>
-      <Tabs>
+      <Tabs onChange={handleTabChange} index={selectedTab}>
         <TabList>
           <Tab>Quran</Tab>
           <Tab>Clothing</Tab>
           <Tab>Accessories</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>Qurans</TabPanel>
-          <TabPanel>Modest Clothing for Men and Women</TabPanel>
+          <TabPanel>
+            
+            <Products products={productsOnSale}></Products>
+          </TabPanel>
+          <TabPanel>
+            <Products products={productsOnSale}></Products>
+          </TabPanel>
           <TabPanel>
             <Products products={productsOnSale}></Products>
           </TabPanel>

@@ -38,7 +38,7 @@ const Product = ({ product }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  
   return (
     <>
       <Card minW="sm" maxW="sm" mb={4}>

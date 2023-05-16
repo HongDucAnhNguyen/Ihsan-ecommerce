@@ -136,7 +136,7 @@ const Navbar = () => {
                 }}
                 width={"100%"}
                 as={NextLink}
-                href="/clothing/men"
+                href="/clothing/mclothing"
               >
                 Men
               </Link>
@@ -151,7 +151,7 @@ const Navbar = () => {
                 }}
                 width={"100%"}
                 as={NextLink}
-                href="/clothing/women"
+                href="/clothing/fclothing"
               >
                 Women
               </Link>
@@ -230,7 +230,12 @@ const Navbar = () => {
           </MenuList>
         </Menu>
 
-        <Modal isCentered={true} isOpen={isOpen} onClose={onClose}>
+        <Modal
+          blockScrollOnMount={false}
+          isCentered={true}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
           <ModalOverlay />
           <ModalContent>
             <ModalCloseButton />

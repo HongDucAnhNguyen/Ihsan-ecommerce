@@ -57,11 +57,9 @@ const HeroSection = () => {
           onClick={() => {
             router.push("/Quran");
           }}
-          sx={{
-            border: "1px solid white",
-            background: "transparent",
-            "&:hover": { background: "black" },
-          }}
+          border="1px solid white"
+          bg="transparent"
+          _hover={{ bg: "black" }}
         >
           Shop Now
         </Button>

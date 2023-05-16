@@ -6,9 +6,14 @@ const handler = async (req, res) => {
       return res.status(403).json({ message: "invalid request" });
     }
     const { category } = req.query;
-   
+    if (category === "clothing") {
+      const womensClothing = await Product.find({ category: "fclothing" });
+      const mensClothing = await Product.find({ category: "mclothing" });
+      const allClothing = womensClothing.concat(mensClothing);
+      return res.status(200).json(allClothing);
+    }
     const productsByCategory = await Product.find({ category: category });
-    
+
     return res.status(200).json(productsByCategory);
   } catch (error) {
     return res

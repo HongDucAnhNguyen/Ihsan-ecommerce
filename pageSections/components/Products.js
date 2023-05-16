@@ -36,7 +36,7 @@ const Products = ({ products }) => {
         }}
       >
         {products.map((product) => (
-          <Product product={product}></Product>
+          <Product key={product._id} product={product}></Product>
         ))}
       </Flex>
     </motion.div>

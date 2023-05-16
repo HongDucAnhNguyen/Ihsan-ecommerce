@@ -44,6 +44,7 @@ export const logoutAction = () => async (dispatch) => {
   try {
     await fetch("/api/logout");
     dispatch({ type: "LOGOUT" });
+    dispatch({ type: "CLEAR_CART" });
   } catch (error) {
     console.log(error);
   }

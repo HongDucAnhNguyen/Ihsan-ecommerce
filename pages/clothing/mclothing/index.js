@@ -9,8 +9,11 @@ const MensClothing = () => {
   const products = useSelector((state) => state.productReducer.products);
   const dispatch = useDispatch();
   const router = useRouter();
-  const category = router.pathname.split("/")[1];
+
   useEffect(() => {
+    const category =
+      router.pathname.split("/")[router.pathname.split("/").length - 1];
+    
     dispatch(getProductsByCategoryAction(category));
   }, []);
   if (products.length === 0) {

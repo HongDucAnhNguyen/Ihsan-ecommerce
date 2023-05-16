@@ -22,6 +22,8 @@ const cartReducer = (
           (item) => item._id !== action?.data
         ),
       };
+    case "CLEAR_CART":
+      return { ...state, itemsInCart: [] };
     default:
       return state;
   }

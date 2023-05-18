@@ -3,6 +3,12 @@ const handler = async (req, res) => {
   try {
     if (req.method === "POST") {
       const reviewData = req.body;
+      const userAlreadyCommented = await Review.find({
+        userId: reviewData.userId,
+      });
+      if (userAlreadyCommented) {
+        return res.status(415).json({ message: "can only comment once" });
+      }
       const newReview = await Review.create(reviewData);
       return res.status(200).json(newReview);
     } else {

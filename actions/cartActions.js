@@ -26,7 +26,6 @@ export const getItemsInCartAction = (user_id) => async (dispatch) => {
     const response = await fetch(`/api/cart/${user_id}`);
     const data = await response.json();
 
-    console.log(data);
     dispatch({ type: "GET_ITEMS_IN_CART", data: data });
   } catch (error) {
     console.log(error);

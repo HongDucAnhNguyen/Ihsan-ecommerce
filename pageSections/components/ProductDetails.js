@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Divider,
@@ -10,24 +11,27 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import Product from "./Product";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCartAction } from "@/actions/cartActions";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { createReviewAction } from "@/actions/reviewActions";
-const ProductDetails = ({ product, userId }) => {
+import { createReviewAction, getReviewsAction } from "@/actions/reviewActions";
+const ProductDetails = ({ product, username, userId }) => {
+  const allReviewsForProduct = useSelector(
+    (state) => state.reviewsReducer.reviews
+  );
   const dispatch = useDispatch();
   const router = useRouter();
   const [reviewData, setReviewData] = useState({
     userId: userId,
+    username: username,
     productId: product._id,
     rating: 4,
     comment: "",
   });
   useEffect(() => {
-    console.log(userId, product._id);
-  }, []);
+    dispatch(getReviewsAction(product._id));
+  }, [allReviewsForProduct]);
   return (
     <Box>
       <Flex justifyContent="space-around" gap={4}>
@@ -66,6 +70,21 @@ const ProductDetails = ({ product, userId }) => {
       </Flex>
 
       <Box>
+        <Heading>Reviews</Heading>
+        {allReviewsForProduct.length > 0 ? (
+          allReviewsForProduct.map((review) => (
+            <Box key={review._id}>
+              <Flex>
+                <Avatar></Avatar>
+                <Text>{review.username}</Text>
+              </Flex>
+
+              <p>{review.comment}</p>
+            </Box>
+          ))
+        ) : (
+          <Text>This Product has no reviews</Text>
+        )}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -73,6 +92,7 @@ const ProductDetails = ({ product, userId }) => {
             dispatch(createReviewAction(reviewData));
             setReviewData({
               userId: userId,
+              username: username,
               productId: product._id,
               rating: 4,
               comment: "",
@@ -80,7 +100,7 @@ const ProductDetails = ({ product, userId }) => {
           }}
         >
           <FormLabel>Write a Review</FormLabel>
-          <Textarea
+          <Input
             onChange={(e) => {
               setReviewData({ ...reviewData, comment: e.target.value });
             }}
@@ -88,7 +108,7 @@ const ProductDetails = ({ product, userId }) => {
             value={reviewData.comment}
             type="text"
             placeholder="write your review*"
-          ></Textarea>
+          ></Input>
           <Button type="submit">Submit</Button>
         </form>
       </Box>

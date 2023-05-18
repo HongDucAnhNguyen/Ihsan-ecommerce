@@ -16,6 +16,7 @@ import {
   loginAction,
 } from "@/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import { getItemsInCartAction } from "@/actions/cartActions";
 const AuthForm = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.authReducer.authData);
@@ -57,6 +58,7 @@ const AuthForm = () => {
           e.preventDefault();
           if (isRegistering) {
             dispatch(registerAction(formData, setMessage));
+            
           } else {
             dispatch(loginAction(formData, setMessage));
           }

@@ -29,6 +29,7 @@ import { useToast } from "@chakra-ui/react";
 import { decode } from "jsonwebtoken";
 import { logoutAction } from "@/actions/authActions";
 import { useRouter } from "next/router";
+import { getItemsInCartAction } from "@/actions/cartActions";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const Navbar = () => {
 
   const checkSession = async () => {
     try {
-      const response = await fetch("/api/getToken");
+      const response = await fetch("/api/auth/getToken");
       const data = await response.json();
       if (data) {
         const decodedToken = decode(data);
@@ -83,6 +84,7 @@ const Navbar = () => {
   }, []);
   useEffect(() => {
     setUser(userState);
+    userState !== null && dispatch(getItemsInCartAction(userState?.result?.id));
   }, [userState]);
   return (
     <nav

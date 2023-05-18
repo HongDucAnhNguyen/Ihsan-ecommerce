@@ -5,15 +5,12 @@ import { useSelector } from "react-redux";
 
 const Details = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
-  const [user, setUser] = useState();
-  useEffect(() => {
-    setUser(userState);
-  }, [userState]);
+  
   return (
     <div className={styles.container}>
       <ProductDetails
         product={product}
-        userId={user?.result?.id}
+        userId={userState?.result?.id}
       ></ProductDetails>
     </div>
   );

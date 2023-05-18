@@ -12,6 +12,7 @@ const FeaturedProductsSection = () => {
   // const isLoading = useSelector((state) => state.productReducer.isLoading);
   useEffect(() => {
     dispatch(getFeaturedProductsAction());
+    console.log(featuredProducts)
   }, []);
 
   return (

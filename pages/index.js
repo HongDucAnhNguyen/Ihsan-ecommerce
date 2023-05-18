@@ -24,6 +24,7 @@ export default function Home() {
         <Box maxW="100%" width={1200}>
           <FeaturedProductsSection></FeaturedProductsSection>
           <Divider></Divider>
+
           <OnSaleProductsSection></OnSaleProductsSection>
           <Divider></Divider>
           <Recommendations></Recommendations>

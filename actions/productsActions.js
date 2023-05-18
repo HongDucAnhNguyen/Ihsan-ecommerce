@@ -36,6 +36,7 @@ export const getFeaturedProductsAction = () => async (dispatch) => {
 
     const response = await fetch("/api/products/featuredProducts");
     const featuredProducts = await response.json();
+    console.log(featuredProducts);
     dispatch({ type: "GET_FEATURED_PRODUCTS", data: featuredProducts });
     dispatch({ type: "END_LOADING" });
   } catch (error) {

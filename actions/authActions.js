@@ -1,6 +1,6 @@
 export const loginAction = (formData, setErrorMessage) => async (dispatch) => {
   try {
-    const response = await fetch("/api/login", {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -21,7 +21,7 @@ export const loginAction = (formData, setErrorMessage) => async (dispatch) => {
 export const registerAction =
   (formData, setErrorMessage) => async (dispatch) => {
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -42,7 +42,7 @@ export const registerAction =
   };
 export const logoutAction = () => async (dispatch) => {
   try {
-    await fetch("/api/logout");
+    await fetch("/api/auth/logout");
     dispatch({ type: "LOGOUT" });
     dispatch({ type: "CLEAR_CART" });
   } catch (error) {
@@ -52,7 +52,7 @@ export const logoutAction = () => async (dispatch) => {
 export const updateAccountAction =
   (formData, userId, setMessage) => async (dispatch) => {
     try {
-      const response = await fetch(`/api/accountConfig/${userId}`, {
+      const response = await fetch(`/api/auth/accountConfig/${userId}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -73,7 +73,7 @@ export const updateAccountAction =
   };
 export const deleteAccountAction = (userId, setMessage) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/accountConfig/${userId}`, {
+    const response = await fetch(`/api/auth/accountConfig/${userId}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -88,7 +88,7 @@ export const deleteAccountAction = (userId, setMessage) => async (dispatch) => {
 export const adminAuthorizeAction =
   (providedCreds, setMessage) => async (dispatch) => {
     try {
-      const response = await fetch("/api/adminAuthorize", {
+      const response = await fetch("/api/auth/adminAuthorize", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -106,6 +106,6 @@ export const adminAuthorizeAction =
       }
     } catch (error) {
       console.log(error);
-      s;
+      
     }
   };

@@ -4,14 +4,13 @@ import ProductDetails from "@/pageSections/components/ProductDetails";
 import { useSelector } from "react-redux";
 
 const Details = ({ product }) => {
-  const userState = useSelector((state) => state.authReducer.authData);
-
+  
+  
   return (
     <div className={styles.container}>
       <ProductDetails
         product={product}
-        username={userState?.result?.username}
-        userId={userState?.result?.id}
+        
       ></ProductDetails>
     </div>
   );

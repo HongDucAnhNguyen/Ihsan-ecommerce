@@ -3,10 +3,18 @@ const handler = async (req, res) => {
   try {
     if (req.method === "POST") {
       const reviewData = req.body;
-      const userAlreadyCommented = await Review.find({
-        userId: reviewData.userId,
+      console.log(reviewData);
+      //if user already commented on product
+      const existingComment = await Review.findOne({
+        $and: [
+          {
+            userId: reviewData.userId,
+          },
+          { productId: reviewData.productId },
+        ],
       });
-      if (userAlreadyCommented) {
+      
+      if (existingComment) {
         return res.status(415).json({ message: "can only comment once" });
       }
       const newReview = await Review.create(reviewData);

@@ -12,14 +12,14 @@ const ItemsInCart = () => {
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setUser(userState);
-  }, [userState]);
+  // useEffect(() => {
+  //   setUser(userState);
+  // }, [userState]);
   useEffect(() => {
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
     }
-  }, []);
+  }, [dispatch]);
   if (itemsInCart.length === 0) {
     return <Text fontSize="2xl">Currently Empty</Text>;
   }

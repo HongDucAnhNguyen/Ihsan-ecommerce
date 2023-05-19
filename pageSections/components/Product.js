@@ -26,19 +26,19 @@ import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { addItemToCartAction } from "@/actions/cartActions";
+import { addItemToCartAction, getItemsInCartAction } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    setUser(userState);
-  }, [userState]);
+  // const [user, setUser] = useState(null);
+  // useEffect(() => {
+  //   setUser(userState);
+  // }, [userState]);
   const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   return (
     <>
       <Card minW="sm" maxW="sm" mb={4}>
@@ -113,7 +113,10 @@ const Product = ({ product }) => {
                 variant="ghost"
                 colorScheme="blue"
                 onClick={() => {
-                  dispatch(addItemToCartAction(product._id, user?.result?.id));
+                  dispatch(
+                    addItemToCartAction(product._id, userState?.result?.id)
+                  );
+                  dispatch(getItemsInCartAction(userState?.result?.id));
                   onOpen();
                 }}
               >

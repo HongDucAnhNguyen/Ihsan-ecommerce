@@ -16,15 +16,17 @@ import { addItemToCartAction } from "@/actions/cartActions";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { createReviewAction, getReviewsAction } from "@/actions/reviewActions";
-const ProductDetails = ({ product, username, userId }) => {
+const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
   );
+  const userState = useSelector((state) => state.authReducer.authData);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const [reviewData, setReviewData] = useState({
-    userId: userId,
-    username: username,
+    userId: userState?.result?.id,
+    username: userState?.result?.username,
     productId: product._id,
     rating: 4,
     comment: "",
@@ -32,6 +34,14 @@ const ProductDetails = ({ product, username, userId }) => {
   useEffect(() => {
     dispatch(getReviewsAction(product._id));
   }, [allReviewsForProduct]);
+  useEffect(() => {
+    console.log(userState);
+    setReviewData({
+      ...reviewData,
+      userId: userState?.result?.id,
+      username: userState?.result?.username,
+    });
+  }, [userState]);
   return (
     <Box>
       <Flex justifyContent="space-around" gap={4}>
@@ -55,7 +65,7 @@ const ProductDetails = ({ product, username, userId }) => {
           <Button
             width="50%"
             onClick={() => {
-              dispatch(addItemToCartAction(product._id, userId));
+              dispatch(addItemToCartAction(product._id, userState?.result?.id));
               router.push("/cart");
             }}
             _hover={{ bg: "black" }}
@@ -91,8 +101,8 @@ const ProductDetails = ({ product, username, userId }) => {
             //dispatch createReview action
             dispatch(createReviewAction(reviewData));
             setReviewData({
-              userId: userId,
-              username: username,
+              userId: userState?.result?.id,
+              username: userState?.result?.username,
               productId: product._id,
               rating: 4,
               comment: "",

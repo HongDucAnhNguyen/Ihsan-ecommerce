@@ -20,13 +20,16 @@ import {
   Tag,
   Text,
   useDisclosure,
-  Input,
 } from "@chakra-ui/react";
+
 import { StarIcon } from "@chakra-ui/icons";
 import styles from "../../styles/Product.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { addItemToCartAction, getItemsInCartAction } from "@/actions/cartActions";
+import {
+  addItemToCartAction,
+  getItemsInCartAction,
+} from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 const Product = ({ product }) => {
@@ -67,7 +70,6 @@ const Product = ({ product }) => {
         <Box className={styles.productImgContainer}>
           <Image
             className={styles.cardImg}
-            borderRadius="lg"
             src={product.imgUrl}
             alt={product.title}
           />
@@ -122,11 +124,6 @@ const Product = ({ product }) => {
               >
                 Add to Cart
               </Button>
-              {/* {userState?.result?.id === "6446ddb6685eec4e5df21f7b" && (
-          <Button variant="solid" colorScheme="red">
-            Delete Item
-          </Button>
-        )} */}
             </ButtonGroup>
           )}
         </CardFooter>

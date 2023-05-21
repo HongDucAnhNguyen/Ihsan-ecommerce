@@ -12,7 +12,7 @@ const handler = async (req, res) => {
       return res.status(200).json(updatedReview);
     } else if (req.method === "DELETE") {
       await Review.findByIdAndDelete(reviewId);
-      return res.status.json({ message: "Deleted review successfully" });
+      return res.status(200).json({ message: "Deleted review successfully" });
     } else {
       return res.status(204).json({ message: "Invalid method" });
     }

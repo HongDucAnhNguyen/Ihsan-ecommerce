@@ -24,3 +24,24 @@ export const getReviewsAction = (productId) => async (dispatch) => {
     dispatch({ type: "GET_ALL_REVIEWS", data: data });
   } catch (error) {}
 };
+export const deleteReviewAction = (reviewId) => async (dispatch) => {
+  try {
+    await fetch(`/api/reviews/reviewConfig/${reviewId}`, { method: "DELETE" });
+    dispatch({ type: "DELETE_REVIEW", data: reviewId });
+  } catch (error) {}
+};
+export const updateReviewAction =
+  (reviewId, reviewData) => async (dispatch) => {
+    try {
+      const response = await fetch(`/api/reviews/reviewConfig/${reviewId}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(reviewData),
+      });
+      const data = await response.json();
+      dispatch({ type: "UPDATE_REVIEW", data: data });
+    } catch (error) {}
+  };

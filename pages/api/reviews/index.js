@@ -3,7 +3,6 @@ const handler = async (req, res) => {
   try {
     if (req.method === "POST") {
       const reviewData = req.body;
-      console.log(reviewData);
       //if user already commented on product
       const existingComment = await Review.findOne({
         $and: [
@@ -13,7 +12,7 @@ const handler = async (req, res) => {
           { productId: reviewData.productId },
         ],
       });
-      
+
       if (existingComment) {
         return res.status(415).json({ message: "can only comment once" });
       }

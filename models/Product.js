@@ -10,8 +10,7 @@ const ProductSchema = mongoose.Schema({
   isFeatured: { type: Boolean },
   isOnSale: { type: Boolean },
   salePrice: { type: Number },
-  // clothingSizes: { type: [String], default: [] }, //if product is of type clothing
-  reviews: { type: [String], default: [] }, //reference ids of the review objects
+  
   likes: { type: [String], default: [] },
 });
 const Product =

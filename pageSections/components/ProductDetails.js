@@ -2,10 +2,12 @@ import {
   Avatar,
   Box,
   Button,
+  ButtonGroup,
   Divider,
   Flex,
   FormLabel,
   Heading,
+  IconButton,
   Image,
   Input,
   Text,
@@ -15,7 +17,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemToCartAction } from "@/actions/cartActions";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { createReviewAction, getReviewsAction } from "@/actions/reviewActions";
+import {
+  createReviewAction,
+  deleteReviewAction,
+  getReviewsAction,
+  updateReviewAction,
+} from "@/actions/reviewActions";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
@@ -28,9 +36,12 @@ const ProductDetails = ({ product }) => {
     userId: userState?.result?.id,
     username: userState?.result?.username,
     productId: product._id,
-    rating: 4,
+    rating: "",
     comment: "",
   });
+
+  const [isEditingReview, setIsEditingReview] = useState(false);
+  const [currentReviewId, setCurrentReviewId] = useState("");
   useEffect(() => {
     dispatch(getReviewsAction(product._id));
   }, [allReviewsForProduct]);
@@ -42,6 +53,15 @@ const ProductDetails = ({ product }) => {
       username: userState?.result?.username,
     });
   }, [userState]);
+  const clearReviewData = () => {
+    setReviewData({
+      userId: userState?.result?.id,
+      username: userState?.result?.username,
+      productId: product._id,
+      rating: "",
+      comment: "",
+    });
+  };
   return (
     <Box>
       <Flex justifyContent="space-around" gap={4}>
@@ -83,13 +103,37 @@ const ProductDetails = ({ product }) => {
         <Heading>Reviews</Heading>
         {allReviewsForProduct.length > 0 ? (
           allReviewsForProduct.map((review) => (
-            <Box key={review._id}>
+            <Box key={review._id} p={5} border="2px solid orange">
               <Flex>
                 <Avatar></Avatar>
                 <Text>{review.username}</Text>
               </Flex>
 
               <p>{review.comment}</p>
+              <p>Rating Given: {review.rating}</p>
+              {userState?.result?.id === review.userId && (
+                <ButtonGroup>
+                  <IconButton
+                    onClick={() => {
+                      setReviewData(review);
+                      setIsEditingReview(true);
+                      setCurrentReviewId(review._id);
+                    }}
+                  >
+                    <EditIcon></EditIcon>
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      clearReviewData();
+                      setIsEditingReview(false);
+                      setCurrentReviewId("");
+                      dispatch(deleteReviewAction(review._id));
+                    }}
+                  >
+                    <DeleteIcon></DeleteIcon>
+                  </IconButton>
+                </ButtonGroup>
+              )}
             </Box>
           ))
         ) : (
@@ -99,17 +143,18 @@ const ProductDetails = ({ product }) => {
           onSubmit={(e) => {
             e.preventDefault();
             //dispatch createReview action
-            dispatch(createReviewAction(reviewData));
-            setReviewData({
-              userId: userState?.result?.id,
-              username: userState?.result?.username,
-              productId: product._id,
-              rating: 4,
-              comment: "",
-            });
+            if (isEditingReview) {
+              dispatch(updateReviewAction(currentReviewId, reviewData));
+            } else dispatch(createReviewAction(reviewData));
+
+            clearReviewData();
+            setIsEditingReview(false);
+            setCurrentReviewId("");
           }}
         >
-          <FormLabel>Write a Review</FormLabel>
+          <FormLabel>
+            {isEditingReview ? "Editing" : "Write"} a Review
+          </FormLabel>
           <Input
             onChange={(e) => {
               setReviewData({ ...reviewData, comment: e.target.value });
@@ -119,7 +164,34 @@ const ProductDetails = ({ product }) => {
             type="text"
             placeholder="write your review*"
           ></Input>
+          <Input
+            required={true}
+            value={reviewData.rating}
+            type="number"
+            placeholder="rate this product*"
+            onChange={(e) => {
+              setReviewData({ ...reviewData, rating: e.target.value });
+            }}
+            min={1}
+            max={5}
+          ></Input>
           <Button type="submit">Submit</Button>
+          {isEditingReview && (
+            <Button
+              onClick={() => {
+                setIsEditingReview(false);
+                setReviewData({
+                  userId: userState?.result?.id,
+                  username: userState?.result?.username,
+                  productId: product._id,
+                  rating: "",
+                  comment: "",
+                });
+              }}
+            >
+              Cancel
+            </Button>
+          )}
         </form>
       </Box>
     </Box>

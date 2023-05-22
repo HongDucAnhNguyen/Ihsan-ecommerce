@@ -15,7 +15,7 @@
   filter: brightness(50%);
   object-fit: cover;
   width: 100%;
-  max-height: 925px;
+  max-height: 625px;
 }
 .heroDescription {
   width: 100%;

@@ -82,13 +82,13 @@ const Product = ({ product }) => {
             <Flex gap={3}>
               <Text
                 color="blue.600"
-                fontSize="1xl"
+                fontSize="2xl"
                 sx={{ textDecorationLine: product.isOnSale && "line-through" }}
               >
                 ${product.price}
               </Text>
               {product.isOnSale && (
-                <Text color="blue.600" fontSize="1xl" fontWeight="bold">
+                <Text color="orange.600" fontSize="3xl" fontWeight="bold">
                   ${product.salePrice}
                 </Text>
               )}

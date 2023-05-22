@@ -4,6 +4,14 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, required: true },
   itemsInCart: { type: [String] }, //product id's go here
+  itemsToCheckOut: {
+    type: [
+      {
+        itemId: { type: String, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+  },
 });
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;

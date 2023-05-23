@@ -48,3 +48,66 @@ export const removeItemInCartAction =
       console.log(error);
     }
   };
+
+export const addItemToCheckOutAction =
+  (productId, userId) => async (dispatch) => {
+    try {
+      const response = await fetch(`/api/checkout/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ itemId: productId, quantity: 1 }),
+      });
+      const data = await response.json();
+      dispatch({ type: "ADD_ITEM_TO_CHECKOUT", data: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+export const removeItemFromCheckOutAction =
+  (productId, userId) => async (dispatch) => {
+    try {
+      await fetch(`/api/checkout/remove/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productId),
+      });
+      // const data = await response.json();
+      dispatch({ type: "REMOVE_FROM_CHECKOUT", data: productId });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+export const getItemsInCheckOutAction = (userId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/checkout/${userId}`);
+    const data = await response.json();
+    dispatch({ type: "GET_ITEMS_IN_CHECKOUT", data: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const setItemQuantityAction =
+  (productId, quantity, userId) => async (dispatch) => {
+    try {
+      await fetch(`/api/checkout/quantity/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId, quantity }),
+      });
+      dispatch({
+        type: "UPDATE_QUANTITY",
+        data: { productId, quantity },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };

@@ -1,8 +1,20 @@
 import {
+  addItemToCheckOutAction,
   getItemsInCartAction,
+  getItemsInCheckOutAction,
+  removeItemFromCheckOutAction,
   removeItemInCartAction,
+  setItemQuantityAction,
 } from "@/actions/cartActions";
-import { Box, Heading, Select, Button, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Select,
+  Button,
+  Text,
+  Checkbox,
+  Flex,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/Layout.module.css";
@@ -10,6 +22,9 @@ import { useRouter } from "next/router";
 const ItemsInCart = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
+  const itemsToCheckOut = useSelector(
+    (state) => state.cartReducer.itemsToCheckOut
+  );
   // const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -17,6 +32,7 @@ const ItemsInCart = () => {
   useEffect(() => {
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
+      dispatch(getItemsInCheckOutAction(userState?.result?.id));
     }
   }, [dispatch]);
 
@@ -34,22 +50,44 @@ const ItemsInCart = () => {
       >
         {itemsInCart.map((item) => (
           <Box key={item._id} border="3px solid orange" p={3} mb={4} mt={4}>
-            <Heading
-              cursor="pointer"
-              onClick={() => {
-                router.push({
-                  pathname: "/details",
-                  query: { productId: item._id },
-                });
-              }}
-              _hover={{
-                color: "tan",
-                transition: "all .3s ease-in-out",
-              }}
-              size="md"
-            >
-              {item.title}
-            </Heading>
+            <Flex gap={5}>
+              <Checkbox
+                defaultChecked={true}
+                onChange={(e) => {
+                  //if is checked add to itemsToCheckOut
+                  //if false, remove from itemsToCheckOut
+                  if (e.target.checked === true) {
+                    dispatch(
+                      addItemToCheckOutAction(item._id, userState?.result?.id)
+                    );
+                  } else {
+                    dispatch(
+                      removeItemFromCheckOutAction(
+                        item._id,
+                        userState?.result?.id
+                      )
+                    );
+                  }
+                }}
+              ></Checkbox>
+              <Heading
+                cursor="pointer"
+                onClick={() => {
+                  router.push({
+                    pathname: "/details",
+                    query: { productId: item._id },
+                  });
+                }}
+                _hover={{
+                  color: "tan",
+                  transition: "all .3s ease-in-out",
+                }}
+                size="md"
+              >
+                {item.title}
+              </Heading>
+            </Flex>
+
             <Text size="md">{item.description}</Text>
 
             {item.isOnSale ? (
@@ -57,16 +95,35 @@ const ItemsInCart = () => {
             ) : (
               <Text size="md">${item.price}</Text>
             )}
-            <Select maxW="50%" required placeholder="Quantity*" mb={4}>
+
+            <Select
+              onChange={(e) => {
+                //dispatch action to update quantity of item
+                console.log(e.target.value);
+                dispatch(
+                  setItemQuantityAction(
+                    item._id,
+                    e.target.value,
+                    userState?.result?.id
+                  )
+                );
+              }}
+              maxW="50%"
+              required
+              mb={4}
+            >
               {Array.from({ length: item.maxQuantityPerPurchase }, (_, i) => (
                 <option key={i} value={i + 1}>
-                  {i + 1}
+                  Quantity: {i + 1}
                 </option>
               ))}
             </Select>
 
             <Button
               onClick={() => {
+                dispatch(
+                  removeItemFromCheckOutAction(item._id, userState?.result?.id)
+                );
                 dispatch(
                   removeItemInCartAction(item._id, userState?.result?.id)
                 );
@@ -76,7 +133,12 @@ const ItemsInCart = () => {
             </Button>
           </Box>
         ))}
-        <Button type="submit">Check Out</Button>
+
+        {itemsToCheckOut.length > 0 ? (
+          <Button type="submit">Check Out</Button>
+        ) : (
+          <Text>Select at least one Item to check out</Text>
+        )}
       </form>
     </Box>
   );

@@ -8,6 +8,7 @@ const Cart = () => {
     <div className={styles.container}>
       <Box>
         <Heading>Your Cart</Heading>
+        
         <ItemsInCart></ItemsInCart>
       </Box>
 

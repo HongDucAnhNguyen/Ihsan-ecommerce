@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
   addItemToCartAction,
+  addItemToCheckOutAction,
   getItemsInCartAction,
 } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
@@ -44,10 +45,11 @@ const Product = ({ product }) => {
 
   return (
     <>
-      <Card minW="sm" maxW="sm" mb={4}>
+      <Card boxShadow="lg" minW="sm" maxW="sm" mb={4}>
         <CardHeader className={styles.cardHeader}>
           <ButtonGroup>
             <Button
+              bg="beige"
               onClick={() => {
                 router.push({
                   pathname: "/details",
@@ -117,6 +119,9 @@ const Product = ({ product }) => {
                 onClick={() => {
                   dispatch(
                     addItemToCartAction(product._id, userState?.result?.id)
+                  );
+                  dispatch(
+                    addItemToCheckOutAction(product._id, userState?.result?.id)
                   );
                   dispatch(getItemsInCartAction(userState?.result?.id));
                   onOpen();

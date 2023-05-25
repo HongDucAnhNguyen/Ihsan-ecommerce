@@ -7,11 +7,12 @@ import connectMongo from "@/actions/database/db";
 import { applyMiddleware, createStore, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "../reducers/combinedReducers";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
 
 connectMongo();
+
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 export default function App({ Component, pageProps }) {

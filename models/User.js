@@ -3,7 +3,15 @@ const userSchema = mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   role: { type: String, required: true },
-  itemsInCart: { type: [String] }, //product id's go here
+  itemsInCart: {
+    type: [
+      {
+        itemId: { type: String, required: true },
+        isSelectedForCheckOut: { type: Boolean, required: true },
+      },
+    ],
+    maxlength: 5,
+  }, //product id's go here
   itemsToCheckOut: {
     type: [
       {
@@ -11,6 +19,7 @@ const userSchema = mongoose.Schema({
         quantity: { type: Number, required: true },
       },
     ],
+    maxlength: 5,
   },
 });
 const User = mongoose.models.User || mongoose.model("User", userSchema);

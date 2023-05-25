@@ -5,6 +5,7 @@ import {
   removeItemFromCheckOutAction,
   removeItemInCartAction,
   setItemQuantityAction,
+  toggleSelectStatus,
 } from "@/actions/cartActions";
 import {
   Box,
@@ -30,14 +31,15 @@ const ItemsInCart = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(itemsToCheckOut);
-    console.log(itemsInCart);
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
+    }
+  }, [itemsInCart]);
+  useEffect(() => {
+    if (userState) {
       dispatch(getItemsInCheckOutAction(userState?.result?.id));
     }
-  }, [dispatch]);
-
+  }, [itemsToCheckOut]);
   if (itemsInCart.length === 0) {
     return <Text fontSize="2xl">Currently Empty</Text>;
   }
@@ -62,17 +64,29 @@ const ItemsInCart = () => {
                 //   );
                 //   itemIsInCheckOut ? true : false;
                 // }}
+                isChecked={item.isSelectedForCheckOut}
                 onChange={(e) => {
                   //if is checked add to itemsToCheckOut
                   //if false, remove from itemsToCheckOut
+
+                  dispatch(
+                    toggleSelectStatus(
+                      item.itemId,
+                      userState?.result?.id,
+                      e.target.checked
+                    )
+                  );
                   if (e.target.checked === true) {
                     dispatch(
-                      addItemToCheckOutAction(item._id, userState?.result?.id)
+                      addItemToCheckOutAction(
+                        item.itemId,
+                        userState?.result?.id
+                      )
                     );
                   } else {
                     dispatch(
                       removeItemFromCheckOutAction(
-                        item._id,
+                        item.itemId,
                         userState?.result?.id
                       )
                     );
@@ -84,7 +98,7 @@ const ItemsInCart = () => {
                 onClick={() => {
                   router.push({
                     pathname: "/details",
-                    query: { productId: item._id },
+                    query: { productId: item.itemId },
                   });
                 }}
                 _hover={{
@@ -131,10 +145,13 @@ const ItemsInCart = () => {
             <Button
               onClick={() => {
                 dispatch(
-                  removeItemFromCheckOutAction(item._id, userState?.result?.id)
+                  removeItemFromCheckOutAction(
+                    item.itemId,
+                    userState?.result?.id
+                  )
                 );
                 dispatch(
-                  removeItemInCartAction(item._id, userState?.result?.id)
+                  removeItemInCartAction(item.itemId, userState?.result?.id)
                 );
               }}
             >

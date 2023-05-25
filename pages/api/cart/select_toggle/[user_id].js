@@ -17,13 +17,18 @@ const handler = async (req, res) => {
       return res.status(204).json({ message: "item is not in cart" });
     }
     //update the user's cart
-    await User.findByIdAndUpdate(
-      user_id,
-      { $pull: { itemsInCart: { itemId: productId } } },
-      { new: true }
+    const index = user.itemsInCart.findIndex(
+      (item) => item.itemId === productId
     );
-    console.log("item removed from cart");
-    return res.status(200).end();
+    if (index !== -1) {
+      if (user.itemsInCart[index].isSelectedForCheckOut === true) {
+        user.itemsInCart[index].isSelectedForCheckOut = false;
+      } else user.itemsInCart[index].isSelectedForCheckOut = true;
+
+      await user.save(); // Save the updated user to the database
+    }
+    console.log("item selection updated");
+    res.status(200).end();
   } catch (error) {
     console.log(error);
     return res

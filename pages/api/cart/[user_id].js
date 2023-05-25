@@ -11,8 +11,29 @@ const handler = async (req, res) => {
         return res.status(200).json([]);
       }
       //get items in cart with the data of the productObjects
-      const itemsInCartPromises = itemsInCart.map((itemId) => {
-        return getProduct(itemId);
+      const itemsInCartPromises = itemsInCart.map(async (item) => {
+        const {
+          imgUrl,
+          title,
+          description,
+          price,
+          maxQuantityPerPurchase,
+          isOnSale,
+          salePrice,
+        } = await getProduct(item.itemId);
+
+        return {
+          _id: item._id,
+          itemId: item.itemId,
+          imgUrl,
+          title,
+          description,
+          price,
+          maxQuantityPerPurchase,
+          isOnSale,
+          salePrice,
+          isSelectedForCheckOut: item.isSelectedForCheckOut,
+        };
       });
       const itemsInCartData = await Promise.all(itemsInCartPromises);
       return res.status(200).json(itemsInCartData);
@@ -21,19 +42,44 @@ const handler = async (req, res) => {
       const productId = req.body; //just string
       //find user by id, add productid to itemsincart array
       const user = await User.findById(user_id);
-      const itemExists = user.itemsInCart.find((item) => item === productId);
+      const itemExists = user.itemsInCart.find(
+        (item) => item.itemId === productId
+      );
       if (itemExists) {
         return res.status(401).json({ message: "product already in cart" });
       }
       await User.findByIdAndUpdate(
         user_id,
-        { $push: { itemsInCart: productId } },
+        {
+          $push: {
+            itemsInCart: { itemId: productId, isSelectedForCheckOut: true },
+          },
+        },
         { new: true }
       );
-      const productAddedToCart = getProduct(productId);
+      const {
+        imgUrl,
+        title,
+        description,
+        price,
+        maxQuantityPerPurchase,
+        isOnSale,
+        salePrice,
+      } = await getProduct(productId);
 
       console.log("added item to cart");
-      return res.status(200).json(productAddedToCart);
+      return res.status(200).json({
+        _id: user.itemsInCart[user.itemsInCart.length - 1]._id,
+        itemId: productId,
+        imgUrl,
+        title,
+        description,
+        price,
+        maxQuantityPerPurchase,
+        isOnSale,
+        salePrice,
+        isSelectedForCheckOut: true,
+      });
     } else {
       return res.status(404).json({ message: "Invalid Method" });
     }

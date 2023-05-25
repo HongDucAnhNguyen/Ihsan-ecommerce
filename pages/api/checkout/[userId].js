@@ -46,10 +46,23 @@ const handler = async (req, res) => {
         { $push: { itemsToCheckOut: { itemId: itemId, quantity: quantity } } },
         { new: true }
       );
-      const productAddedToCheckOut = getProduct(itemId);
+      const { imgUrl, title, description, price, isOnSale, salePrice } =
+        getProduct(itemId);
 
       console.log("added item to check out");
-      return res.status(200).json(productAddedToCheckOut);
+      return res
+        .status(200)
+        .json({
+          imgUrl,
+          title,
+          description,
+          price,
+          isOnSale,
+          salePrice,
+          itemId: itemId,
+          quantity: quantity,
+          _id: user.itemsToCheckOut[user.itemsToCheckOut.length - 1]._id,
+        });
     } else {
       return res.status(404).json({ message: "Invalid Method" });
     }

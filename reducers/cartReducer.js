@@ -15,11 +15,23 @@ const cartReducer = (
       return {
         ...state,
         itemsInCart: state.itemsInCart.filter(
-          (item) => item._id !== action?.data
+          (item) => item.itemId !== action?.data
         ),
       };
     case "CLEAR_CART":
       return { ...state, itemsInCart: [], itemsToCheckOut: [] };
+    case "TOGGLE_ITEM_SELECTION":
+      return {
+        ...state,
+        itemsInCart: state.itemsInCart.map((item) =>
+          item.itemId === action?.data?.itemId
+            ? {
+                ...item,
+                isSelectedForCheckOut: action?.data?.selected,
+              }
+            : item
+        ),
+      };
     case "GET_ITEMS_IN_CHECKOUT":
       return { ...state, itemsToCheckOut: action?.data };
     case "ADD_ITEM_TO_CHECKOUT":

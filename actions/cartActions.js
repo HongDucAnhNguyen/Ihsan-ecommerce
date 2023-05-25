@@ -31,7 +31,21 @@ export const getItemsInCartAction = (user_id) => async (dispatch) => {
     console.log(error);
   }
 };
-
+export const toggleSelectStatus = (productId, user_id, selectedValue) => async (dispatch) => {
+  try {
+    await fetch(`/api/cart/select_toggle/${user_id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productId),
+    });
+    dispatch({ type: "TOGGLE_ITEM_SELECTION", data: {itemId: productId, selected: selectedValue} });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const removeItemInCartAction =
   (productId, user_id) => async (dispatch) => {
     try {

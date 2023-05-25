@@ -2,6 +2,7 @@ const cartReducer = (
   state = {
     itemsInCart: [],
     itemsToCheckOut: [],
+    checkOutSubTotal: 0,
   },
   action
 ) => {
@@ -30,7 +31,7 @@ const cartReducer = (
       return {
         ...state,
         itemsToCheckOut: state.itemsToCheckOut.filter(
-          (item) => item._id !== action?.data
+          (item) => item.itemId !== action?.data
         ),
       };
     case "UPDATE_QUANTITY":
@@ -42,7 +43,18 @@ const cartReducer = (
             : itemToCheckOut
         ),
       };
+    case "CALCULATE_SUBTOTAL":
+      let total = 0;
 
+      state.itemsToCheckOut.forEach((itemToCheckOut) => {
+        if (itemToCheckOut.isOnSale) {
+          total += itemToCheckOut.salePrice * itemToCheckOut.quantity;
+        } else total += itemToCheckOut.price * itemToCheckOut.quantity;
+      });
+      return {
+        ...state,
+        checkOutSubTotal: total,
+      };
     default:
       return state;
   }

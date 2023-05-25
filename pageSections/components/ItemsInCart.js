@@ -30,6 +30,8 @@ const ItemsInCart = () => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(itemsToCheckOut);
+    console.log(itemsInCart);
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
       dispatch(getItemsInCheckOutAction(userState?.result?.id));
@@ -52,7 +54,14 @@ const ItemsInCart = () => {
           <Box key={item._id} border="3px solid orange" p={3} mb={4} mt={4}>
             <Flex gap={5}>
               <Checkbox
-                defaultChecked={true}
+                // isChecked={() => {
+                //   const itemIsInCheckOut = itemsToCheckOut.find(
+                //     (itemToCheckOut) => {
+                //       itemToCheckOut.itemId === item._id;
+                //     }
+                //   );
+                //   itemIsInCheckOut ? true : false;
+                // }}
                 onChange={(e) => {
                   //if is checked add to itemsToCheckOut
                   //if false, remove from itemsToCheckOut

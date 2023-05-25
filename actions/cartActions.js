@@ -62,6 +62,7 @@ export const addItemToCheckOutAction =
       });
       const data = await response.json();
       dispatch({ type: "ADD_ITEM_TO_CHECKOUT", data: data });
+      dispatch({ type: "CALCULATE_SUBTOTAL" });
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +80,7 @@ export const removeItemFromCheckOutAction =
       });
       // const data = await response.json();
       dispatch({ type: "REMOVE_FROM_CHECKOUT", data: productId });
+      dispatch({ type: "CALCULATE_SUBTOTAL" });
     } catch (error) {
       console.log(error);
     }
@@ -88,6 +90,7 @@ export const getItemsInCheckOutAction = (userId) => async (dispatch) => {
     const response = await fetch(`/api/checkout/${userId}`);
     const data = await response.json();
     dispatch({ type: "GET_ITEMS_IN_CHECKOUT", data: data });
+    dispatch({ type: "CALCULATE_SUBTOTAL" });
   } catch (error) {
     console.log(error);
   }
@@ -107,6 +110,7 @@ export const setItemQuantityAction =
         type: "UPDATE_QUANTITY",
         data: { productId, quantity },
       });
+      dispatch({ type: "CALCULATE_SUBTOTAL" });
     } catch (error) {
       console.log(error);
     }

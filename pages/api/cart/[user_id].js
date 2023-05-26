@@ -21,9 +21,8 @@ const handler = async (req, res) => {
           isOnSale,
           salePrice,
         } = await getProduct(item.itemId);
-
         return {
-          _id: item._id,
+          // _id: item._id,
           itemId: item.itemId,
           imgUrl,
           title,
@@ -69,7 +68,7 @@ const handler = async (req, res) => {
 
       console.log("added item to cart");
       return res.status(200).json({
-        _id: user.itemsInCart[user.itemsInCart.length - 1]._id,
+        // _id: user.itemsInCart[user.itemsInCart.length - 1]._id,
         itemId: productId,
         imgUrl,
         title,

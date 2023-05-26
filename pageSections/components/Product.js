@@ -20,6 +20,10 @@ import {
   Tag,
   Text,
   useDisclosure,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+  CloseButton,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
@@ -42,7 +46,7 @@ const Product = ({ product }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [errorMessage, setErrorMessage] = useState("");
   return (
     <>
       <Card boxShadow="lg" minW="sm" maxW="sm" mb={4}>
@@ -118,7 +122,11 @@ const Product = ({ product }) => {
                 colorScheme="blue"
                 onClick={() => {
                   dispatch(
-                    addItemToCartAction(product._id, userState?.result?.id)
+                    addItemToCartAction(
+                      product._id,
+                      userState?.result?.id,
+                      setErrorMessage
+                    )
                   );
                   dispatch(
                     addItemToCheckOutAction(product._id, userState?.result?.id)
@@ -134,6 +142,7 @@ const Product = ({ product }) => {
         </CardFooter>
       </Card>
       <Drawer
+        size="lg"
         zIndex={999999999}
         isOpen={isOpen}
         placement="right"
@@ -143,7 +152,28 @@ const Product = ({ product }) => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Your Cart</DrawerHeader>
-
+          {errorMessage && (
+            <Alert
+              ml={4}
+              mr={4}
+              maxW="50%"
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+              status="error"
+            >
+              <Box display="flex">
+                <AlertIcon></AlertIcon>
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Box>
+              <CloseButton
+                onClick={() => {
+                  setErrorMessage(null);
+                }}
+              ></CloseButton>
+            </Alert>
+          )}
           <DrawerBody>
             <ItemsInCart></ItemsInCart>
           </DrawerBody>

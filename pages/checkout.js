@@ -17,11 +17,11 @@ const CheckOutPage = () => {
   return (
     <div className={styles.container}>
       <Box>
-        <Heading>CheckOutPage</Heading>
+        
 
-        {itemsToCheckOut.length > 0 &&
+        {itemsToCheckOut.length > 0 ? (
           itemsToCheckOut.map((itemToCheckOut) => (
-            <Box key={itemToCheckOut._id} mb={4} border="3px solid orange">
+            <Box key={itemToCheckOut.itemId} mb={4} border="3px solid orange">
               <Text fontSize="2xl">{itemToCheckOut.title}</Text>
               <Text>
                 {itemToCheckOut.isOnSale
@@ -30,7 +30,10 @@ const CheckOutPage = () => {
               </Text>
               <Text>Quantity: {itemToCheckOut.quantity}</Text>
             </Box>
-          ))}
+          ))
+        ) : (
+          <Text>Please select at least one item to check out</Text>
+        )}
         {itemsToCheckOut.length > 0 && <Heading>Subtotal: {subTotal} </Heading>}
       </Box>
     </div>

@@ -43,6 +43,7 @@ const AuthForm = () => {
         <Button
           onClick={() => {
             dispatch(logoutAction());
+            
           }}
         >
           LOG OUT
@@ -58,7 +59,6 @@ const AuthForm = () => {
           e.preventDefault();
           if (isRegistering) {
             dispatch(registerAction(formData, setMessage));
-            
           } else {
             dispatch(loginAction(formData, setMessage));
           }

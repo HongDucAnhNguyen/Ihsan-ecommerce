@@ -29,17 +29,14 @@ const ItemsInCart = () => {
   // const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const [canCheckOut, setCanCheckOut] = useState(true);
   useEffect(() => {
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
-    }
-  }, [itemsInCart]);
-  useEffect(() => {
-    if (userState) {
       dispatch(getItemsInCheckOutAction(userState?.result?.id));
     }
-  }, [itemsToCheckOut]);
+  }, [dispatch]);
+ 
   if (itemsInCart.length === 0) {
     return <Text fontSize="2xl">Currently Empty</Text>;
   }
@@ -53,7 +50,7 @@ const ItemsInCart = () => {
         }}
       >
         {itemsInCart.map((item) => (
-          <Box key={item._id} border="3px solid orange" p={3} mb={4} mt={4}>
+          <Box key={item.itemId} border="3px solid orange" p={3} mb={4} mt={4}>
             <Flex gap={5}>
               <Checkbox
                 // isChecked={() => {
@@ -125,7 +122,7 @@ const ItemsInCart = () => {
                 console.log(e.target.value);
                 dispatch(
                   setItemQuantityAction(
-                    item._id,
+                    item.itemId,
                     e.target.value,
                     userState?.result?.id
                   )
@@ -134,6 +131,11 @@ const ItemsInCart = () => {
               maxW="50%"
               required
               mb={4}
+              value={
+                itemsToCheckOut.find(
+                  (itemToCheckOut) => itemToCheckOut.itemId === item.itemId
+                )?.quantity
+              }
             >
               {Array.from({ length: item.maxQuantityPerPurchase }, (_, i) => (
                 <option key={i} value={i + 1}>
@@ -160,11 +162,9 @@ const ItemsInCart = () => {
           </Box>
         ))}
 
-        {itemsToCheckOut.length > 0 ? (
-          <Button type="submit">Check Out</Button>
-        ) : (
-          <Text>Select at least one Item to check out</Text>
-        )}
+        
+          <Button colorScheme="yellow" type="submit">Proceed to Check Out</Button>
+        
       </form>
     </Box>
   );

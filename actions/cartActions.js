@@ -1,25 +1,26 @@
-export const addItemToCartAction = (productId, user_id) => async (dispatch) => {
-  try {
-    //call to add product id to user's cart
-    const response = await fetch(`/api/cart/${user_id}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(productId),
-    });
-    //call to add product object to cart reducer, rendered on page
+export const addItemToCartAction =
+  (productId, user_id, setErrorMessage) => async (dispatch) => {
+    try {
+      //call to add product id to user's cart
+      const response = await fetch(`/api/cart/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productId),
+      });
+      //call to add product object to cart reducer, rendered on page
 
-    const data = await response.json();
-    if (data.message) {
-      return;
+      const data = await response.json();
+      if (data.message) {
+        setErrorMessage(data.message);
+      }
+      dispatch({ type: "ADD_TO_CART", data: data });
+    } catch (error) {
+      console.log(error);
     }
-    dispatch({ type: "ADD_TO_CART", data: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
 export const getItemsInCartAction = (user_id) => async (dispatch) => {
   try {
@@ -31,21 +32,25 @@ export const getItemsInCartAction = (user_id) => async (dispatch) => {
     console.log(error);
   }
 };
-export const toggleSelectStatus = (productId, user_id, selectedValue) => async (dispatch) => {
-  try {
-    await fetch(`/api/cart/select_toggle/${user_id}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(productId),
-    });
-    dispatch({ type: "TOGGLE_ITEM_SELECTION", data: {itemId: productId, selected: selectedValue} });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const toggleSelectStatus =
+  (productId, user_id, selectedValue) => async (dispatch) => {
+    try {
+      await fetch(`/api/cart/select_toggle/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productId),
+      });
+      dispatch({
+        type: "TOGGLE_ITEM_SELECTION",
+        data: { itemId: productId, selected: selectedValue },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 export const removeItemInCartAction =
   (productId, user_id) => async (dispatch) => {
     try {
@@ -75,6 +80,7 @@ export const addItemToCheckOutAction =
         body: JSON.stringify({ itemId: productId, quantity: 1 }),
       });
       const data = await response.json();
+      console.log(data);
       dispatch({ type: "ADD_ITEM_TO_CHECKOUT", data: data });
       dispatch({ type: "CALCULATE_SUBTOTAL" });
     } catch (error) {

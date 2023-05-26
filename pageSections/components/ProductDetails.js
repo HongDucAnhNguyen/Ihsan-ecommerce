@@ -46,7 +46,6 @@ const ProductDetails = ({ product }) => {
     dispatch(getReviewsAction(product._id));
   }, [allReviewsForProduct]);
   useEffect(() => {
-    console.log(userState);
     setReviewData({
       ...reviewData,
       userId: userState?.result?.id,

@@ -15,7 +15,7 @@ const handler = async (req, res) => {
         const { imgUrl, title, description, price, isOnSale, salePrice } =
           await getProduct(item.itemId);
         return {
-          _id: item._id,
+          // _id: item._id,
           itemId: item.itemId,
           imgUrl,
           title,
@@ -50,19 +50,17 @@ const handler = async (req, res) => {
         getProduct(itemId);
 
       console.log("added item to check out");
-      return res
-        .status(200)
-        .json({
-          imgUrl,
-          title,
-          description,
-          price,
-          isOnSale,
-          salePrice,
-          itemId: itemId,
-          quantity: quantity,
-          _id: user.itemsToCheckOut[user.itemsToCheckOut.length - 1]._id,
-        });
+      return res.status(200).json({
+        imgUrl,
+        title,
+        description,
+        price,
+        isOnSale,
+        salePrice,
+        itemId: itemId,
+        quantity: quantity,
+        // _id: user.itemsToCheckOut[user.itemsToCheckOut.length - 1]._id,
+      });
     } else {
       return res.status(404).json({ message: "Invalid Method" });
     }

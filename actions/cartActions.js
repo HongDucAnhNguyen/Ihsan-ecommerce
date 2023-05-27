@@ -80,7 +80,7 @@ export const addItemToCheckOutAction =
         body: JSON.stringify({ itemId: productId, quantity: 1 }),
       });
       const data = await response.json();
-      console.log(data);
+      
       dispatch({ type: "ADD_ITEM_TO_CHECKOUT", data: data });
       dispatch({ type: "CALCULATE_SUBTOTAL" });
     } catch (error) {

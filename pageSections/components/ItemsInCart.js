@@ -16,27 +16,26 @@ import {
   Checkbox,
   Flex,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../../styles/Layout.module.css";
 import { useRouter } from "next/router";
+
 const ItemsInCart = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
   const itemsToCheckOut = useSelector(
     (state) => state.cartReducer.itemsToCheckOut
   );
-  // const [user, setUser] = useState(null);
+  
   const dispatch = useDispatch();
   const router = useRouter();
-  const [canCheckOut, setCanCheckOut] = useState(true);
   useEffect(() => {
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
       dispatch(getItemsInCheckOutAction(userState?.result?.id));
     }
   }, [dispatch]);
- 
+
   if (itemsInCart.length === 0) {
     return <Text fontSize="2xl">Currently Empty</Text>;
   }
@@ -53,14 +52,6 @@ const ItemsInCart = () => {
           <Box key={item.itemId} border="3px solid orange" p={3} mb={4} mt={4}>
             <Flex gap={5}>
               <Checkbox
-                // isChecked={() => {
-                //   const itemIsInCheckOut = itemsToCheckOut.find(
-                //     (itemToCheckOut) => {
-                //       itemToCheckOut.itemId === item._id;
-                //     }
-                //   );
-                //   itemIsInCheckOut ? true : false;
-                // }}
                 isChecked={item.isSelectedForCheckOut}
                 onChange={(e) => {
                   //if is checked add to itemsToCheckOut
@@ -162,9 +153,9 @@ const ItemsInCart = () => {
           </Box>
         ))}
 
-        
-          <Button colorScheme="yellow" type="submit">Proceed to Check Out</Button>
-        
+        <Button colorScheme="yellow" type="submit">
+          Proceed to Check Out
+        </Button>
       </form>
     </Box>
   );

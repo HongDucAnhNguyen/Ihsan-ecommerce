@@ -17,13 +17,12 @@ const CheckOutPage = () => {
   return (
     <div className={styles.container}>
       <Box>
-        
-
         {itemsToCheckOut.length > 0 ? (
           itemsToCheckOut.map((itemToCheckOut) => (
-            <Box key={itemToCheckOut.itemId} mb={4} border="3px solid orange">
+            <Box key={itemToCheckOut._id} mb={4} border="3px solid orange">
               <Text fontSize="2xl">{itemToCheckOut.title}</Text>
-              <Text>
+              <Text fontSize="2xl" fontWeight="bold" color="orange.600">
+                $
                 {itemToCheckOut.isOnSale
                   ? itemToCheckOut.salePrice
                   : itemToCheckOut.price}

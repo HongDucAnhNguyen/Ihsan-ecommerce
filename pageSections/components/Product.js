@@ -34,11 +34,14 @@ import {
   addItemToCartAction,
   addItemToCheckOutAction,
   getItemsInCartAction,
+  removeItemFromCheckOutAction,
+  toggleSelectStatus,
 } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
+  const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
   // const [user, setUser] = useState(null);
   // useEffect(() => {
   //   setUser(userState);
@@ -112,6 +115,38 @@ const Product = ({ product }) => {
                 variant="solid"
                 colorScheme="blue"
                 onClick={() => {
+                  //dispatch(buy now action)
+                  dispatch(
+                    addItemToCartAction(
+                      product._id,
+                      userState?.result?.id,
+                      setErrorMessage
+                    )
+                  );
+                  dispatch(
+                    addItemToCheckOutAction(product._id, userState?.result?.id)
+                  );
+                  itemsInCart.map((itemInCart) => {
+                    if (
+                      itemInCart.itemId !== product._id &&
+                      itemInCart.isSelectedForCheckOut === true
+                    ) {
+                      dispatch(
+                        removeItemFromCheckOutAction(
+                          itemInCart.itemId,
+                          userState?.result?.id
+                        )
+                      );
+                      dispatch(
+                        toggleSelectStatus(
+                          itemInCart.itemId,
+                          userState?.result?.id,
+                          itemInCart.isSelectedForCheckOut
+                        )
+                      );
+                    }
+                  });
+
                   router.push("/checkout");
                 }}
               >

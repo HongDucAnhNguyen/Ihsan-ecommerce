@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
         isSelectedForCheckOut: { type: Boolean, required: true },
       },
     ],
-    maxlength: 5,
+    maxlength: 10,
   }, //product id's go here
   itemsToCheckOut: {
     type: [
@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
         quantity: { type: Number, required: true },
       },
     ],
-    maxlength: 5,
+    maxlength: 10,
   },
 });
 const User = mongoose.models.User || mongoose.model("User", userSchema);

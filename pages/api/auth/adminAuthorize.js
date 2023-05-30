@@ -10,10 +10,14 @@ const handler = async (req, res) => {
     }
     const { username, password } = req.body;
     const existingUser = await User.findOne({
-      username: username,
+      $and: [
+        {
+          username: username,
+        },
+        { role: "admin" },
+      ],
     });
     if (!existingUser) {
-      
       return res.status(401).json({ message: "invalid username" });
     }
     const passwordsMatch = await bcrypt.compare(

@@ -13,6 +13,12 @@ import {
   CloseButton,
   Heading,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Select,
   Text,
 } from "@chakra-ui/react";
@@ -26,6 +32,7 @@ import {
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { adminAuthorizeAction } from "@/actions/authActions";
 //add password checker to authorize access to content of adminpage
+import { useDisclosure } from "@chakra-ui/react";
 const Admin = () => {
   const authorizedStatus = useSelector(
     (state) => state.authReducer.isAuthorizedAsAdmin
@@ -51,6 +58,8 @@ const Admin = () => {
     availableStock: "",
   });
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const clearForm = () => {
     setProductFormData({
       imgUrl: "",
@@ -75,6 +84,9 @@ const Admin = () => {
   useEffect(() => {
     setUser(userState);
   }, [userState]);
+  useEffect(() => {
+    onOpen();
+  }, []);
   if (!user) {
     return (
       <div className={styles.container}>
@@ -306,63 +318,72 @@ const Admin = () => {
           </form>
         </Box>
       ) : (
-        <Box maxW="50%">
-          {message && (
-            <Alert
-              sx={{
-                maxWidth: 400,
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-              status="error"
-            >
-              <Box display="flex">
-                <AlertIcon></AlertIcon>
-                <AlertDescription>{message}</AlertDescription>
-              </Box>
-              <CloseButton
-                onClick={() => {
-                  setMessage(null);
-                }}
-              ></CloseButton>
-            </Alert>
-          )}
-
-          <Heading>Verify as Admin to access content</Heading>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              dispatch(adminAuthorizeAction(adminCreds, setMessage));
-              setAdminCreds({ username: "", password: "" });
-            }}
-          >
-            <Input
-              required
-              type="text"
-              placeholder="username*"
-              value={adminCreds.username}
-              onChange={(e) => {
-                setAdminCreds({
-                  ...adminCreds,
-                  username: e.target.value,
-                });
-              }}
-            />
-            <Input
-              required
-              type="password"
-              placeholder="password*"
-              value={adminCreds.password}
-              onChange={(e) => {
-                setAdminCreds({
-                  ...adminCreds,
-                  password: e.target.value,
-                });
-              }}
-            />
-            <Button type="submit">Verify</Button>
-          </form>
-        </Box>
+        <>
+          {" "}
+          <Heading>Unauthorized</Heading>
+          <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay></ModalOverlay>
+            <ModalContent>
+              <ModalHeader>Verify as Admin to access content</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                {message && (
+                  <Alert
+                    sx={{
+                      maxWidth: 400,
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                    status="error"
+                  >
+                    <Box display="flex">
+                      <AlertIcon></AlertIcon>
+                      <AlertDescription>{message}</AlertDescription>
+                    </Box>
+                    <CloseButton
+                      onClick={() => {
+                        setMessage(null);
+                      }}
+                    ></CloseButton>
+                  </Alert>
+                )}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    dispatch(adminAuthorizeAction(adminCreds, setMessage));
+                    setAdminCreds({ username: "", password: "" });
+                  }}
+                >
+                  <Input
+                    required
+                    type="text"
+                    placeholder="username*"
+                    value={adminCreds.username}
+                    onChange={(e) => {
+                      setAdminCreds({
+                        ...adminCreds,
+                        username: e.target.value,
+                      });
+                    }}
+                  />
+                  <Input
+                    required
+                    type="password"
+                    placeholder="password*"
+                    value={adminCreds.password}
+                    onChange={(e) => {
+                      setAdminCreds({
+                        ...adminCreds,
+                        password: e.target.value,
+                      });
+                    }}
+                  />
+                  <Button type="submit">Verify</Button>
+                </form>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        </>
       )}
     </div>
   );

@@ -6,6 +6,10 @@ const handler = async (req, res) => {
 
     if (req.method === "DELETE") {
       console.log(userId);
+      const userRetrieved = await User.findById(userId);
+      if (userRetrieved.role === "admin") {
+        return res.status(401).json({ message: "cannot delete admin account" });
+      }
       await User.findByIdAndDelete(userId);
       console.log("account deleted successfully");
       return res.status(200).json({ message: "account deleted successfully" });

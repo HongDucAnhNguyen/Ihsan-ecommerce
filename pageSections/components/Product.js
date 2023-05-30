@@ -142,7 +142,7 @@ const Product = ({ product }) => {
                           itemInCart.itemId,
                           userState?.result?.id,
                           itemInCart.isSelectedForCheckOut
-                        )
+                        )  
                       );
                     }
                   });

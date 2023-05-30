@@ -10,6 +10,14 @@ export const createProductAction = (productFormData) => async (dispatch) => {
       body: JSON.stringify(productFormData),
     });
     const data = await response.json();
+    await fetch("/api/stripe/products", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...productFormData, id: data._id }),
+    });
     dispatch({ type: "CREATE_PRODUCT", data: data });
     console.log(data);
     dispatch({ type: "END_LOADING" });
@@ -17,6 +25,7 @@ export const createProductAction = (productFormData) => async (dispatch) => {
     console.log(error);
   }
 };
+
 export const getAllProductsAction = () => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });

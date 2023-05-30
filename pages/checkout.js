@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import styles from "../styles/Layout.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ const CheckOutPage = () => {
   }, [dispatch]);
   return (
     <div className={styles.container}>
-      <Box>
+      <div>
         {itemsToCheckOut.length > 0 ? (
           itemsToCheckOut.map((itemToCheckOut) => (
             <Box key={itemToCheckOut._id} mb={4} border="3px solid orange">
@@ -34,7 +34,8 @@ const CheckOutPage = () => {
           <Text>Please select at least one item to check out</Text>
         )}
         {itemsToCheckOut.length > 0 && <Heading>Subtotal: {subTotal} </Heading>}
-      </Box>
+        <Button>Confirm and Proceed</Button>
+      </div>
     </div>
   );
 };

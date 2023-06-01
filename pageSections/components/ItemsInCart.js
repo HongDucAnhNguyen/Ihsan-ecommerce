@@ -26,7 +26,7 @@ const ItemsInCart = () => {
   const itemsToCheckOut = useSelector(
     (state) => state.cartReducer.itemsToCheckOut
   );
-  
+
   const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
@@ -49,7 +49,7 @@ const ItemsInCart = () => {
         }}
       >
         {itemsInCart.map((item) => (
-          <Box key={item.itemId} border="3px solid orange" p={3} mb={4} mt={4}>
+          <Box key={item.itemId} border="3px solid orange" p={3} >
             <Flex gap={5}>
               <Checkbox
                 isChecked={item.isSelectedForCheckOut}
@@ -99,7 +99,7 @@ const ItemsInCart = () => {
               </Heading>
             </Flex>
 
-            <Text size="md">{item.description}</Text>
+            <Text >{item.description}</Text>
 
             {item.isOnSale ? (
               <Text>${item.salePrice}</Text>

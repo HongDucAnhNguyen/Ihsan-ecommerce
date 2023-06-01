@@ -14,7 +14,10 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCartAction } from "@/actions/cartActions";
+import {
+  addItemToCartAction,
+  addItemToCheckOutAction,
+} from "@/actions/cartActions";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -84,6 +87,9 @@ const ProductDetails = ({ product }) => {
           <Button
             width="50%"
             onClick={() => {
+              dispatch(
+                addItemToCheckOutAction(product._id, userState?.result?.id)
+              );
               dispatch(addItemToCartAction(product._id, userState?.result?.id));
               router.push("/cart");
             }}

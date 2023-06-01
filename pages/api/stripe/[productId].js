@@ -10,10 +10,7 @@ const handler = async (req, res) => {
       const priceRetrieved = await stripe.prices.retrieve(
         productRetrieved.default_price
       );
-      if (price !== priceRetrieved.unit_amount) {
-        await stripe.prices.update(priceRetrieved.id, {
-          active: false, // Set the old price as inactive
-        });
+      if (price * 100 !== priceRetrieved.unit_amount) {
         const newPrice = await stripe.prices.create({
           product: productId,
           unit_amount: price * 100,
@@ -21,6 +18,9 @@ const handler = async (req, res) => {
         });
         await stripe.products.update(productId, {
           default_price: newPrice.id,
+        });
+        await stripe.prices.update(priceRetrieved.id, {
+          active: false, // Set the old price as inactive
         });
       }
 

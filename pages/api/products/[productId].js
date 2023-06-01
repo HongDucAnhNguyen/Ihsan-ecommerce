@@ -1,4 +1,5 @@
 import Product from "@/models/Product";
+import Review from "@/models/Review";
 import User from "@/models/User";
 
 const handler = async (req, res) => {
@@ -20,12 +21,19 @@ const handler = async (req, res) => {
     } else if (req.method === "DELETE") {
       const allUsers = await User.find(); //get all users
       allUsers.forEach((user) => {
+        removeItemFromCheckOut(user, productId);
         removeItemFromCart(user, productId);
       });
 
       await Product.findByIdAndDelete(productId);
       console.log("deleted product successfully");
-
+      //removing the reviews corresponding to this product
+      const allReviewsForProduct = await Review.findOne({
+        productId: productId,
+      });
+      allReviewsForProduct.map(async (review) => {
+        await Review.findByIdAndDelete(review._id);
+      });
       return res.status(200).end();
     } else {
       return res.status(403).json({ message: "invalid request" });
@@ -41,17 +49,33 @@ export default handler;
 const removeItemFromCart = async (user, productId) => {
   try {
     const itemIsInCart = user.itemsInCart.find(
-      (itemId) => itemId === productId
+      (item) => item.itemId === productId
     );
     if (itemIsInCart) {
       //update the user's cart
       await User.findByIdAndUpdate(
         user._id,
-        { $pull: { itemsInCart: productId } },
+        { $pull: { itemsInCart: { itemId: productId } } },
         { new: true }
       );
     }
-    
+  } catch (error) {
+    console.log(error);
+  }
+};
+const removeItemFromCheckOut = async (user, productId) => {
+  try {
+    const itemIsInCart = user.itemsForCheckOut.find(
+      (item) => item.itemId === productId
+    );
+    if (itemIsInCart) {
+      //update the user's cart
+      await User.findByIdAndUpdate(
+        user._id,
+        { $pull: { itemsToCheckOut: { itemId: productId } } },
+        { new: true }
+      );
+    }
   } catch (error) {
     console.log(error);
   }

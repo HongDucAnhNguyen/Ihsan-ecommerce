@@ -139,18 +139,7 @@ const Admin = () => {
                     <Button
                       colorScheme="red"
                       onClick={() => {
-                        dispatch(
-                          removeItemFromCheckOutAction(
-                            product._id,
-                            userState?.result?.id
-                          )
-                        );
-                        dispatch(
-                          removeItemInCartAction(
-                            product._id,
-                            userState?.result?.id
-                          )
-                        );
+                      
                         dispatch(deleteProductAction(product._id));
                       }}
                     >

@@ -4,6 +4,28 @@ const handler = async (req, res) => {
   try {
     if (req.method === "GET") {
       const { productCategory } = req.query;
+      if (productCategory === "clothing") {
+        const allMensClothingOnSale = await Product.find({
+          $and: [
+            {
+              isOnSale: true,
+            },
+            { category: "mclothing" },
+          ],
+        });
+        const allWomensClothingOnSale = await Product.find({
+          $and: [
+            {
+              isOnSale: true,
+            },
+            { category: "fclothing" },
+          ],
+        });
+        const allClothingOnSale = allWomensClothingOnSale.concat(
+          allMensClothingOnSale
+        );
+        return res.status(200).json(allClothingOnSale);
+      }
       const productsOnSale = await Product.find({
         $and: [
           {

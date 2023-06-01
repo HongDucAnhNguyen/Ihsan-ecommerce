@@ -38,7 +38,7 @@ const OnSaleProductsSection = () => {
         dispatch(getProductsOnSaleAction("Quran"));
         break;
       case 1:
-        dispatch(getProductsOnSaleAction("fclothing"));
+        dispatch(getProductsOnSaleAction("clothing"));
         break;
       case 2:
         dispatch(getProductsOnSaleAction("accessories"));
@@ -59,7 +59,6 @@ const OnSaleProductsSection = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            
             <Products products={productsOnSale}></Products>
           </TabPanel>
           <TabPanel>

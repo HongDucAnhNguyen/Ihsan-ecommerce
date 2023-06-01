@@ -33,6 +33,10 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { adminAuthorizeAction } from "@/actions/authActions";
 //add password checker to authorize access to content of adminpage
 import { useDisclosure } from "@chakra-ui/react";
+import {
+  removeItemFromCheckOutAction,
+  removeItemInCartAction,
+} from "../actions/cartActions";
 const Admin = () => {
   const authorizedStatus = useSelector(
     (state) => state.authReducer.isAuthorizedAsAdmin
@@ -77,7 +81,7 @@ const Admin = () => {
   };
   useEffect(() => {
     dispatch(getAllProductsAction());
-  }, [ dispatch]);
+  }, [dispatch]);
   useEffect(() => {
     setIsAuthorized(authorizedStatus);
   }, [authorizedStatus]);
@@ -135,8 +139,19 @@ const Admin = () => {
                     <Button
                       colorScheme="red"
                       onClick={() => {
+                        dispatch(
+                          removeItemFromCheckOutAction(
+                            product._id,
+                            userState?.result?.id
+                          )
+                        );
+                        dispatch(
+                          removeItemInCartAction(
+                            product._id,
+                            userState?.result?.id
+                          )
+                        );
                         dispatch(deleteProductAction(product._id));
-                        dispatch(getAllProductsAction());
                       }}
                     >
                       <DeleteIcon></DeleteIcon>

@@ -3,6 +3,8 @@ import styles from "../styles/Layout.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getItemsInCheckOutAction } from "@/actions/cartActions";
+import payWithStripe from "@/actions/payment/payWithStripe";
+import { useRouter } from "next/router";
 const CheckOutPage = () => {
   const itemsToCheckOut = useSelector(
     (state) => state.cartReducer.itemsToCheckOut
@@ -10,7 +12,7 @@ const CheckOutPage = () => {
   const subTotal = useSelector((state) => state.cartReducer.checkOutSubTotal);
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
-
+  const router = useRouter();
   useEffect(() => {
     dispatch(getItemsInCheckOutAction(userState?.result?.id));
   }, [dispatch]);
@@ -34,7 +36,14 @@ const CheckOutPage = () => {
           <Text>Please select at least one item to check out</Text>
         )}
         {itemsToCheckOut.length > 0 && <Heading>Subtotal: {subTotal} </Heading>}
-        <Button>Confirm and Proceed</Button>
+        <Button
+          onClick={() => {
+            payWithStripe(userState?.result?.id, router);
+          }}
+          colorScheme="yellow"
+        >
+          Place order with Stripe
+        </Button>
       </div>
     </div>
   );

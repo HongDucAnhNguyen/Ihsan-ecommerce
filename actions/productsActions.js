@@ -16,7 +16,15 @@ export const createProductAction = (productFormData) => async (dispatch) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...productFormData, id: data._id }),
+      body: JSON.stringify({
+        title: data.title,
+        isOnSale: data.isOnSale,
+        salePrice: data.salePrice,
+        price: data.price,
+        description: data.description,
+        imgUrl: data.imgUrl,
+        id: data._id,
+      }),
     });
     dispatch({ type: "CREATE_PRODUCT", data: data });
     console.log(data);
@@ -71,6 +79,7 @@ export const getProductsOnSaleAction =
 export const deleteProductAction = (productId) => async (dispatch) => {
   try {
     await fetch(`/api/products/${productId}`, { method: "DELETE" });
+    await fetch(`/api/stripe/${productId}`, { method: "DELETE" });
     dispatch({ type: "DELETE_PRODUCT", data: productId });
   } catch (error) {
     console.log(error);
@@ -87,8 +96,24 @@ export const updateProductAction =
         },
         body: JSON.stringify(productFormData),
       });
-      const updatedProduct = await response.json();
-      dispatch({ type: "UPDATE_PRODUCT", data: updatedProduct });
+      const data = await response.json();
+      await fetch(`/api/stripe/${productId}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: productFormData.title,
+
+          price: productFormData.isOnSale
+            ? productFormData.salePrice
+            : productFormData.price,
+          description: productFormData.description,
+          imgUrl: productFormData.imgUrl,
+        }),
+      });
+      dispatch({ type: "UPDATE_PRODUCT", data: data });
     } catch (error) {
       console.log(error);
     }

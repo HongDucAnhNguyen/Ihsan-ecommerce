@@ -131,13 +131,12 @@ export const getProductsByCategoryAction = (category) => async (dispatch) => {
     console.log(error);
   }
 };
-// export const getProductAction = (productId) => async (dispatch) => {
-//   try {
-//     const response = await fetch(`/api/products/${productId}`);
-//     const data = await response.json();
-//     console.log(data);
-//     dispatch({ type: "GET_PRODUCT", data: data });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const searchProductsAction = (searchTerm) => async (dispatch) => {
+  try {
+    const response = await fetch(
+      `/api/products/search?searchQuery=${searchTerm}`
+    );
+    const data = await response.json();
+    dispatch({ type: "GET_SEARCH_RESULTS", data: data });
+  } catch (error) {}
+};

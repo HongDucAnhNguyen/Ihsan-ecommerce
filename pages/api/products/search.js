@@ -2,7 +2,6 @@ import connectMongo from "@/actions/database/db";
 import Product from "@/models/Product";
 const handler = async (req, res) => {
   try {
-    connectMongo();
     if (req.method === "GET") {
       const { searchQuery } = req.query;
       //case insensitive
@@ -12,8 +11,7 @@ const handler = async (req, res) => {
           { title: { $regex: searchKey } },
           { description: { $regex: searchKey } },
           { category: { $regex: searchKey } },
-          { price: { $regex: searchKey } },
-          { salePrice: { $regex: searchKey } },
+          
         ],
       });
       return res.status(200).json(productSearchResults);

@@ -32,7 +32,7 @@ const handler = async (req, res) => {
       console.log("product updated in stripe");
       return res.status(200).json(updatedStripeProduct);
     } else if (req.method === "DELETE") {
-      await stripe.products.del(productId);
+      await stripe.products.update(productId, { active: false });
       console.log("product removed from stripe");
       return res.status(200).end();
     } else return res.status(405).json({ message: "Invalid method" });

@@ -4,6 +4,7 @@ const productReducer = (
     featuredProducts: [],
     productsOnSale: [],
     isLoading: true,
+    searchResults: [],
   },
   action
 ) => {
@@ -13,7 +14,7 @@ const productReducer = (
     case "END_LOADING":
       return { ...state, isLoading: false };
     case "CREATE_PRODUCT":
-      return { ...state, products: [action?.data, ...state.products] };
+      return { ...state, products: [...state.products, action?.data] };
     case "GET_ALL_PRODUCTS":
       return { ...state, products: action?.data };
 
@@ -37,6 +38,8 @@ const productReducer = (
           (product) => product._id !== action?.data
         ),
       };
+    case "GET_SEARCH_RESULTS":
+      return { ...state, searchResults: action?.data };
     default:
       return state;
   }

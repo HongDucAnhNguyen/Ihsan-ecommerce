@@ -7,6 +7,8 @@ import {
   CloseButton,
   Box,
   AlertDescription,
+  Text,
+  Flex,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/AuthForm.module.css";
@@ -43,7 +45,6 @@ const AuthForm = () => {
         <Button
           onClick={() => {
             dispatch(logoutAction());
-            
           }}
         >
           LOG OUT
@@ -105,13 +106,34 @@ const AuthForm = () => {
         <Button variant="solid" colorScheme="blue" type="submit">
           {isRegistering ? "Register" : "Login"}
         </Button>
-        <Button
+        <Text
+          align="center"
+          cursor="pointer"
+          color="steelblue"
+          _hover={{ textDecoration: "underline" }}
           onClick={() => setIsRegistering(!isRegistering)}
-          variant="ghost"
-          colorScheme="blue"
         >
           {isRegistering ? "Have an account? Sign in" : "Not a user? Register"}
-        </Button>
+        </Text>
+        {!isRegistering && (
+          <Flex gap={4} justifyContent="center">
+            {" "}
+            <Text
+              cursor="pointer"
+              color="darkred"
+              _hover={{ textDecoration: "underline" }}
+            >
+              Forgot Password?
+            </Text>
+            <Text
+              cursor="pointer"
+              color="darkred"
+              _hover={{ textDecoration: "underline" }}
+            >
+              Forgot username?
+            </Text>
+          </Flex>
+        )}
       </form>
     </div>
   );

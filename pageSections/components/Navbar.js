@@ -1,15 +1,5 @@
 import NextLink from "next/link";
-import {
-  Avatar,
-  Button,
-  Flex,
-  Icon,
-  IconButton,
-  Link,
-  Modal,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
+
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/Navbar.module.css";
 import {
@@ -20,9 +10,19 @@ import {
   ModalCloseButton,
   ModalOverlay,
   ModalContent,
+  Avatar,
+  Button,
+  Flex,
+  Icon,
+  Link,
+  Modal,
+  Text,
+  useDisclosure,
+  Input,
+  IconButton,
 } from "@chakra-ui/react";
 import { AiOutlineShopping } from "react-icons/ai";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
@@ -30,6 +30,7 @@ import { decode } from "jsonwebtoken";
 import { logoutAction } from "@/actions/authActions";
 import { useRouter } from "next/router";
 import { getItemsInCartAction } from "@/actions/cartActions";
+import { searchProductsAction } from "@/actions/productsActions";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Navbar = () => {
   const toast = useToast();
   const [user, setUser] = useState(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetHeight * 2) {
@@ -46,7 +48,7 @@ const Navbar = () => {
       setIsScrolling(false);
     }
   };
-
+  const [isSearching, setIsSearching] = useState(false);
   const checkSession = async () => {
     try {
       const response = await fetch("/api/auth/getToken");
@@ -83,6 +85,9 @@ const Navbar = () => {
     };
   }, []);
   useEffect(() => {
+    console.log(isSearching);
+  }, [isSearching]);
+  useEffect(() => {
     setUser(userState);
     userState !== null && dispatch(getItemsInCartAction(userState?.result?.id));
   }, [userState]);
@@ -103,7 +108,7 @@ const Navbar = () => {
             fontWeight: "bold",
           }}
         >
-          Logo
+          Ihsan
         </Link>
         <Link
           as={NextLink}
@@ -204,8 +209,23 @@ const Navbar = () => {
         </Link>
       </div>
       <div>
+        <IconButton
+          onClick={() => {
+            setIsSearching(true);
+            onOpen();
+          }}
+        >
+          <SearchIcon></SearchIcon>
+        </IconButton>
+
         <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+          <MenuButton
+            onClick={() => {
+              setIsSearching(false);
+            }}
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+          >
             <Avatar size="xs"></Avatar>
           </MenuButton>
           <MenuList>
@@ -240,8 +260,32 @@ const Navbar = () => {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalCloseButton />
-            <AuthForm></AuthForm>
+            {isSearching ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  dispatch(searchProductsAction(searchQuery));
+                  setSearchQuery("");
+                  onClose();
+                  router.push("/searchResults");
+                }}
+              >
+                <Input
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                  }}
+                  type="text"
+                  required
+                  placeholder="Search Store..."
+                ></Input>
+              </form>
+            ) : (
+              <>
+                <ModalCloseButton />
+                <AuthForm></AuthForm>
+              </>
+            )}
           </ModalContent>
         </Modal>
 

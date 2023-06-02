@@ -35,7 +35,7 @@ const handler = async (req, res) => {
       });
       return res.status(200).json(session.url);
     } catch (err) {
-      return res.status(err.statusCode || 500).json(err.message);
+      return res.status(err.statusCode || 500).json({message: err.message});
     }
   } else {
     res.setHeader("Allow", "POST");

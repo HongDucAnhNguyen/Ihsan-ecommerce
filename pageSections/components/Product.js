@@ -166,7 +166,7 @@ const Product = ({ product }) => {
                   dispatch(
                     addItemToCheckOutAction(product._id, userState?.result?.id)
                   );
-                  dispatch(getItemsInCartAction(userState?.result?.id));
+                  
                   onOpen();
                 }}
               >

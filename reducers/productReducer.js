@@ -4,7 +4,12 @@ const productReducer = (
     featuredProducts: [],
     productsOnSale: [],
     isLoading: true,
-    searchResults: [],
+    searchResults:
+      typeof window !== "undefined" &&
+      localStorage.getItem("searchResults") &&
+      localStorage.getItem("searchResults")?.length > 0
+        ? JSON.parse(localStorage.getItem("searchResults"))
+        : [],
   },
   action
 ) => {
@@ -39,6 +44,7 @@ const productReducer = (
         ),
       };
     case "GET_SEARCH_RESULTS":
+      localStorage.setItem("searchResults", JSON.stringify(action?.data));
       return { ...state, searchResults: action?.data };
     default:
       return state;

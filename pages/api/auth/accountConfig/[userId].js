@@ -34,7 +34,7 @@ const handler = async (req, res) => {
       const updatedUser = await User.findByIdAndUpdate(
         userId,
         {
-          username: updatedUserData.username,
+          username: updatedUserData.newUsername,
           password: hashedNewPassword,
           role: existingUser.role,
         },

@@ -35,7 +35,7 @@ import { EditIcon } from "@chakra-ui/icons";
 const Account = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     newUsername: "",
@@ -47,6 +47,9 @@ const Account = () => {
   useEffect(() => {
     setUser(userState);
   }, [userState]);
+  useEffect(() => {
+    setMessage("");
+  }, [onClose]);
 
   return (
     <div className={styles.container}>
@@ -111,7 +114,7 @@ const Account = () => {
                         required
                         type="text"
                         placeholder="New Username*"
-                        value={formData.username}
+                        value={formData.newUsername}
                         onChange={(e) => {
                           setFormData({
                             ...formData,

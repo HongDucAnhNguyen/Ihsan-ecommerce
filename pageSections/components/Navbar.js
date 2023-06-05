@@ -210,6 +210,7 @@ const Navbar = () => {
       </div>
       <div>
         <IconButton
+          mr={4}
           onClick={() => {
             setIsSearching(true);
             onOpen();
@@ -271,6 +272,7 @@ const Navbar = () => {
                 }}
               >
                 <Input
+                  size="lg"
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);

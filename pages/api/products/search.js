@@ -11,10 +11,14 @@ const handler = async (req, res) => {
           { title: { $regex: searchKey } },
           { description: { $regex: searchKey } },
           { category: { $regex: searchKey } },
-          
         ],
       });
-      return res.status(200).json(productSearchResults);
+      return res.status(200).json(
+        productSearchResults.map((product) => ({
+          _id: product._id,
+          title: product.title,
+        }))
+      );
     }
   } catch (error) {
     return res

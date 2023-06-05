@@ -140,3 +140,11 @@ export const searchProductsAction = (searchTerm) => async (dispatch) => {
     dispatch({ type: "GET_SEARCH_RESULTS", data: data });
   } catch (error) {}
 };
+export const getProductsInWishList = (userId) => async (dispatch) => {
+  try {
+    const response = await fetch(`api/products/wishlist/${userId}`);
+    const data = await response.json();
+    //list of products that have been starred by user
+    dispatch({ type: "GET_WISH_LIST", data: data });
+  } catch (error) {}
+};

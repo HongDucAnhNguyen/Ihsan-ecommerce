@@ -10,6 +10,7 @@ const productReducer = (
       localStorage.getItem("searchResults")?.length > 0
         ? JSON.parse(localStorage.getItem("searchResults"))
         : [],
+    productWishlist: [],
   },
   action
 ) => {
@@ -46,6 +47,8 @@ const productReducer = (
     case "GET_SEARCH_RESULTS":
       localStorage.setItem("searchResults", JSON.stringify(action?.data));
       return { ...state, searchResults: action?.data };
+    case "GET_WISH_LIST":
+      return { ...state, productWishlist: action?.data };
     default:
       return state;
   }

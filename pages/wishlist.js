@@ -35,7 +35,7 @@ const WishList = () => {
                 cursor="pointer"
                 _hover={{
                   color: "orange",
-                  transition: "all .5s ease-in-out",
+                  transition: "all .3s ease-in-out",
                 }}
                 onClick={() => {
                   router.push({

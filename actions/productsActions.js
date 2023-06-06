@@ -155,7 +155,7 @@ export const getProductsInWishList = (userId) => async (dispatch) => {
   }
 };
 export const addProductToWishList =
-  (userId, productId, setErrorMessage) => async (dispatch) => {
+  (userId, productId, toast) => async (dispatch) => {
     try {
       const response = await fetch(`api/products/wishlist/${userId}`, {
         method: "PATCH",
@@ -167,8 +167,26 @@ export const addProductToWishList =
       });
       const data = await response.json();
       if (data.message) {
-        setErrorMessage(data.message);
-      } else dispatch({ type: "ADD_TO_WISH_LIST", data: data });
+        toast({
+          position: "bottom-left",
+          title: "Existing item.",
+          status: "error",
+          description: data.message,
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          position: "bottom-left",
+          title: "Added to Wish List.",
+          status: "success",
+          description: "Product successfully added to Wish List",
+          duration: 5000,
+          isClosable: true,
+        });
+        
+        dispatch({ type: "ADD_TO_WISH_LIST", data: data });
+      }
     } catch (error) {
       console.log(error);
     }

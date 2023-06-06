@@ -34,7 +34,7 @@ const productReducer = (
       return {
         ...state,
         products: state.products.map((product) =>
-          product._id === action?.data._id ? action.data : product
+          product._id === action?.data._id ? action?.data : product
         ),
       };
     case "DELETE_PRODUCT":
@@ -48,7 +48,10 @@ const productReducer = (
       localStorage.setItem("searchResults", JSON.stringify(action?.data));
       return { ...state, searchResults: action?.data };
     case "GET_WISH_LIST":
-      return { ...state, productWishlist: action?.data };
+      return {
+        ...state,
+        productWishlist: action?.data,
+      };
     case "ADD_TO_WISH_LIST":
       return {
         ...state,

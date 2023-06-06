@@ -27,12 +27,13 @@ import {
   updateReviewAction,
 } from "@/actions/reviewActions";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
 const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
   );
   const userState = useSelector((state) => state.authReducer.authData);
-
+  const toast = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
   const [reviewData, setReviewData] = useState({
@@ -90,7 +91,9 @@ const ProductDetails = ({ product }) => {
               dispatch(
                 addItemToCheckOutAction(product._id, userState?.result?.id)
               );
-              dispatch(addItemToCartAction(product._id, userState?.result?.id));
+              dispatch(
+                addItemToCartAction(product._id, userState?.result?.id, toast)
+              );
               router.push("/cart");
             }}
             _hover={{ bg: "black" }}
@@ -150,7 +153,7 @@ const ProductDetails = ({ product }) => {
             //dispatch createReview action
             if (isEditingReview) {
               dispatch(updateReviewAction(currentReviewId, reviewData));
-            } else dispatch(createReviewAction(reviewData));
+            } else dispatch(createReviewAction(reviewData, toast));
 
             clearReviewData();
             setIsEditingReview(false);

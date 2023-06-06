@@ -20,10 +20,6 @@ import {
   Tag,
   Text,
   useDisclosure,
-  Alert,
-  AlertIcon,
-  AlertDescription,
-  CloseButton,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
@@ -33,7 +29,6 @@ import { useRouter } from "next/router";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
-  getItemsInCartAction,
   removeItemFromCheckOutAction,
   toggleSelectStatus,
 } from "@/actions/cartActions";
@@ -45,28 +40,18 @@ import { useToast } from "@chakra-ui/react";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
-  const productWishlist = useSelector(
-    (state) => state.productReducer.productWishlist
-  );
+
   // const [user, setUser] = useState(null);
   // useEffect(() => {
   //   setUser(userState);
   // }, [userState]);
+
   const toast = useToast();
 
   const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isInWishList, setIsInWishList] = useState(false);
-  useEffect(() => {
-    const existingItemInWishList = productWishlist.find(
-      (wishlistItem) => wishlistItem._id === product._id
-    );
-    if (existingItemInWishList) {
-      setIsInWishList(true);
-    }
-  }, [dispatch]);
+
   return (
     <>
       <Card boxShadow="lg" minW="sm" maxW="sm" mb={4}>
@@ -91,31 +76,13 @@ const Product = ({ product }) => {
                   addProductToWishList(
                     userState?.result?.id,
                     product._id,
-                    setErrorMessage
+                    toast
                   )
                 );
-                if (errorMessage) {
-                  return toast({
-                    position: "bottom-left",
-                    title: "Already In Wish List",
-                    status: "error",
-                    description: errorMessage,
-
-                    duration: 5000,
-                    isClosable: true,
-                  });
-                }
-                return toast({
-                  position: "bottom-left",
-                  title: "Added to Wish List.",
-                  description: "Product successfully added to Wish List",
-                  duration: 5000,
-                  isClosable: true,
-                });
               }}
             >
               <StarIcon
-                color={isInWishList ? "blue.600" : "secondary"}
+                color={product.isInWishList ? "blue.600" : ""}
               ></StarIcon>
             </IconButton>
           </ButtonGroup>
@@ -164,7 +131,7 @@ const Product = ({ product }) => {
                     addItemToCartAction(
                       product._id,
                       userState?.result?.id,
-                      setErrorMessage
+                      toast
                     )
                   );
                   dispatch(
@@ -204,7 +171,7 @@ const Product = ({ product }) => {
                     addItemToCartAction(
                       product._id,
                       userState?.result?.id,
-                      setErrorMessage
+                      toast
                     )
                   );
                   dispatch(
@@ -231,28 +198,7 @@ const Product = ({ product }) => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Your Cart</DrawerHeader>
-          {errorMessage && (
-            <Alert
-              ml={4}
-              mr={4}
-              maxW="50%"
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-              status="error"
-            >
-              <Box display="flex">
-                <AlertIcon></AlertIcon>
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Box>
-              <CloseButton
-                onClick={() => {
-                  setErrorMessage(null);
-                }}
-              ></CloseButton>
-            </Alert>
-          )}
+
           <DrawerBody>
             <ItemsInCart></ItemsInCart>
           </DrawerBody>

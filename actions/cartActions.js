@@ -1,5 +1,5 @@
 export const addItemToCartAction =
-  (productId, user_id, setErrorMessage) => async (dispatch) => {
+  (productId, user_id, toast) => async (dispatch) => {
     try {
       //call to add product id to user's cart
       const response = await fetch(`/api/cart/${user_id}`, {
@@ -14,7 +14,15 @@ export const addItemToCartAction =
 
       const data = await response.json();
       if (data.message) {
-        setErrorMessage(data.message);
+        toast({
+          position: "bottom-left",
+          title: "Existing item.",
+          status: "error",
+          description: data.message,
+          duration: 5000,
+          isClosable: true,
+        });
+        return
       }
       dispatch({ type: "ADD_TO_CART", data: data });
     } catch (error) {

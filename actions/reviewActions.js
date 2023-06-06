@@ -1,4 +1,4 @@
-export const createReviewAction = (reviewData) => async (dispatch) => {
+export const createReviewAction = (reviewData, toast) => async (dispatch) => {
   try {
     const response = await fetch("/api/reviews", {
       method: "POST",
@@ -10,7 +10,15 @@ export const createReviewAction = (reviewData) => async (dispatch) => {
     });
     const data = await response.json();
     if (data.message) {
-      return;
+      toast({
+        position: "bottom-left",
+        title: "Existing Comment.",
+        status: "error",
+        description: data.message,
+        duration: 5000,
+        isClosable: true,
+      });
+      return
     }
     dispatch({ type: "CREATE_REVIEW", data: data });
   } catch (error) {

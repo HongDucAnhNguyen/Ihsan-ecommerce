@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-const Contact = () => {
+const searchResults = () => {
   const productSearchResults = useSelector(
     (state) => state.productReducer.searchResults
   );
@@ -48,4 +48,4 @@ const Contact = () => {
     </div>
   );
 };
-export default Contact;
+export default searchResults;

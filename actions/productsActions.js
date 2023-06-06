@@ -137,14 +137,56 @@ export const searchProductsAction = (searchTerm) => async (dispatch) => {
       `/api/products/search?searchQuery=${searchTerm}`
     );
     const data = await response.json();
+
     dispatch({ type: "GET_SEARCH_RESULTS", data: data });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const getProductsInWishList = (userId) => async (dispatch) => {
   try {
     const response = await fetch(`api/products/wishlist/${userId}`);
     const data = await response.json();
-    //list of products that have been starred by user
+    //list of products that have been starred by user\
+    console.log(data);
     dispatch({ type: "GET_WISH_LIST", data: data });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
+export const addProductToWishList =
+  (userId, productId, setErrorMessage) => async (dispatch) => {
+    try {
+      const response = await fetch(`api/products/wishlist/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productId),
+      });
+      const data = await response.json();
+      if (data.message) {
+        setErrorMessage(data.message);
+      } else dispatch({ type: "ADD_TO_WISH_LIST", data: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+export const removeProductFromWishList =
+  (userId, productId) => async (dispatch) => {
+    try {
+      await fetch(`api/products/wishlist/remove/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productId),
+      });
+
+      dispatch({ type: "REMOVE_FROM_WISH_LIST", data: productId });
+    } catch (error) {
+      console.log(error);
+    }
+  };

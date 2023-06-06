@@ -49,6 +49,18 @@ const productReducer = (
       return { ...state, searchResults: action?.data };
     case "GET_WISH_LIST":
       return { ...state, productWishlist: action?.data };
+    case "ADD_TO_WISH_LIST":
+      return {
+        ...state,
+        productWishlist: [...state.productWishlist, action?.data],
+      };
+    case "REMOVE_FROM_WISH_LIST":
+      return {
+        ...state,
+        productWishlist: state.productWishlist.filter(
+          (product) => product._id !== action?.data
+        ),
+      };
     default:
       return state;
   }

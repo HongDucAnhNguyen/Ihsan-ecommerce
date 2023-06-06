@@ -234,21 +234,38 @@ const Navbar = () => {
               {user ? user?.result?.username : "Log In/Register"}
             </MenuItem>
             {user && (
-              <MenuItem>
-                {" "}
-                <Link
-                  width={"100%"}
-                  sx={{
-                    "&:hover": {
-                      textDecoration: "none",
-                    },
-                  }}
-                  as={NextLink}
-                  href="/account"
-                >
-                  Account
-                </Link>
-              </MenuItem>
+              <>
+                <MenuItem>
+                  {" "}
+                  <Link
+                    width={"100%"}
+                    sx={{
+                      "&:hover": {
+                        textDecoration: "none",
+                      },
+                    }}
+                    as={NextLink}
+                    href="/account"
+                  >
+                    Account
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  {" "}
+                  <Link
+                    width={"100%"}
+                    sx={{
+                      "&:hover": {
+                        textDecoration: "none",
+                      },
+                    }}
+                    as={NextLink}
+                    href="/wishlist"
+                  >
+                    Wish List
+                  </Link>
+                </MenuItem>
+              </>
             )}
           </MenuList>
         </Menu>

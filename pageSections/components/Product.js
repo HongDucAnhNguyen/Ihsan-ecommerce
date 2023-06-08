@@ -68,23 +68,25 @@ const Product = ({ product }) => {
             >
               View Item
             </Button>
-            <IconButton
-              title="Add product to Wish List"
-              bg="beige"
-              onClick={() => {
-                dispatch(
-                  addProductToWishList(
-                    userState?.result?.id,
-                    product._id,
-                    toast
-                  )
-                );
-              }}
-            >
-              <StarIcon
-                color={product.isInWishList ? "blue.600" : ""}
-              ></StarIcon>
-            </IconButton>
+            {userState && (
+              <IconButton
+                title="Add product to Wish List"
+                bg="beige"
+                onClick={() => {
+                  dispatch(
+                    addProductToWishList(
+                      userState?.result?.id,
+                      product._id,
+                      toast
+                    )
+                  );
+                }}
+              >
+                <StarIcon
+                  color={product.isInWishList ? "blue.600" : ""}
+                ></StarIcon>
+              </IconButton>
+            )}
           </ButtonGroup>
         </CardHeader>
         <Box className={styles.productImgContainer}>
@@ -120,12 +122,14 @@ const Product = ({ product }) => {
             <Tag variant="solid" size="lg" colorScheme="red">
               Sold Out
             </Tag>
-          ) : (
+          ) : userState ? (
             <ButtonGroup spacing={2}>
               <Button
                 variant="solid"
                 colorScheme="blue"
                 onClick={() => {
+                  if (!userState) {
+                  }
                   //dispatch(buy now action)
                   dispatch(
                     addItemToCartAction(
@@ -167,6 +171,10 @@ const Product = ({ product }) => {
                 variant="ghost"
                 colorScheme="blue"
                 onClick={() => {
+                  if (!userState) {
+                    onOpen();
+                    return;
+                  }
                   dispatch(
                     addItemToCartAction(
                       product._id,
@@ -184,6 +192,8 @@ const Product = ({ product }) => {
                 Add to Cart
               </Button>
             </ButtonGroup>
+          ) : (
+            <Text color="red.600">Sign In to interact with Product</Text>
           )}
         </CardFooter>
       </Card>

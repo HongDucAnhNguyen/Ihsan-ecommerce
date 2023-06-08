@@ -115,9 +115,9 @@ const Footer = () => {
         </div>
       </div>
       <Divider></Divider>
-      <div style={{ textAlign: "center" }}>
+      <Box textAlign="center" p={4}>
         © 2022 Hong Duc Anh Nguyen. All Rights Reserved.
-      </div>
+      </Box>
     </>
   );
 };

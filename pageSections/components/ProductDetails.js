@@ -37,30 +37,27 @@ const ProductDetails = ({ product }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [reviewData, setReviewData] = useState({
-    userId: userState?.result?.id,
-    username: userState?.result?.username,
-    productId: product._id,
+    userId: "",
+    username: "",
+    productId: "",
     rating: "",
     comment: "",
   });
 
   const [isEditingReview, setIsEditingReview] = useState(false);
   const [currentReviewId, setCurrentReviewId] = useState("");
+  const [user, setUser] = useState(null);
   useEffect(() => {
     dispatch(getReviewsAction(product._id));
-  }, [allReviewsForProduct]);
+  }, [dispatch]);
   useEffect(() => {
-    setReviewData({
-      ...reviewData,
-      userId: userState?.result?.id,
-      username: userState?.result?.username,
-    });
+    setUser(userState);
   }, [userState]);
   const clearReviewData = () => {
     setReviewData({
-      userId: userState?.result?.id,
-      username: userState?.result?.username,
-      productId: product._id,
+      userId: "",
+      username: "",
+      productId: "",
       rating: "",
       comment: "",
     });
@@ -68,7 +65,7 @@ const ProductDetails = ({ product }) => {
   return (
     <Box>
       <Flex justifyContent="space-around" gap={4}>
-        <Image src={product.imgUrl} maxWidth="50%"></Image>
+        <Image minW="sm" src={product.imgUrl} maxWidth="md"></Image>
         <Flex flexDirection="column" alignItems="center" textAlign="center">
           <Heading mb={3}>{product.title}</Heading>
           <Flex gap={3} mb={4}>
@@ -80,41 +77,50 @@ const ProductDetails = ({ product }) => {
               ${product.price}
             </Text>
             {product.isOnSale && (
-              <Text color="blue.600" fontSize="3xl" fontWeight="bold">
+              <Text color="orange.600" fontSize="3xl" fontWeight="bold">
                 ${product.salePrice}
               </Text>
             )}
           </Flex>
-          <Button
-            width="50%"
-            onClick={() => {
-              dispatch(
-                addItemToCheckOutAction(product._id, userState?.result?.id)
-              );
-              dispatch(
-                addItemToCartAction(product._id, userState?.result?.id, toast)
-              );
-              router.push("/cart");
-            }}
-            _hover={{ bg: "black" }}
-            bg="blackAlpha.700"
-            color="whitesmoke"
-            mb={4}
-          >
-            Add to Cart
-          </Button>
+          {user ? (
+            <Button
+              width="50%"
+              onClick={() => {
+                dispatch(
+                  addItemToCheckOutAction(product._id, userState?.result?.id)
+                );
+                dispatch(
+                  addItemToCartAction(product._id, userState?.result?.id, toast)
+                );
+                router.push("/cart");
+              }}
+              _hover={{ bg: "black" }}
+              bg="blackAlpha.700"
+              color="whitesmoke"
+              mb={4}
+            >
+              Add to Cart
+            </Button>
+          ) : (
+            <Text color="red.600">Sign in to interact with product</Text>
+          )}
+
           <Text>{product.description}</Text>
         </Flex>
       </Flex>
 
       <Box>
         <Heading>Reviews</Heading>
+        <Divider></Divider>
         {allReviewsForProduct.length > 0 ? (
           allReviewsForProduct.map((review) => (
-            <Box key={review._id} p={5} border="2px solid orange">
-              <Flex>
-                <Avatar></Avatar>
-                <Text>{review.username}</Text>
+            <Box key={review._id} p={5}>
+              <Flex justifyContent="space-between">
+                <Flex>
+                  <Avatar></Avatar>
+                  <Text>{review.username}</Text>
+                </Flex>
+                <Box>Commented on {review.createdAt.substring(0, 10)}</Box>
               </Flex>
 
               <p>{review.comment}</p>
@@ -147,60 +153,82 @@ const ProductDetails = ({ product }) => {
         ) : (
           <Text>This Product has no reviews</Text>
         )}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            //dispatch createReview action
-            if (isEditingReview) {
-              dispatch(updateReviewAction(currentReviewId, reviewData));
-            } else dispatch(createReviewAction(reviewData, toast));
+        {user ? (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              //dispatch createReview action
+              if (isEditingReview) {
+                dispatch(
+                  updateReviewAction(currentReviewId, {
+                    ...reviewData,
+                    userId: userState?.result?.id,
+                    username: userState?.result?.username,
+                    productId: product._id,
+                  })
+                );
+              } else
+                dispatch(
+                  createReviewAction(
+                    {
+                      ...reviewData,
+                      userId: userState?.result?.id,
+                      username: userState?.result?.username,
+                      productId: product._id,
+                    },
+                    toast
+                  )
+                );
 
-            clearReviewData();
-            setIsEditingReview(false);
-            setCurrentReviewId("");
-          }}
-        >
-          <FormLabel>
-            {isEditingReview ? "Editing" : "Write"} a Review
-          </FormLabel>
-          <Input
-            onChange={(e) => {
-              setReviewData({ ...reviewData, comment: e.target.value });
+              clearReviewData();
+              setIsEditingReview(false);
+              setCurrentReviewId("");
             }}
-            required={true}
-            value={reviewData.comment}
-            type="text"
-            placeholder="write your review*"
-          ></Input>
-          <Input
-            required={true}
-            value={reviewData.rating}
-            type="number"
-            placeholder="rate this product*"
-            onChange={(e) => {
-              setReviewData({ ...reviewData, rating: e.target.value });
-            }}
-            min={1}
-            max={5}
-          ></Input>
-          <Button type="submit">Submit</Button>
-          {isEditingReview && (
-            <Button
-              onClick={() => {
-                setIsEditingReview(false);
-                setReviewData({
-                  userId: userState?.result?.id,
-                  username: userState?.result?.username,
-                  productId: product._id,
-                  rating: "",
-                  comment: "",
-                });
+          >
+            <FormLabel>
+              {isEditingReview ? "Editing" : "Write"} a Review
+            </FormLabel>
+            <Input
+              onChange={(e) => {
+                setReviewData({ ...reviewData, comment: e.target.value });
               }}
-            >
-              Cancel
-            </Button>
-          )}
-        </form>
+              required={true}
+              value={reviewData.comment}
+              type="text"
+              placeholder="write your review*"
+            ></Input>
+            <Input
+              required={true}
+              value={reviewData.rating}
+              type="number"
+              placeholder="rate this product*"
+              onChange={(e) => {
+                setReviewData({ ...reviewData, rating: e.target.value });
+              }}
+              min={1}
+              max={5}
+            ></Input>
+            <Button type="submit">Submit</Button>
+            {isEditingReview && (
+              <Button
+                onClick={() => {
+                  setIsEditingReview(false);
+                  setReviewData({
+                    userId: userState?.result?.id,
+                    username: userState?.result?.username,
+                    productId: product._id,
+                    rating: "",
+                    comment: "",
+                  });
+                }}
+              >
+                Cancel
+              </Button>
+            )}
+          </form>
+        ) : (
+          <Text color="red.600">Sign in to comment</Text>
+        )}
       </Box>
     </Box>
   );

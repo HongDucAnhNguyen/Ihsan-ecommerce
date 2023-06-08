@@ -1,3 +1,4 @@
+import Review from "@/models/Review";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 const handler = async (req, res) => {
@@ -40,6 +41,15 @@ const handler = async (req, res) => {
         },
         { new: true }
       );
+      //update the username displayed in user's reviews of products
+      const reviewsFromUser = await Review.find({ userId: userId });
+      reviewsFromUser.map(async (review) => {
+        await Review.findByIdAndUpdate(
+          review._id,
+          { $set: { username: updatedUserData.newUsername } },
+          { new: true }
+        );
+      });
       console.log("updated user account");
       return res.status(200).json({
         result: {

@@ -1,7 +1,7 @@
 const reviewsReducer = (state = { reviews: [] }, action) => {
   switch (action.type) {
     case "CREATE_REVIEW":
-      return { ...state, reviews: [action?.data, ...state.reviews] };
+      return { ...state, reviews: [...state.reviews, action?.data] };
     case "GET_ALL_REVIEWS":
       return { ...state, reviews: action?.data };
     case "DELETE_REVIEW":

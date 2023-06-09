@@ -14,15 +14,16 @@ export const addItemToCartAction =
 
       const data = await response.json();
       if (data.message) {
-        toast({
-          position: "bottom-left",
-          title: "Existing item.",
-          status: "error",
-          description: data.message,
-          duration: 5000,
-          isClosable: true,
-        });
-        return
+        toast &&
+          toast({
+            position: "bottom-left",
+            title: "Existing item.",
+            status: "error",
+            description: data.message,
+            duration: 5000,
+            isClosable: true,
+          });
+        return;
       }
       dispatch({ type: "ADD_TO_CART", data: data });
     } catch (error) {
@@ -49,7 +50,7 @@ export const toggleSelectStatus =
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(productId),
+        body: JSON.stringify({productId, selectedValue}),
       });
       dispatch({
         type: "TOGGLE_ITEM_SELECTION",
@@ -88,7 +89,7 @@ export const addItemToCheckOutAction =
         body: JSON.stringify({ itemId: productId, quantity: 1 }),
       });
       const data = await response.json();
-      
+
       dispatch({ type: "ADD_ITEM_TO_CHECKOUT", data: data });
       dispatch({ type: "CALCULATE_SUBTOTAL" });
     } catch (error) {
@@ -143,3 +144,19 @@ export const setItemQuantityAction =
       console.log(error);
     }
   };
+export const setCheckOutAction = (productId, userId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/checkout/buynow/${userId}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, quantity: 1 }),
+    });
+    const data = await response.json();
+    dispatch({ type: "BUY_NOW", data: data });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -29,7 +29,7 @@ import { useRouter } from "next/router";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
-  removeItemFromCheckOutAction,
+  setCheckOutAction,
   toggleSelectStatus,
 } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
@@ -82,9 +82,7 @@ const Product = ({ product }) => {
                   );
                 }}
               >
-                <StarIcon
-                  color={product.isInWishList ? "blue.600" : ""}
-                ></StarIcon>
+                <StarIcon></StarIcon>
               </IconButton>
             )}
           </ButtonGroup>
@@ -128,38 +126,31 @@ const Product = ({ product }) => {
                 variant="solid"
                 colorScheme="blue"
                 onClick={() => {
-                  if (!userState) {
-                  }
                   //dispatch(buy now action)
+
                   dispatch(
-                    addItemToCartAction(
-                      product._id,
-                      userState?.result?.id,
-                      toast
-                    )
+                    addItemToCartAction(product._id, userState?.result?.id)
                   );
                   dispatch(
-                    addItemToCheckOutAction(product._id, userState?.result?.id)
+                    setCheckOutAction(product._id, userState?.result?.id)
                   );
                   itemsInCart.map((itemInCart) => {
-                    if (
-                      itemInCart.itemId !== product._id &&
-                      itemInCart.isSelectedForCheckOut === true
-                    ) {
-                      dispatch(
-                        removeItemFromCheckOutAction(
-                          itemInCart.itemId,
-                          userState?.result?.id
-                        )
-                      );
+                    if (itemInCart.itemId !== product._id) {
                       dispatch(
                         toggleSelectStatus(
                           itemInCart.itemId,
                           userState?.result?.id,
-                          itemInCart.isSelectedForCheckOut
+                          false
                         )
                       );
-                    }
+                    } else
+                      dispatch(
+                        toggleSelectStatus(
+                          itemInCart.itemId,
+                          userState?.result?.id,
+                          true
+                        )
+                      );
                   });
 
                   router.push("/checkout");

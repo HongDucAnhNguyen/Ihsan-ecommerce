@@ -4,6 +4,7 @@ const handler = async (req, res) => {
   try {
     if (req.method === "GET") {
       const featuredProducts = await Product.find({ isFeatured: true });
+      
       return res.status(200).json(featuredProducts);
     }
   } catch (error) {

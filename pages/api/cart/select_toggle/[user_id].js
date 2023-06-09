@@ -7,7 +7,7 @@ const handler = async (req, res) => {
 
     //removing an item from cart (not actual erasing of data)
     const { user_id } = req.query;
-    const productId = req.body;
+    const { productId, selectedValue } = req.body;
     //security measures
     const user = await User.findById(user_id);
     const itemIsInCart = user.itemsInCart.find(
@@ -21,9 +21,7 @@ const handler = async (req, res) => {
       (item) => item.itemId === productId
     );
     if (index !== -1) {
-      if (user.itemsInCart[index].isSelectedForCheckOut === true) {
-        user.itemsInCart[index].isSelectedForCheckOut = false;
-      } else user.itemsInCart[index].isSelectedForCheckOut = true;
+      user.itemsInCart[index].isSelectedForCheckOut = selectedValue;
 
       await user.save(); // Save the updated user to the database
     }

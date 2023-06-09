@@ -3,6 +3,7 @@ import Product from "./Product";
 import { motion } from "framer-motion";
 
 const Products = ({ products }) => {
+  
   const fadeInVariants = {
     initial: {
       opacity: 0,
@@ -35,7 +36,7 @@ const Products = ({ products }) => {
           },
         }}
       >
-        {products.map((product) => (
+        {products.length > 0 && products.map((product) => (
           <Product key={product._id} product={product}></Product>
         ))}
       </Flex>

@@ -1,5 +1,4 @@
 .footerContainer {
-  
   overflow: hidden;
 }
 
@@ -11,7 +10,7 @@
 }
 .footerInnerSectionsContainer {
   display: flex;
-  max-width: 1200px;
-  justify-content: space-evenly;
+  width: 1200px;
+  justify-content: space-between;
   gap: 20px;
 }

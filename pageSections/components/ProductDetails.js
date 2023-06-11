@@ -10,6 +10,7 @@ import {
   IconButton,
   Image,
   Input,
+  Tag,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -83,29 +84,42 @@ const ProductDetails = ({ product }) => {
             )}
           </Flex>
           {user ? (
-            <Button
-              width="50%"
-              onClick={() => {
-                dispatch(
-                  addItemToCheckOutAction(product._id, userState?.result?.id)
-                );
-                dispatch(
-                  addItemToCartAction(product._id, userState?.result?.id, toast)
-                );
-                router.push("/cart");
-              }}
-              _hover={{ bg: "black" }}
-              bg="blackAlpha.700"
-              color="whitesmoke"
-              mb={4}
-            >
-              Add to Cart
-            </Button>
+            product.availableStock === 0 ? (
+              <Tag fontSize="lg" variant="solid" size="lg" colorScheme="red">
+                SOLD OUT
+              </Tag>
+            ) : (
+              <Button
+                width="50%"
+                onClick={() => {
+                  dispatch(
+                    addItemToCheckOutAction(product._id, userState?.result?.id)
+                  );
+                  dispatch(
+                    addItemToCartAction(
+                      product._id,
+                      userState?.result?.id,
+                      toast
+                    )
+                  );
+                  router.push("/cart");
+                }}
+                _hover={{ bg: "black" }}
+                bg="blackAlpha.700"
+                color="whitesmoke"
+                mb={4}
+              >
+                Add to Cart
+              </Button>
+            )
           ) : (
             <Text color="red.600">Sign in to interact with product</Text>
           )}
 
           <Text>{product.description}</Text>
+          {product.availableStock === 1 && (
+            <Text color="red.600">Only 1 left in stock!</Text>
+          )}
         </Flex>
       </Flex>
 

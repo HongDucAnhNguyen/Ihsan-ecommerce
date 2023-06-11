@@ -20,6 +20,10 @@ import {
   Tag,
   Text,
   useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
@@ -29,13 +33,14 @@ import { useRouter } from "next/router";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
-  setCheckOutAction,
+  setCheckOutBuyNowAction,
   toggleSelectStatus,
 } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 import { addProductToWishList } from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
+import AuthForm from "./AuthForm";
 
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
@@ -51,7 +56,14 @@ const Product = ({ product }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   return (
     <>
       <Card boxShadow="lg" minW="sm" maxW="sm" mb={4}>
@@ -99,6 +111,9 @@ const Product = ({ product }) => {
           <Stack mt="6" spacing="3">
             <Heading size="md">{product.title}</Heading>
             <Text>{product.description}</Text>
+            {product.availableStock === 1 && (
+              <Text color="red.600">Only 1 left in stock!</Text>
+            )}
             <Flex gap={3}>
               <Text
                 color="blue.600"
@@ -117,74 +132,96 @@ const Product = ({ product }) => {
         </CardBody>
         <CardFooter>
           {product.availableStock === 0 ? (
-            <Tag variant="solid" size="lg" colorScheme="red">
-              Sold Out
+            <Tag fontSize='lg' variant="solid" size="lg" colorScheme="red">
+              SOLD OUT
             </Tag>
-          ) : userState ? (
-            <ButtonGroup spacing={2}>
-              <Button
-                variant="solid"
-                colorScheme="blue"
-                onClick={() => {
-                  //dispatch(buy now action)
-
-                  dispatch(
-                    addItemToCartAction(product._id, userState?.result?.id)
-                  );
-                  dispatch(
-                    setCheckOutAction(product._id, userState?.result?.id)
-                  );
-                  itemsInCart.map((itemInCart) => {
-                    if (itemInCart.itemId !== product._id) {
-                      dispatch(
-                        toggleSelectStatus(
-                          itemInCart.itemId,
-                          userState?.result?.id,
-                          false
-                        )
-                      );
-                    } else
-                      dispatch(
-                        toggleSelectStatus(
-                          itemInCart.itemId,
-                          userState?.result?.id,
-                          true
-                        )
-                      );
-                  });
-
-                  router.push("/checkout");
-                }}
-              >
-                Buy Now
-              </Button>
-              <Button
-                variant="ghost"
-                colorScheme="blue"
-                onClick={() => {
-                  if (!userState) {
-                    onOpen();
-                    return;
-                  }
-                  dispatch(
-                    addItemToCartAction(
-                      product._id,
-                      userState?.result?.id,
-                      toast
-                    )
-                  );
-                  dispatch(
-                    addItemToCheckOutAction(product._id, userState?.result?.id)
-                  );
-
-                  onOpen();
-                }}
-              >
-                Add to Cart
-              </Button>
-            </ButtonGroup>
           ) : (
-            <Text color="red.600">Sign In to interact with Product</Text>
+            <>
+              <ButtonGroup spacing={2}>
+                <Button
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={() => {
+                    //dispatch(buy now action)
+                    if (!userState) {
+                      openModal();
+                      return;
+                    }
+                    dispatch(
+                      addItemToCartAction(product._id, userState?.result?.id)
+                    );
+                    dispatch(
+                      setCheckOutBuyNowAction(
+                        product._id,
+                        userState?.result?.id
+                      )
+                    );
+                    itemsInCart.map((itemInCart) => {
+                      if (itemInCart.itemId !== product._id) {
+                        dispatch(
+                          toggleSelectStatus(
+                            itemInCart.itemId,
+                            userState?.result?.id,
+                            false
+                          )
+                        );
+                      } else
+                        dispatch(
+                          toggleSelectStatus(
+                            itemInCart.itemId,
+                            userState?.result?.id,
+                            true
+                          )
+                        );
+                    });
+
+                    router.push("/checkout");
+                  }}
+                >
+                  Buy Now
+                </Button>
+                <Button
+                  variant="ghost"
+                  colorScheme="blue"
+                  onClick={() => {
+                    if (!userState) {
+                      openModal();
+                      return;
+                    }
+                    dispatch(
+                      addItemToCartAction(
+                        product._id,
+                        userState?.result?.id,
+                        toast
+                      )
+                    );
+                    dispatch(
+                      addItemToCheckOutAction(
+                        product._id,
+                        userState?.result?.id
+                      )
+                    );
+
+                    onOpen();
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              </ButtonGroup>
+              <Modal
+                blockScrollOnMount={false}
+                isCentered={true}
+                isOpen={isModalOpen}
+                onOpen={openModal}
+                onClose={closeModal}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalCloseButton />
+                  <AuthForm></AuthForm>
+                </ModalContent>
+              </Modal>
+            </>
           )}
         </CardFooter>
       </Card>

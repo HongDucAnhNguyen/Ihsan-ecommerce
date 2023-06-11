@@ -13,7 +13,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 connectMongo();
 
-
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 export default function App({ Component, pageProps }) {
   const router = useRouter();

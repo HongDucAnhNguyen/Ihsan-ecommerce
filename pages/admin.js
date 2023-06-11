@@ -21,6 +21,7 @@ import {
   ModalOverlay,
   Select,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import {
   createProductAction,
@@ -62,6 +63,7 @@ const Admin = () => {
     availableStock: "",
   });
   const dispatch = useDispatch();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const clearForm = () => {
@@ -139,7 +141,6 @@ const Admin = () => {
                     <Button
                       colorScheme="red"
                       onClick={() => {
-                      
                         dispatch(deleteProductAction(product._id));
                       }}
                     >
@@ -157,7 +158,30 @@ const Admin = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-
+              if (productFormData.salePrice > productFormData.price) {
+                toast({
+                  position: "bottom-left",
+                  title: "Pricing Error.",
+                  status: "error",
+                  description: "sale price cannot exceed original price",
+                  duration: 5000,
+                  isClosable: true,
+                });
+                return;
+              } else if (
+                productFormData.maxQuantityPerPurchase >
+                productFormData.availableStock
+              ) {
+                toast({
+                  position: "bottom-left",
+                  title: "Stock Quantity Error.",
+                  status: "error",
+                  description: "stock quantity insufficient",
+                  duration: 5000,
+                  isClosable: true,
+                });
+                return;
+              }
               if (isEditing) {
                 dispatch(
                   updateProductAction(productFormData._id, productFormData)

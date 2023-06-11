@@ -144,7 +144,7 @@ export const setItemQuantityAction =
       console.log(error);
     }
   };
-export const setCheckOutAction = (productId, userId) => async (dispatch) => {
+export const setCheckOutBuyNowAction = (productId, userId) => async (dispatch) => {
   try {
     const response = await fetch(`/api/checkout/buynow/${userId}`, {
       method: "PATCH",

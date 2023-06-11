@@ -35,15 +35,19 @@ const CheckOutPage = () => {
         ) : (
           <Text>Please select at least one item to check out</Text>
         )}
-        {itemsToCheckOut.length > 0 && <Heading>Subtotal: {subTotal} </Heading>}
-        <Button
-          onClick={() => {
-            payWithStripe(userState?.result?.id, router);
-          }}
-          colorScheme="yellow"
-        >
-          Place order with Stripe
-        </Button>
+        {itemsToCheckOut.length > 0 && (
+          <>
+            <Heading>Subtotal: {subTotal} </Heading>
+            <Button
+              onClick={() => {
+                payWithStripe(userState?.result?.id, router);
+              }}
+              colorScheme="yellow"
+            >
+              Place order with Stripe
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

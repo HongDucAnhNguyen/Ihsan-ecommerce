@@ -16,6 +16,7 @@ const handler = async (req, res) => {
           message: "sale price cannot exceed original price",
         });
       } else if (
+        updatedData.maxQuantityPerPurchase > 1 &&
         updatedData.maxQuantityPerPurchase > updatedData.availableStock
       ) {
         return res.status(415).json({

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import styles from "../../styles/Layout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import Products from "@/pageSections/components/Products";
 import { useEffect } from "react";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
@@ -24,7 +24,19 @@ const Clothing = () => {
   }
   return (
     <div className={styles.container}>
-      <Products products={products}></Products>
+      <Box
+        sx={{
+          width: "100%",
+          p: 5,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Box maxW="100%" width={1200} textAlign="center">
+          <Heading mb={6}>All Clothing Products</Heading>
+          <Products products={products}></Products>
+        </Box>
+      </Box>
     </div>
   );
 };

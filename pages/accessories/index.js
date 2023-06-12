@@ -3,7 +3,7 @@ import Products from "@/pageSections/components/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
-import { Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 const Accessories = () => {
@@ -25,7 +25,19 @@ const Accessories = () => {
   }
   return (
     <div className={styles.container}>
-      <Products products={products}></Products>
+      <Box
+        sx={{
+          width: "100%",
+          p: 5,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Box maxW="100%" width={1200} textAlign="center">
+          <Heading mb={6}>Accessories</Heading>
+          <Products products={products}></Products>
+        </Box>
+      </Box>
     </div>
   );
 };

@@ -80,6 +80,7 @@ const Account = () => {
                 <CardHeader>
                   <Flex justifyContent="space-between">
                     <Heading>Manage Profile</Heading>
+
                     <IconButton
                       title="Edit Profile"
                       onClick={() => {
@@ -93,6 +94,9 @@ const Account = () => {
 
                 {isEditing && (
                   <CardBody>
+                    <Text fontSize="2xl" fontWeight="bold">
+                      {user?.result?.username}
+                    </Text>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();

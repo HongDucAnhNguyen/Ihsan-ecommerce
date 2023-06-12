@@ -3,16 +3,16 @@ import Products from "@/pageSections/components/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
-import { Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 const WomensClothing = () => {
   const products = useSelector((state) => state.productReducer.products);
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   useEffect(() => {
     const category =
-    router.pathname.split("/")[router.pathname.split("/").length - 1];
+      router.pathname.split("/")[router.pathname.split("/").length - 1];
     dispatch(getProductsByCategoryAction(category));
   }, []);
   if (products.length === 0) {
@@ -24,7 +24,19 @@ const WomensClothing = () => {
   }
   return (
     <div className={styles.container}>
-      <Products products={products}></Products>
+      <Box
+        sx={{
+          width: "100%",
+          p: 5,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Box maxW="100%" width={1200} textAlign="center">
+          <Heading mb={6}>Women's Clothing Products</Heading>
+          <Products products={products}></Products>
+        </Box>
+      </Box>
     </div>
   );
 };

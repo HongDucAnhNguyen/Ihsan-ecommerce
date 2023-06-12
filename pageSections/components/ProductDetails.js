@@ -29,7 +29,7 @@ import {
 } from "@/actions/reviewActions";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
-import { updateProductRatingAction } from "@/actions/productsActions";
+import ReactStars from "react-rating-stars-component";
 const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
@@ -65,11 +65,13 @@ const ProductDetails = ({ product }) => {
     });
   };
   return (
-    <Box>
+    <Box mt={200} mb={10}>
       <Flex justifyContent="space-around" gap={4}>
         <Image minW="sm" src={product.imgUrl} maxWidth="md"></Image>
         <Flex flexDirection="column" alignItems="center" textAlign="center">
-          <Heading mb={3}>{product.title}</Heading>
+          <Heading maxW={500} mb={3}>
+            {product.title}
+          </Heading>
           <Flex gap={3} mb={4}>
             <Text
               color="blue.600"
@@ -84,6 +86,15 @@ const ProductDetails = ({ product }) => {
               </Text>
             )}
           </Flex>
+
+          <ReactStars
+            value={product.rating}
+            isHalf={true}
+            edit={false}
+            size={24}
+            activeColor="#ffd700"
+          ></ReactStars>
+
           {user ? (
             product.availableStock === 0 ? (
               <Tag fontSize="lg" variant="solid" size="lg" colorScheme="red">
@@ -117,7 +128,7 @@ const ProductDetails = ({ product }) => {
             <Text color="red.600">Sign in to interact with product</Text>
           )}
 
-          <Text>{product.description}</Text>
+          <Text maxW={400}>{product.description}</Text>
           {product.availableStock === 1 && (
             <Text color="red.600">Only 1 left in stock!</Text>
           )}
@@ -125,21 +136,33 @@ const ProductDetails = ({ product }) => {
       </Flex>
 
       <Box>
-        <Heading>Reviews</Heading>
+        <Heading mt={6} mb={6}>
+          Reviews
+        </Heading>
         <Divider></Divider>
         {allReviewsForProduct.length > 0 ? (
           allReviewsForProduct.map((review) => (
             <Box key={review._id} p={5}>
               <Flex justifyContent="space-between">
                 <Flex>
-                  <Avatar></Avatar>
-                  <Text>{review.username}</Text>
+                  <Avatar size="sm" mr={4}></Avatar>
+                  <Text fontWeight="bold" fontSize="lg">
+                    {review.username}
+                  </Text>
                 </Flex>
-                <Box>Commented on {review.createdAt.substring(0, 10)}</Box>
+                <Text color="gray.700">
+                  Commented on {review.createdAt.substring(0, 10)}
+                </Text>
               </Flex>
 
-              <p>{review.comment}</p>
-              <p>Rating Given: {review.rating}</p>
+              <Text mt={3}>{review.comment}</Text>
+              <ReactStars
+                value={review.rating}
+                isHalf={true}
+                edit={false}
+                size={24}
+                activeColor="#ffd700"
+              ></ReactStars>
               {userState?.result?.id === review.userId && (
                 <ButtonGroup>
                   <IconButton

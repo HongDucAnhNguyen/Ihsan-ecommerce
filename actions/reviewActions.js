@@ -18,9 +18,14 @@ export const createReviewAction = (reviewData, toast) => async (dispatch) => {
         duration: 5000,
         isClosable: true,
       });
-      return
+      return;
     }
     dispatch({ type: "CREATE_REVIEW", data: data });
+    const { productId } = reviewData;
+    const updatedUserRes = await fetch(`/api/products/calcRating/${productId}`);
+    const updatedUserData = await updatedUserRes.json();
+
+    dispatch({ type: "UPDATE_PRODUCT", data: updatedUserData });
   } catch (error) {
     console.log(error);
   }
@@ -32,10 +37,16 @@ export const getReviewsAction = (productId) => async (dispatch) => {
     dispatch({ type: "GET_ALL_REVIEWS", data: data });
   } catch (error) {}
 };
-export const deleteReviewAction = (reviewId) => async (dispatch) => {
+export const deleteReviewAction = (reviewId, productId) => async (dispatch) => {
   try {
     await fetch(`/api/reviews/reviewConfig/${reviewId}`, { method: "DELETE" });
+
     dispatch({ type: "DELETE_REVIEW", data: reviewId });
+
+    const updatedUserRes = await fetch(`/api/products/calcRating/${productId}`);
+    const updatedUserData = await updatedUserRes.json();
+
+    dispatch({ type: "UPDATE_PRODUCT", data: updatedUserData });
   } catch (error) {}
 };
 export const updateReviewAction =
@@ -51,5 +62,12 @@ export const updateReviewAction =
       });
       const data = await response.json();
       dispatch({ type: "UPDATE_REVIEW", data: data });
+      const { productId } = reviewData;
+      const updatedUserRes = await fetch(
+        `/api/products/calcRating/${productId}`
+      );
+      const updatedUserData = await updatedUserRes.json();
+
+      dispatch({ type: "UPDATE_PRODUCT", data: updatedUserData });
     } catch (error) {}
   };

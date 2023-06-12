@@ -10,7 +10,7 @@ const ProductSchema = mongoose.Schema({
   isFeatured: { type: Boolean },
   isOnSale: { type: Boolean },
   salePrice: { type: Number },
-  
+  rating: { type: Number, required: true, default: 0 },
   likes: { type: [String], default: [] },
 });
 const Product =

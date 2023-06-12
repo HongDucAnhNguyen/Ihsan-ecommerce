@@ -3,6 +3,7 @@ const productReducer = (
     products: [],
     featuredProducts: [],
     productsOnSale: [],
+    recommendedProducts: [],
     isLoading: true,
     searchResults:
       typeof window !== "undefined" &&
@@ -25,6 +26,8 @@ const productReducer = (
       return { ...state, products: action?.data };
     case "GET_FEATURED_PRODUCTS":
       return { ...state, featuredProducts: action?.data };
+    case "GET_RECOMMENDED_PRODUCTS":
+      return { ...state, recommendedProducts: action?.data };
     case "GET_PRODUCTS_ON_SALE":
       return { ...state, productsOnSale: action?.data };
     case "GET_PRODUCTS_BY_CATEGORY":

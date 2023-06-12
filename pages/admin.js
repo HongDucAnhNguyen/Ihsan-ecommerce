@@ -84,6 +84,7 @@ const Admin = () => {
   useEffect(() => {
     dispatch(getAllProductsAction());
   }, [dispatch]);
+
   useEffect(() => {
     setIsAuthorized(authorizedStatus);
   }, [authorizedStatus]);
@@ -141,6 +142,7 @@ const Admin = () => {
                     <Button
                       colorScheme="red"
                       onClick={() => {
+                        setIsEditing(false);
                         dispatch(deleteProductAction(product._id));
                       }}
                     >
@@ -158,36 +160,13 @@ const Admin = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (productFormData.salePrice > productFormData.price) {
-                toast({
-                  position: "bottom-left",
-                  title: "Pricing Error.",
-                  status: "error",
-                  description: "sale price cannot exceed original price",
-                  duration: 5000,
-                  isClosable: true,
-                });
-                return;
-              } else if (
-                productFormData.maxQuantityPerPurchase >
-                productFormData.availableStock
-              ) {
-                toast({
-                  position: "bottom-left",
-                  title: "Stock Quantity Error.",
-                  status: "error",
-                  description: "stock quantity insufficient",
-                  duration: 5000,
-                  isClosable: true,
-                });
-                return;
-              }
+            
               if (isEditing) {
                 dispatch(
-                  updateProductAction(productFormData._id, productFormData)
+                  updateProductAction(productFormData._id, productFormData, toast)
                 );
               } else {
-                dispatch(createProductAction(productFormData));
+                dispatch(createProductAction(productFormData, toast));
               }
 
               clearForm();

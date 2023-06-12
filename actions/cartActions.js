@@ -17,7 +17,7 @@ export const addItemToCartAction =
         toast &&
           toast({
             position: "bottom-left",
-            title: "Existing item.",
+            title: data.messageTitle,
             status: "error",
             description: data.message,
             duration: 5000,
@@ -50,7 +50,7 @@ export const toggleSelectStatus =
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({productId, selectedValue}),
+        body: JSON.stringify({ productId, selectedValue }),
       });
       dispatch({
         type: "TOGGLE_ITEM_SELECTION",
@@ -144,19 +144,20 @@ export const setItemQuantityAction =
       console.log(error);
     }
   };
-export const setCheckOutBuyNowAction = (productId, userId) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/checkout/buynow/${userId}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productId, quantity: 1 }),
-    });
-    const data = await response.json();
-    dispatch({ type: "BUY_NOW", data: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const setCheckOutBuyNowAction =
+  (productId, userId) => async (dispatch) => {
+    try {
+      const response = await fetch(`/api/checkout/buynow/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId, quantity: 1 }),
+      });
+      const data = await response.json();
+      dispatch({ type: "BUY_NOW", data: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };

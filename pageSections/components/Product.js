@@ -38,7 +38,12 @@ import {
 } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
-import { addProductToWishList } from "@/actions/productsActions";
+import {
+  addProductToWishList,
+  getAllProductsAction,
+  getProductsOnSaleAction,
+  getRecommendedProductsAction,
+} from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
 import AuthForm from "./AuthForm";
 
@@ -57,6 +62,7 @@ const Product = ({ product }) => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isAddedToWishList, setIsAddedToWishList] = useState(false);
   const openModal = () => {
     setModalOpen(true);
   };
@@ -64,6 +70,7 @@ const Product = ({ product }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
   return (
     <>
       <Card boxShadow="lg" minW="sm" maxW="sm" mb={4}>
@@ -92,9 +99,19 @@ const Product = ({ product }) => {
                       toast
                     )
                   );
+                  setIsAddedToWishList(true);
                 }}
               >
-                <StarIcon></StarIcon>
+                <StarIcon
+                  color={
+                    isAddedToWishList ||
+                    product.likes.find(
+                      (userId) => userId === userState?.result?.id
+                    )
+                      ? "blue.600"
+                      : "primary"
+                  }
+                ></StarIcon>
               </IconButton>
             )}
           </ButtonGroup>
@@ -111,6 +128,7 @@ const Product = ({ product }) => {
           <Stack mt="6" spacing="3">
             <Heading size="md">{product.title}</Heading>
             <Text>{product.description}</Text>
+            {product.rating > 0 && <Text>{product.rating} stars</Text>}
             {product.availableStock === 1 && (
               <Text color="red.600">Only 1 left in stock!</Text>
             )}
@@ -132,7 +150,7 @@ const Product = ({ product }) => {
         </CardBody>
         <CardFooter>
           {product.availableStock === 0 ? (
-            <Tag fontSize='lg' variant="solid" size="lg" colorScheme="red">
+            <Tag fontSize="lg" variant="solid" size="lg" colorScheme="red">
               SOLD OUT
             </Tag>
           ) : (

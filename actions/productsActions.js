@@ -1,4 +1,4 @@
-export const createProductAction = (productFormData) => async (dispatch) => {
+export const createProductAction = (productFormData, toast) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
     const response = await fetch("/api/products", {
@@ -10,6 +10,17 @@ export const createProductAction = (productFormData) => async (dispatch) => {
       body: JSON.stringify(productFormData),
     });
     const data = await response.json();
+    if (data.message) {
+      toast({
+        position: "bottom-left",
+        title: data.messageTitle,
+        status: "error",
+        description: data.message,
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     await fetch("/api/stripe/products", {
       method: "POST",
       headers: {
@@ -47,6 +58,19 @@ export const getAllProductsAction = () => async (dispatch) => {
   }
 };
 
+export const getRecommendedProductsAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: "LOADING" });
+
+    const response = await fetch("/api/products/recommendedProducts");
+    const recommendedProducts = await response.json();
+
+    dispatch({ type: "GET_RECOMMENDED_PRODUCTS", data: recommendedProducts });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const getFeaturedProductsAction = () => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
@@ -86,7 +110,7 @@ export const deleteProductAction = (productId) => async (dispatch) => {
   }
 };
 export const updateProductAction =
-  (productId, productFormData) => async (dispatch) => {
+  (productId, productFormData, toast) => async (dispatch) => {
     try {
       const response = await fetch(`/api/products/${productId}`, {
         method: "PUT",
@@ -97,6 +121,17 @@ export const updateProductAction =
         body: JSON.stringify(productFormData),
       });
       const data = await response.json();
+      if (data.message) {
+        toast({
+          position: "bottom-left",
+          title: data.messageTitle,
+          status: "error",
+          description: data.message,
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
       await fetch(`/api/stripe/${productId}`, {
         method: "PUT",
         headers: {
@@ -118,6 +153,7 @@ export const updateProductAction =
       console.log(error);
     }
   };
+
 export const getProductsByCategoryAction = (category) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
@@ -148,7 +184,7 @@ export const getProductsInWishList = (userId) => async (dispatch) => {
     const response = await fetch(`api/products/wishlist/${userId}`);
     const data = await response.json();
     //list of products that have been starred by user\
-    console.log(data);
+
     dispatch({ type: "GET_WISH_LIST", data: data });
   } catch (error) {
     console.log(error);
@@ -184,7 +220,7 @@ export const addProductToWishList =
           duration: 5000,
           isClosable: true,
         });
-        
+
         dispatch({ type: "ADD_TO_WISH_LIST", data: data });
       }
     } catch (error) {

@@ -17,6 +17,7 @@ const handler = async (req, res) => {
         return res.status(415).json({ message: "can only comment once" });
       }
       const newReview = await Review.create(reviewData);
+      
       return res.status(200).json(newReview);
     } else {
       return res.status(204).json({ message: "Invalid method" });
@@ -29,3 +30,5 @@ const handler = async (req, res) => {
   }
 };
 export default handler;
+
+

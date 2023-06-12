@@ -10,7 +10,19 @@ const handler = async (req, res) => {
       return res.status(200).json(productDetails);
     } else if (req.method === "PUT" || req.method === "PATCH") {
       const updatedData = req.body;
-
+      if (updatedData.salePrice > updatedData.price) {
+        return res.status(415).json({
+          messageTitle: "Pricing Error",
+          message: "sale price cannot exceed original price",
+        });
+      } else if (
+        updatedData.maxQuantityPerPurchase > updatedData.availableStock
+      ) {
+        return res.status(415).json({
+          messageTitle: "Insufficient Stock",
+          message: "max quantity per purchase cannot exceed available stock",
+        });
+      }
       const updatedProduct = await Product.findByIdAndUpdate(
         productId,
         updatedData,
@@ -28,7 +40,7 @@ const handler = async (req, res) => {
       await Product.findByIdAndDelete(productId);
       console.log("deleted product successfully");
       //removing the reviews corresponding to this product
-      const allReviewsForProduct = await Review.findOne({
+      const allReviewsForProduct = await Review.find({
         productId: productId,
       });
       allReviewsForProduct.map(async (review) => {
@@ -48,7 +60,7 @@ export default handler;
 
 const removeItemFromCart = async (user, productId) => {
   try {
-    const itemIsInCart = user.itemsInCart.find(
+    const itemIsInCart = await user.itemsInCart.find(
       (item) => item.itemId === productId
     );
     if (itemIsInCart) {
@@ -65,7 +77,7 @@ const removeItemFromCart = async (user, productId) => {
 };
 const removeItemFromCheckOut = async (user, productId) => {
   try {
-    const itemIsInCart = user.itemsForCheckOut.find(
+    const itemIsInCart = await user.itemsForCheckOut.find(
       (item) => item.itemId === productId
     );
     if (itemIsInCart) {

@@ -29,6 +29,7 @@ import {
 } from "@/actions/reviewActions";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
+import { updateProductRatingAction } from "@/actions/productsActions";
 const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
@@ -155,7 +156,7 @@ const ProductDetails = ({ product }) => {
                       clearReviewData();
                       setIsEditingReview(false);
                       setCurrentReviewId("");
-                      dispatch(deleteReviewAction(review._id));
+                      dispatch(deleteReviewAction(review._id, product._id));
                     }}
                   >
                     <DeleteIcon></DeleteIcon>

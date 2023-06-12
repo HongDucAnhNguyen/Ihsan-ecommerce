@@ -14,7 +14,7 @@ const handler = async (req, res) => {
           usersWishList.push({ _id: product._id, title: product.title });
         }
       });
-      console.log(usersWishList);
+      
       //list of products user has liked
       return res.status(200).json(usersWishList);
     } else if (req.method === "PATCH" || req.method === "PUT") {

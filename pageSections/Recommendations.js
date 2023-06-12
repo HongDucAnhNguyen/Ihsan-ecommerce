@@ -3,19 +3,19 @@ import { Box, Heading } from "@chakra-ui/react";
 import Products from "./components/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getFeaturedProductsAction } from "@/actions/productsActions";
+import { getRecommendedProductsAction } from "@/actions/productsActions";
 const Recommendations = () => {
   const dispatch = useDispatch();
-  const featuredProducts = useSelector(
-    (state) => state.productReducer.featuredProducts
+  const recommendedProducts = useSelector(
+    (state) => state.productReducer.recommendedProducts
   );
   useEffect(() => {
-    dispatch(getFeaturedProductsAction());
+    dispatch(getRecommendedProductsAction());
   }, []);
   return (
     <>
       <Heading mb={4}>Recommendations</Heading>
-      <Products products={featuredProducts}></Products>
+      <Products products={recommendedProducts}></Products>
     </>
   );
 };

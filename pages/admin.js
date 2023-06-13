@@ -11,7 +11,9 @@ import {
   Checkbox,
   CheckboxGroup,
   CloseButton,
+  Flex,
   Heading,
+  Img,
   Input,
   Modal,
   ModalBody,
@@ -21,6 +23,7 @@ import {
   ModalOverlay,
   Select,
   Text,
+  Textarea,
   useToast,
 } from "@chakra-ui/react";
 import {
@@ -104,31 +107,69 @@ const Admin = () => {
   return (
     <div className={styles.container}>
       {isAuthorized ? (
-        <Box maxW="lg">
-          <Heading>Inventory Management</Heading>
+        <Box maxW="lg" mt={10}>
+          <Heading mb={5}>Inventory Management</Heading>
           {allProducts.length > 0 ? (
             <Box maxH="lg" overflow="auto">
               {allProducts.map((product) => (
-                <div
-                  style={{
-                    margin: "5px",
-                    padding: "5px",
-                    border: "1px solid orange",
-                  }}
+                <Box
+                  borderWidth="1px"
+                  borderRadius={4}
+                  boxShadow={4}
                   key={product._id}
+                  p={5}
+                  mt={3}
+                  mb={3}
                 >
-                  <p>Item Id: {product._id}</p>
-                  <p>Item On Sale: {product.isOnSale.toString()}</p>
-                  <p>Item Featured: {product.isFeatured.toString()}</p>
-                  <p>Title: {product.title}</p>
-                  <p>Description: {product.description}</p>
-                  <p>
-                    max Quantity per Purchase: {product.maxQuantityPerPurchase}
-                  </p>
-                  <p>available Stock: {product.availableStock}</p>
-                  <p>Category: {product.category}</p>
-                  <p>Price: {product.price}</p>
-                  {product.isOnSale && <p>Sale Price: {product.salePrice}</p>}
+                  <Text color="green.600" fontWeight="bold">
+                    #{product._id.substring(5, 10)}
+                  </Text>
+                  <Flex p={6} gap={3}>
+                    <Img width="30%" height="30%" src={product.imgUrl}></Img>
+                    <Box>
+                      <Text fontSize="large" fontWeight="bold">
+                        {product.title}
+                      </Text>
+
+                      <Text
+                        fontWeight="bold"
+                        color={
+                          product.availableStock > 0 ? "green.600" : "red.600"
+                        }
+                      >
+                        {product.availableStock > 0
+                          ? product.availableStock === 1
+                            ? "only 1 item left"
+                            : `${product.availableStock} items in stock`
+                          : "SOLD OUT"}
+                      </Text>
+                      <Text color="orange.600" fontWeight="bold">
+                        Category - {product.category}
+                      </Text>
+                      <Flex gap={3}>
+                        <Text
+                          color="blue.600"
+                          fontSize="xl"
+                          sx={{
+                            textDecorationLine:
+                              product.isOnSale && "line-through",
+                          }}
+                        >
+                          ${product.price}
+                        </Text>
+                        {product.isOnSale && (
+                          <Text
+                            color="orange.600"
+                            fontSize="2xl"
+                            fontWeight="bold"
+                          >
+                            ${product.salePrice}
+                          </Text>
+                        )}
+                      </Flex>
+                    </Box>
+                  </Flex>
+
                   <ButtonGroup>
                     <Button
                       colorScheme="blue"
@@ -149,21 +190,27 @@ const Admin = () => {
                       <DeleteIcon></DeleteIcon>
                     </Button>
                   </ButtonGroup>
-                </div>
+                </Box>
               ))}
             </Box>
           ) : (
             <Text color="red">Add some products</Text>
           )}
 
-          <Heading>{isEditing ? "Edit" : "Add"} Product</Heading>
+          <Heading mt={4} mb={4}>
+            {isEditing ? "Edit" : "Add"} Product
+          </Heading>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-            
+
               if (isEditing) {
                 dispatch(
-                  updateProductAction(productFormData._id, productFormData, toast)
+                  updateProductAction(
+                    productFormData._id,
+                    productFormData,
+                    toast
+                  )
                 );
               } else {
                 dispatch(createProductAction(productFormData, toast));
@@ -213,9 +260,8 @@ const Admin = () => {
                 });
               }}
             />
-            <Input
+            <Textarea
               required
-              type="text"
               placeholder="Description*"
               value={productFormData.description}
               onChange={(e) => {

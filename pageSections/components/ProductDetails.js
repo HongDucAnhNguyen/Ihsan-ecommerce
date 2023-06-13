@@ -129,9 +129,11 @@ const ProductDetails = ({ product }) => {
           )}
 
           <Text maxW={400}>{product.description}</Text>
-          {product.availableStock === 1 && (
-            <Text color="red.600">Only 1 left in stock!</Text>
-          )}
+          <Box>
+            {product.availableStock === 1 && (
+              <Text color="red.600">Only 1 left in stock!</Text>
+            )}
+          </Box>
         </Flex>
       </Flex>
 
@@ -145,17 +147,25 @@ const ProductDetails = ({ product }) => {
             <Box key={review._id} p={5}>
               <Flex justifyContent="space-between">
                 <Flex>
-                  <Avatar size="sm" mr={4}></Avatar>
-                  <Text fontWeight="bold" fontSize="lg">
-                    {review.username}
-                  </Text>
+                  <Box mr={4}>
+                    <Avatar size="sm" name={review.username} />
+                  </Box>
+                  <Box>
+                    <Text fontWeight="bold" fontSize="lg">
+                      {review.username}
+                    </Text>
+                  </Box>
                 </Flex>
-                <Text color="gray.700">
-                  Commented on {review.createdAt.substring(0, 10)}
-                </Text>
+                <Box>
+                  <Text color="gray.700">
+                    Commented on {review.createdAt.substring(0, 10)}
+                  </Text>
+                </Box>
               </Flex>
 
-              <Text mt={3}>{review.comment}</Text>
+              <Text maxW="70%" mt={3}>
+                {review.comment}
+              </Text>
               <ReactStars
                 value={review.rating}
                 isHalf={true}
@@ -163,7 +173,7 @@ const ProductDetails = ({ product }) => {
                 size={24}
                 activeColor="#ffd700"
               ></ReactStars>
-              {userState?.result?.id === review.userId && (
+              {user && user?.result?.id === review.userId && (
                 <ButtonGroup>
                   <IconButton
                     onClick={() => {
@@ -189,84 +199,87 @@ const ProductDetails = ({ product }) => {
             </Box>
           ))
         ) : (
-          <Text>This Product has no reviews</Text>
+          <Text color="orange.700" p={4}>
+            This Product has no reviews, be the first to review this item!
+          </Text>
         )}
-        {user ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              //dispatch createReview action
-              if (isEditingReview) {
-                dispatch(
-                  updateReviewAction(currentReviewId, {
-                    ...reviewData,
-                    userId: userState?.result?.id,
-                    username: userState?.result?.username,
-                    productId: product._id,
-                  })
-                );
-              } else
-                dispatch(
-                  createReviewAction(
-                    {
+        <Box mr={4} ml={4}>
+          {user ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                //dispatch createReview action
+                if (isEditingReview) {
+                  dispatch(
+                    updateReviewAction(currentReviewId, {
                       ...reviewData,
                       userId: userState?.result?.id,
                       username: userState?.result?.username,
                       productId: product._id,
-                    },
-                    toast
-                  )
-                );
+                    })
+                  );
+                } else
+                  dispatch(
+                    createReviewAction(
+                      {
+                        ...reviewData,
+                        userId: userState?.result?.id,
+                        username: userState?.result?.username,
+                        productId: product._id,
+                      },
+                      toast
+                    )
+                  );
 
-              clearReviewData();
-              setIsEditingReview(false);
-              setCurrentReviewId("");
-            }}
-          >
-            <FormLabel>
-              {isEditingReview ? "Editing" : "Write"} a Review
-            </FormLabel>
-            <Input
-              onChange={(e) => {
-                setReviewData({ ...reviewData, comment: e.target.value });
+                clearReviewData();
+                setIsEditingReview(false);
+                setCurrentReviewId("");
               }}
-              required={true}
-              value={reviewData.comment}
-              type="text"
-              placeholder="write your review*"
-            ></Input>
-            <Input
-              required={true}
-              value={reviewData.rating}
-              type="number"
-              placeholder="rate this product*"
-              onChange={(e) => {
-                setReviewData({ ...reviewData, rating: e.target.value });
-              }}
-              min={1}
-              max={5}
-            ></Input>
-            <Button type="submit">Submit</Button>
-            {isEditingReview && (
-              <Button
-                onClick={() => {
-                  setIsEditingReview(false);
-                  setReviewData({
-                    userId: userState?.result?.id,
-                    username: userState?.result?.username,
-                    productId: product._id,
-                    rating: "",
-                    comment: "",
-                  });
+            >
+              <FormLabel fontWeight="bold">
+                {isEditingReview ? "Editing" : "Write"} Review
+              </FormLabel>
+              <Textarea
+                onChange={(e) => {
+                  setReviewData({ ...reviewData, comment: e.target.value });
                 }}
-              >
-                Cancel
-              </Button>
-            )}
-          </form>
-        ) : (
-          <Text color="red.600">Sign in to comment</Text>
-        )}
+                required={true}
+                value={reviewData.comment}
+                placeholder="write your review*"
+              ></Textarea>
+              <Input
+                required={true}
+                value={reviewData.rating}
+                type="number"
+                placeholder="rate this product*"
+                onChange={(e) => {
+                  setReviewData({ ...reviewData, rating: e.target.value });
+                }}
+                min={1}
+                max={5}
+              ></Input>
+              <Button type="submit">Submit</Button>
+              {isEditingReview && (
+                <Button
+                  onClick={() => {
+                    setIsEditingReview(false);
+                    setReviewData({
+                      userId: userState?.result?.id,
+                      username: userState?.result?.username,
+                      productId: product._id,
+                      rating: "",
+                      comment: "",
+                    });
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+            </form>
+          ) : (
+            <Text color="red.600">Sign in to comment</Text>
+          )}
+        </Box>
       </Box>
     </Box>
   );

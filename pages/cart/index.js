@@ -18,9 +18,10 @@ const Cart = () => {
   return (
     <div className={styles.container}>
       <motion.div variants={fadeInVariants} initial="initial" animate="animate">
-        <Heading>Your Cart</Heading>
-        
-        <ItemsInCart></ItemsInCart>
+        <Box p={20} mt={20}>
+          <Heading>Your Cart</Heading>
+          <ItemsInCart></ItemsInCart>
+        </Box>
       </motion.div>
 
       {/*  */}

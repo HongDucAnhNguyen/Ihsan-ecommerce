@@ -102,7 +102,13 @@ const Account = () => {
                         e.preventDefault();
                         dispatch(
                           updateAccountAction(
-                            formData,
+                            {
+                              ...formData,
+                              newUsername:
+                                !formData.newUsername && user?.result?.username
+                                  ? user.result.username
+                                  : formData.newUsername,
+                            },
                             user.result.id,
                             setMessage
                           )
@@ -115,9 +121,8 @@ const Account = () => {
                       }}
                     >
                       <Input
-                        required
                         type="text"
-                        placeholder="New Username*"
+                        placeholder="New Username (optional)"
                         value={formData.newUsername}
                         onChange={(e) => {
                           setFormData({

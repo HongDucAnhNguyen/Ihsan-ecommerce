@@ -77,7 +77,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const checkInterval = setInterval(checkSession, 2000);
+    checkSession();
+    const checkInterval = setInterval(checkSession, 3000);
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () => {
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);
@@ -227,7 +228,10 @@ const Navbar = () => {
             as={Button}
             rightIcon={<ChevronDownIcon />}
           >
-            <Avatar size="xs"></Avatar>
+            <Avatar
+              name={user ? user?.result?.username : ""}
+              size="xs"
+            ></Avatar>
           </MenuButton>
           <MenuList>
             <MenuItem onClick={onOpen}>

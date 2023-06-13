@@ -10,6 +10,13 @@ const handler = async (req, res) => {
       return res.status(200).json(productDetails);
     } else if (req.method === "PUT" || req.method === "PATCH") {
       const updatedData = req.body;
+      if (updatedData.availableStock === 0) {
+        const allUsers = await User.find();
+        allUsers.forEach((user) => {
+          removeItemFromCheckOut(user, productId);
+          removeItemFromCart(user, productId);
+        });
+      }
       if (updatedData.salePrice > updatedData.price) {
         return res.status(415).json({
           messageTitle: "Pricing Error",

@@ -18,6 +18,7 @@ const handler = async (req, res) => {
           description,
           price,
           maxQuantityPerPurchase,
+          availableStock,
           isOnSale,
           salePrice,
         } = await getProduct(item.itemId);
@@ -29,6 +30,7 @@ const handler = async (req, res) => {
           description,
           price,
           maxQuantityPerPurchase,
+          availableStock,
           isOnSale,
           salePrice,
           isSelectedForCheckOut: item.isSelectedForCheckOut,
@@ -45,19 +47,15 @@ const handler = async (req, res) => {
         (item) => item.itemId === productId
       );
       if (itemExists) {
-        return res
-          .status(401)
-          .json({
-            messageTitle: "Existing Item",
-            message: "product already in cart",
-          });
+        return res.status(401).json({
+          messageTitle: "Existing Item",
+          message: "product already in cart",
+        });
       } else if (user.itemsInCart.length === 10) {
-        return res
-          .status(401)
-          .json({
-            messageTitle: "Cart Limit Reached",
-            message: "Cart capacity is limited to 10 items per purchase",
-          });
+        return res.status(401).json({
+          messageTitle: "Cart Limit Reached",
+          message: "Cart capacity is limited to 10 items per purchase",
+        });
       }
       await User.findByIdAndUpdate(
         user_id,

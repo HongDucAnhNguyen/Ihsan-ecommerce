@@ -14,11 +14,11 @@ const handler = async (req, res) => {
           usersWishList.push({ _id: product._id, title: product.title });
         }
       });
-      
+
       //list of products user has liked
       return res.status(200).json(usersWishList);
     } else if (req.method === "PATCH" || req.method === "PUT") {
-      authorize(req,res,userId)
+      
       const productId = req.body;
       const productRetrieved = await Product.findById(productId);
       const alreadyInWishList = productRetrieved.likes.find(
@@ -43,6 +43,7 @@ const handler = async (req, res) => {
         .json({ _id: updatedProduct._id, title: updatedProduct.title });
     } else return res.status(405).json({ message: "Invalid Method" });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ message: "something went wrong with the server" });

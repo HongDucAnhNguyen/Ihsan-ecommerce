@@ -22,10 +22,12 @@ export const createReviewAction = (reviewData, toast) => async (dispatch) => {
     }
     dispatch({ type: "CREATE_REVIEW", data: data });
     const { productId } = reviewData;
-    const updatedUserRes = await fetch(`/api/products/calcRating/${productId}`);
-    const updatedUserData = await updatedUserRes.json();
-
-    dispatch({ type: "UPDATE_PRODUCT", data: updatedUserData });
+    const updatedProductRes = await fetch(
+      `/api/products/calcRating/${productId}`
+    );
+    const updatedProductData = await updatedProductRes.json();
+    console.log(updatedProductData);
+    dispatch({ type: "UPDATE_PRODUCT", data: updatedProductData });
   } catch (error) {
     console.log(error);
   }
@@ -43,10 +45,12 @@ export const deleteReviewAction = (reviewId, productId) => async (dispatch) => {
 
     dispatch({ type: "DELETE_REVIEW", data: reviewId });
 
-    const updatedUserRes = await fetch(`/api/products/calcRating/${productId}`);
-    const updatedUserData = await updatedUserRes.json();
+    const updatedProductRes = await fetch(
+      `/api/products/calcRating/${productId}`
+    );
+    const updatedProductData = await updatedProductRes.json();
 
-    dispatch({ type: "UPDATE_PRODUCT", data: updatedUserData });
+    dispatch({ type: "UPDATE_PRODUCT", data: updatedProductData });
   } catch (error) {}
 };
 export const updateReviewAction =
@@ -63,11 +67,11 @@ export const updateReviewAction =
       const data = await response.json();
       dispatch({ type: "UPDATE_REVIEW", data: data });
       const { productId } = reviewData;
-      const updatedUserRes = await fetch(
+      const updatedProductRes = await fetch(
         `/api/products/calcRating/${productId}`
       );
-      const updatedUserData = await updatedUserRes.json();
+      const updatedProductData = await updatedProductRes.json();
 
-      dispatch({ type: "UPDATE_PRODUCT", data: updatedUserData });
+      dispatch({ type: "UPDATE_PRODUCT", data: updatedProductData });
     } catch (error) {}
   };

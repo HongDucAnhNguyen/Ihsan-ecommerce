@@ -12,17 +12,21 @@ import {
   ModalContent,
   Avatar,
   Button,
-  Flex,
   Icon,
   Link,
   Modal,
-  Text,
   useDisclosure,
   Input,
   IconButton,
 } from "@chakra-ui/react";
 import { AiOutlineShopping } from "react-icons/ai";
-import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  SearchIcon,
+  InfoOutlineIcon,
+  StarIcon,
+  SettingsIcon,
+} from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
@@ -235,7 +239,14 @@ const Navbar = () => {
           </MenuButton>
           <MenuList>
             <MenuItem onClick={onOpen}>
-              {user ? user?.result?.username : "Log In/Register"}
+              {user ? (
+                <>
+                  {user?.result?.username}{" "}
+                  <InfoOutlineIcon ml={3}></InfoOutlineIcon>
+                </>
+              ) : (
+                "Log In/Register"
+              )}
             </MenuItem>
             {user && (
               <>
@@ -251,7 +262,7 @@ const Navbar = () => {
                     as={NextLink}
                     href="/account"
                   >
-                    Account
+                    Account <SettingsIcon ml={3}></SettingsIcon>
                   </Link>
                 </MenuItem>
                 <MenuItem>
@@ -266,7 +277,7 @@ const Navbar = () => {
                     as={NextLink}
                     href="/wishlist"
                   >
-                    Wish List
+                    Wish List <StarIcon ml={3}></StarIcon>
                   </Link>
                 </MenuItem>
               </>

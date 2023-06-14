@@ -20,13 +20,15 @@ const WishList = () => {
   }, [dispatch]);
   return (
     <div className={styles.container}>
-      <Box>
+      <Box p={20}>
         <Heading>Your Wish List</Heading>
         {productWishlist.length > 0 ? (
           productWishlist.map((product) => (
             <Flex
               key={product._id}
               p={4}
+              mt={4}
+              borderRadius={10}
               border="3px solid lightblue"
               justifyContent="space-between"
             >

@@ -1,10 +1,11 @@
 import Review from "@/models/Review";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
+import { authorize } from "@/actions/middleware/accountAuthorize";
 const handler = async (req, res) => {
   try {
     const { userId } = req.query;
-
+    authorize(req, res, userId);
     if (req.method === "DELETE") {
       console.log(userId);
       const userRetrieved = await User.findById(userId);

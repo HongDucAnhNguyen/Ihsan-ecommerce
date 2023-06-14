@@ -1,3 +1,4 @@
+import { authorize } from "@/actions/middleware/accountAuthorize";
 import User from "@/models/User";
 const handler = async (req, res) => {
   try {
@@ -7,6 +8,7 @@ const handler = async (req, res) => {
 
     //removing an item from cart (not actual erasing of data)
     const { userId } = req.query;
+    authorize(req,res,userId);
     const productId = req.body;
     //security measures
     const user = await User.findById(userId);

@@ -12,7 +12,7 @@ const handler = async (req, res) => {
           const stripeProductRetrieved = await stripe.products.retrieve(
             itemToCheckOut.itemId
           );
-          console.log(stripeProductRetrieved.default_price);
+         
           if (stripeProductRetrieved) {
             return {
               priceId: stripeProductRetrieved.default_price,

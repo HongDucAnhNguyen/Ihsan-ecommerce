@@ -16,13 +16,16 @@ const searchResults = () => {
   }, [productSearchResults]);
   return (
     <div className={styles.container}>
-      <Box>
+      <Box mt={20} p={30}>
         <Heading>Search Results</Heading>
         {searchResults.length > 0 ? (
           searchResults.map((product) => (
             <Flex
+              mt={5}
+              mb={5}
               key={product._id}
               p={4}
+              borderRadius={10}
               border="3px solid lightblue"
               justifyContent="space-between"
             >

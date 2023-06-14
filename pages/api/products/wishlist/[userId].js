@@ -1,3 +1,4 @@
+import { authorize } from "@/actions/middleware/accountAuthorize";
 import Product from "@/models/Product";
 const handler = async (req, res) => {
   try {
@@ -18,6 +19,7 @@ const handler = async (req, res) => {
       //list of products user has liked
       return res.status(200).json(usersWishList);
     } else if (req.method === "PATCH" || req.method === "PUT") {
+      authorize(req,res,userId)
       const productId = req.body;
       const productRetrieved = await Product.findById(productId);
       const alreadyInWishList = productRetrieved.likes.find(

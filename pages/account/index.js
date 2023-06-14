@@ -25,6 +25,7 @@ import {
   CardBody,
   Text,
   ButtonGroup,
+  Avatar,
 } from "@chakra-ui/react";
 import {
   updateAccountAction,
@@ -60,7 +61,6 @@ const Account = () => {
             display: "flex",
             justifyContent: "space-between",
           }}
-          // status={message.includes("invalid") ? "error" : "success"}
         >
           <Box display="flex">
             <AlertIcon></AlertIcon>
@@ -76,27 +76,30 @@ const Account = () => {
         <div>
           {user ? (
             <>
+              <Heading mb={4}>My Account</Heading>
               <Card minW="sm" maxW="md">
                 <CardHeader>
                   <Flex justifyContent="space-between">
-                    <Heading>Manage Profile</Heading>
+                    <Flex gap={3}>
+                      <Avatar name={user?.result?.username} size="sm"></Avatar>
+                      <Text fontSize="xl" fontWeight="bold">
+                        {user?.result?.username}
+                      </Text>
+                    </Flex>
 
-                    <IconButton
+                    <Button
                       title="Edit Profile"
                       onClick={() => {
                         setIsEditing(!isEditing);
                       }}
                     >
-                      <EditIcon></EditIcon>
-                    </IconButton>
+                      Edit Account<EditIcon ml={3}></EditIcon>
+                    </Button>
                   </Flex>
                 </CardHeader>
 
                 {isEditing && (
                   <CardBody>
-                    <Text fontSize="2xl" fontWeight="bold">
-                      {user?.result?.username}
-                    </Text>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -155,10 +158,14 @@ const Account = () => {
                           });
                         }}
                       />
-                      <ButtonGroup>
-                        <Button type="submit">Update Account</Button>
+                      <ButtonGroup mt={3}>
+                        <Button colorScheme="blue" type="submit">
+                          Update Account
+                        </Button>
                         {user?.result?.role !== "admin" && (
-                          <Button onClick={onOpen}>Delete Account</Button>
+                          <Button colorScheme="red" onClick={onOpen}>
+                            Delete Account
+                          </Button>
                         )}
                       </ButtonGroup>
                     </form>

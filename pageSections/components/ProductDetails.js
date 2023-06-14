@@ -48,6 +48,7 @@ const ProductDetails = ({ product }) => {
 
   const [isEditingReview, setIsEditingReview] = useState(false);
   const [currentReviewId, setCurrentReviewId] = useState("");
+
   const [user, setUser] = useState(null);
   useEffect(() => {
     dispatch(getReviewsAction(product._id));
@@ -65,9 +66,9 @@ const ProductDetails = ({ product }) => {
     });
   };
   return (
-    <Box mt={200} mb={10}>
-      <Flex justifyContent="space-around" gap={4}>
-        <Image minW="sm" src={product.imgUrl} maxWidth="md"></Image>
+    <Box p={20} mt={20} mb={10}>
+      <Flex justifyContent="space-around" gap={4} mb={6}>
+        <Image maxWidth="50%" height="50%" src={product.imgUrl}></Image>
         <Flex flexDirection="column" alignItems="center" textAlign="center">
           <Heading maxW={500} mb={3}>
             {product.title}
@@ -136,12 +137,10 @@ const ProductDetails = ({ product }) => {
           </Box>
         </Flex>
       </Flex>
+      <Divider></Divider>
+      <Box p={6}>
+        <Heading mb={5}>Reviews</Heading>
 
-      <Box>
-        <Heading mt={6} mb={6}>
-          Reviews
-        </Heading>
-        <Divider></Divider>
         {allReviewsForProduct.length > 0 ? (
           allReviewsForProduct.map((review) => (
             <Box key={review._id} p={5}>
@@ -209,6 +208,7 @@ const ProductDetails = ({ product }) => {
               onSubmit={(e) => {
                 e.preventDefault();
                 //dispatch createReview action
+
                 if (isEditingReview) {
                   dispatch(
                     updateReviewAction(currentReviewId, {

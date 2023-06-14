@@ -40,16 +40,16 @@ const AuthForm = () => {
   }, [userState]);
   if (user !== null) {
     return (
-      <div className={styles.container}>
+      <Box p={5}>
         <Heading>Welcome {user?.result?.username}</Heading>
-        <Button
+        <Button colorScheme="red" mt={3}
           onClick={() => {
             dispatch(logoutAction());
           }}
         >
           LOG OUT
         </Button>
-      </div>
+      </Box>
     );
   }
   return (

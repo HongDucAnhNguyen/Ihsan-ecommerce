@@ -110,7 +110,7 @@ const ItemsInCart = () => {
                   </Heading>
                 </Flex>
 
-                <Text>{item.description}</Text>
+                <Text width="70%">{item.description}</Text>
 
                 {item.availableStock === 1 && (
                   <Text color="red.600">Only 1 left in stock!</Text>

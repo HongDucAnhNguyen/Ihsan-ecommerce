@@ -37,10 +37,7 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { adminAuthorizeAction } from "@/actions/authActions";
 //add password checker to authorize access to content of adminpage
 import { useDisclosure } from "@chakra-ui/react";
-import {
-  removeItemFromCheckOutAction,
-  removeItemInCartAction,
-} from "../actions/cartActions";
+
 const Admin = () => {
   const authorizedStatus = useSelector(
     (state) => state.authReducer.isAuthorizedAsAdmin
@@ -134,12 +131,16 @@ const Admin = () => {
                       <Text
                         fontWeight="bold"
                         color={
-                          product.availableStock > 0 ? "green.600" : "red.600"
+                          product.availableStock > 0
+                            ? product.availableStock === 1
+                              ? "red.400"
+                              : "green.600"
+                            : "red.600"
                         }
                       >
                         {product.availableStock > 0
                           ? product.availableStock === 1
-                            ? "only 1 item left"
+                            ? "only 1 item left!"
                             : `${product.availableStock} items in stock`
                           : "SOLD OUT"}
                       </Text>
@@ -328,6 +329,7 @@ const Admin = () => {
             )}
             <CheckboxGroup>
               <Checkbox
+                mr={3}
                 isChecked={productFormData.isOnSale}
                 onChange={() => {
                   setProductFormData({

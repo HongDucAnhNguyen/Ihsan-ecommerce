@@ -1,4 +1,3 @@
-import { authorize } from "@/actions/middleware/accountAuthorize";
 import Product from "@/models/Product";
 const handler = async (req, res) => {
   try {

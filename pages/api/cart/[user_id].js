@@ -1,10 +1,13 @@
 import User from "@/models/User";
 import Product from "@/models/Product";
-import { authorize } from "@/actions/middleware/accountAuthorize";
+import { authorize } from "@/actions/middleware/authorize";
 const handler = async (req, res) => {
   try {
-    const { user_id } = req.query; //get userid
-    authorize(req, res, user_id);
+    //get userid
+    const { user_id } = req.query;
+    if (!authorize(req)) {
+      res.status(401).end();
+    }
     if (req.method === "GET") {
       //getting all items currently in cart
       const user = await User.findById(user_id);

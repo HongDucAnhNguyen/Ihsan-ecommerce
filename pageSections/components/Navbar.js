@@ -82,7 +82,7 @@ const Navbar = () => {
 
   useEffect(() => {
     checkSession();
-    const checkInterval = setInterval(checkSession, 3000);
+    const checkInterval = setInterval(checkSession, 3600000);
     window.addEventListener("scroll", handleNavbarStickyOnScroll);
     return () => {
       window.removeEventListener("scroll", handleNavbarStickyOnScroll);

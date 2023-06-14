@@ -9,7 +9,7 @@ const payWithStripe = async (userId, router) => {
       body: JSON.stringify(userId),
     });
     const data = await response.json();
-    console.log(data);
+    
     router.push(data);
   } catch (error) {
     console.log(error);

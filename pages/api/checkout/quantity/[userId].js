@@ -1,9 +1,8 @@
-import { authorize } from "@/actions/middleware/accountAuthorize";
 import User from "@/models/User";
 const handler = async (req, res) => {
   try {
     const { userId } = req.query;
-    authorize(req, res, userId)
+    
     if (req.method === "PUT" || req.method === "PATCH") {
       const { productId, quantity } = req.body;
       const user = await User.findById(userId);

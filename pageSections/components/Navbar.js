@@ -18,6 +18,14 @@ import {
   useDisclosure,
   Input,
   IconButton,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  Flex,
+  Box,
 } from "@chakra-ui/react";
 import { AiOutlineShopping } from "react-icons/ai";
 import {
@@ -26,6 +34,7 @@ import {
   InfoOutlineIcon,
   StarIcon,
   SettingsIcon,
+  HamburgerIcon,
 } from "@chakra-ui/icons";
 import AuthForm from "./AuthForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +44,8 @@ import { logoutAction } from "@/actions/authActions";
 import { useRouter } from "next/router";
 import { getItemsInCartAction } from "@/actions/cartActions";
 import { searchProductsAction } from "@/actions/productsActions";
+import NavbarItemLinks from "./NavbarItemLinks";
+import NavbarActionLinks from "./NavbarActionLinks";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
@@ -42,8 +53,21 @@ const Navbar = () => {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState(null);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [hamburgerNav, setHamburgerNav] = useState(false);
+  const [windowSize, setWindowSize] = useState({
+    width: "",
+    height: "",
+  });
+  const handleResize = () => {
+    setWindowSize({
+      width: (window.innerWidth * 95) / 100,
+      height: window.innerHeight,
+    });
+  };
+
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetHeight * 2) {
@@ -79,303 +103,118 @@ const Navbar = () => {
       isClosable: true,
     });
   };
-
+  const openHamburgerMenu = () => {
+    setIsHamburgerOpen(true);
+  };
+  const closeHamburgerMenu = () => {
+    setIsHamburgerOpen(false);
+  };
   useEffect(() => {
     checkSession();
+    setWindowSize({
+      width: window.innerWidth,
+    });
     const checkInterval = setInterval(checkSession, 3600000);
-    window.addEventListener("scroll", handleNavbarStickyOnScroll);
+    if (windowSize.width > 880) {
+      window.addEventListener("scroll", handleNavbarStickyOnScroll);
+    }
+
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("scroll", handleNavbarStickyOnScroll);
+      window.removeEventListener("resize", handleResize);
+      if (windowSize.width > 880) {
+        window.removeEventListener("scroll", handleNavbarStickyOnScroll);
+      }
       clearInterval(checkInterval);
     };
   }, []);
+
   useEffect(() => {
-    console.log(isSearching);
-  }, [isSearching]);
+    console.log(windowSize.width);
+    if (windowSize.width < 880) {
+      setHamburgerNav(true);
+    } else setHamburgerNav(false);
+  }, [windowSize]);
   useEffect(() => {
     setUser(userState);
     userState !== null && dispatch(getItemsInCartAction(userState?.result?.id));
   }, [userState]);
+
   return (
     <nav
       className={`${styles.navbar} ${isScrolling && styles.navbarSticky} `}
       id="navbar"
     >
-      <div>
-        <Link
-          mr={2}
-          as={NextLink}
-          href="/"
-          sx={{
-            "&:hover": {
-              textDecoration: "none",
-            },
-            p: 2,
-            fontWeight: "bold",
-            fontSize: "2xl",
-            fontStyle: "italic",
-            marginRight: 10,
-          }}
-        >
-          Ihsan
-        </Link>
-        <Link
-          mr={2}
-          as={NextLink}
-          href="/Quran"
-          sx={{
-            "&:hover": {
-              textDecoration: "none",
-            },
-            p: 2,
-            fontWeight: "bold",
-          }}
-        >
-          Qur'an
-        </Link>
-
-        <Menu
-          sx={{
-            p: 4,
-            fontWeight: "bold",
-          }}
-        >
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            Clothing
-          </MenuButton>
-          <MenuList>
-            <MenuItem>
-              <Link
-                mr={2}
-                sx={{
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                }}
-                width={"100%"}
-                as={NextLink}
-                href="/clothing/mclothing"
-              >
-                Men
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              {" "}
-              <Link
-                mr={2}
-                sx={{
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                }}
-                width={"100%"}
-                as={NextLink}
-                href="/clothing/fclothing"
-              >
-                Women
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              {" "}
-              <Link
-                mr={2}
-                sx={{
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                }}
-                width={"100%"}
-                as={NextLink}
-                href="/clothing"
-              >
-                All
-              </Link>
-            </MenuItem>
-          </MenuList>
-        </Menu>
-
-        <Link
-          mr={2}
-          as={NextLink}
-          href="/accessories"
-          sx={{
-            "&:hover": {
-              textDecoration: "none",
-            },
-            p: 2,
-            fontWeight: "bold",
-          }}
-        >
-          Accessories
-        </Link>
-        <Link
-          mr={2}
-          as={NextLink}
-          href="/about"
-          sx={{
-            "&:hover": {
-              textDecoration: "none",
-            },
-            p: 2,
-            fontWeight: "bold",
-          }}
-        >
-          About
-        </Link>
-      </div>
-      <div>
-        <IconButton
-          mr={4}
-          onClick={() => {
-            setIsSearching(true);
-            onOpen();
-          }}
-        >
-          <SearchIcon></SearchIcon>
-        </IconButton>
-
-        <Menu>
-          <MenuButton
-            onClick={() => {
-              setIsSearching(false);
-            }}
-            as={Button}
-            rightIcon={<ChevronDownIcon />}
-          >
-            <Avatar
-              name={user ? user?.result?.username : ""}
-              size="xs"
-            ></Avatar>
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={onOpen}>
-              {user ? (
-                <>
-                  {user?.result?.username}{" "}
-                  <InfoOutlineIcon ml={3}></InfoOutlineIcon>
-                </>
-              ) : (
-                "Log In/Register"
-              )}
-            </MenuItem>
-            {user && (
-              <>
-                <MenuItem>
-                  {" "}
-                  <Link
-                    mr={2}
-                    width={"100%"}
-                    sx={{
-                      "&:hover": {
-                        textDecoration: "none",
-                      },
-                    }}
-                    as={NextLink}
-                    href="/account"
-                  >
-                    Account <SettingsIcon ml={3}></SettingsIcon>
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  {" "}
-                  <Link
-                    mr={2}
-                    width={"100%"}
-                    sx={{
-                      "&:hover": {
-                        textDecoration: "none",
-                      },
-                    }}
-                    as={NextLink}
-                    href="/wishlist"
-                  >
-                    Wish List <StarIcon ml={3}></StarIcon>
-                  </Link>
-                </MenuItem>
-              </>
-            )}
-          </MenuList>
-        </Menu>
-
-        <Modal
-          blockScrollOnMount={false}
-          isCentered={true}
-          isOpen={isOpen}
-          onClose={onClose}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            {isSearching ? (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  dispatch(searchProductsAction(searchQuery));
-                  setSearchQuery("");
-                  onClose();
-                  router.push("/searchResults");
-                }}
-              >
-                <Input
-                  size="lg"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                  }}
-                  type="text"
-                  required
-                  placeholder="Search Store..."
-                ></Input>
-              </form>
-            ) : (
-              <>
-                <ModalCloseButton />
-                <AuthForm></AuthForm>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-
-        <Link
-          mr={2}
-          as={NextLink}
-          href="/contact"
-          sx={{
-            "&:hover": {
-              textDecoration: "none",
-            },
-            p: 2,
-            fontWeight: "bold",
-          }}
-        >
-          Contact
-        </Link>
-        {user && user?.result?.role === "admin" ? (
+      <Flex>
+        <Box>
           <Link
             mr={2}
             as={NextLink}
-            href="/admin"
+            href="/"
             sx={{
               "&:hover": {
                 textDecoration: "none",
               },
               p: 2,
               fontWeight: "bold",
+              fontSize: "2xl",
+              fontStyle: "italic",
+              marginRight: 10,
             }}
           >
-            Admin
+            Ihsan
           </Link>
-        ) : (
-          <></>
-        )}
-        <Button
-          onClick={() => {
-            router.push("/cart");
-          }}
-          rightIcon={<Icon fontSize="xl" as={AiOutlineShopping}></Icon>}
-        >
-          Cart
-        </Button>
-      </div>
+        </Box>
+
+        {!hamburgerNav && <NavbarItemLinks></NavbarItemLinks>}
+      </Flex>
+
+      {!hamburgerNav && (
+        <NavbarActionLinks
+          user={user}
+          onOpen={onOpen}
+          onClose={onClose}
+          isOpen={isOpen}
+          isSearching={isSearching}
+          setIsSearching={setIsSearching}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        ></NavbarActionLinks>
+      )}
+      {hamburgerNav && (
+        <div>
+          <IconButton size="lg" onClick={openHamburgerMenu}>
+            <HamburgerIcon></HamburgerIcon>
+          </IconButton>
+          <Drawer
+            size="md"
+            zIndex={999999999}
+            isOpen={isHamburgerOpen}
+            placement="right"
+            onClose={closeHamburgerMenu}
+          >
+            <DrawerOverlay />
+
+            <DrawerContent>
+              <DrawerCloseButton />
+
+              <DrawerBody>
+                <NavbarItemLinks></NavbarItemLinks>
+                <NavbarActionLinks
+                  user={user}
+                  onOpen={onOpen}
+                  onClose={onClose}
+                  isOpen={isOpen}
+                  isSearching={isSearching}
+                  setIsSearching={setIsSearching}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                ></NavbarActionLinks>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </div>
+      )}
     </nav>
   );
 };

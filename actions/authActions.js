@@ -45,6 +45,7 @@ export const logoutAction = () => async (dispatch) => {
     await fetch("/api/auth/logout");
     dispatch({ type: "LOGOUT" });
     dispatch({ type: "CLEAR_CART" });
+    dispatch({ type: "CLEAR_WISH_LIST" });
   } catch (error) {
     console.log(error);
   }
@@ -106,6 +107,5 @@ export const adminAuthorizeAction =
       }
     } catch (error) {
       console.log(error);
-      
     }
   };

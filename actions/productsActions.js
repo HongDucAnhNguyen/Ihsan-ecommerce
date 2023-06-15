@@ -1,49 +1,50 @@
-export const createProductAction = (productFormData, toast) => async (dispatch) => {
-  try {
-    dispatch({ type: "LOADING" });
-    const response = await fetch("/api/products", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(productFormData),
-    });
-    const data = await response.json();
-    if (data.message) {
-      toast({
-        position: "bottom-left",
-        title: data.messageTitle,
-        status: "error",
-        description: data.message,
-        duration: 5000,
-        isClosable: true,
+export const createProductAction =
+  (productFormData, toast) => async (dispatch) => {
+    try {
+      dispatch({ type: "LOADING" });
+      const response = await fetch("/api/products", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productFormData),
       });
-      return;
+      const data = await response.json();
+      if (data.message) {
+        toast({
+          position: "bottom-left",
+          title: data.messageTitle,
+          status: "error",
+          description: data.message,
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+      await fetch("/api/stripe/products", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: data.title,
+          isOnSale: data.isOnSale,
+          salePrice: data.salePrice,
+          price: data.price,
+          description: data.description,
+          imgUrl: data.imgUrl,
+          id: data._id,
+        }),
+      });
+      dispatch({ type: "CREATE_PRODUCT", data: data });
+      console.log(data);
+      dispatch({ type: "END_LOADING" });
+    } catch (error) {
+      console.log(error);
     }
-    await fetch("/api/stripe/products", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: data.title,
-        isOnSale: data.isOnSale,
-        salePrice: data.salePrice,
-        price: data.price,
-        description: data.description,
-        imgUrl: data.imgUrl,
-        id: data._id,
-      }),
-    });
-    dispatch({ type: "CREATE_PRODUCT", data: data });
-    console.log(data);
-    dispatch({ type: "END_LOADING" });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
 export const getAllProductsAction = () => async (dispatch) => {
   try {
@@ -181,7 +182,7 @@ export const searchProductsAction = (searchTerm) => async (dispatch) => {
 };
 export const getProductsInWishList = (userId) => async (dispatch) => {
   try {
-    const response = await fetch(`api/products/wishlist/${userId}`);
+    const response = await fetch(`/api/products/wishlist/${userId}`);
     const data = await response.json();
     //list of products that have been starred by user\
 
@@ -193,7 +194,7 @@ export const getProductsInWishList = (userId) => async (dispatch) => {
 export const addProductToWishList =
   (userId, productId, toast) => async (dispatch) => {
     try {
-      const response = await fetch(`api/products/wishlist/${userId}`, {
+      const response = await fetch(`/api/products/wishlist/${userId}`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
@@ -230,7 +231,7 @@ export const addProductToWishList =
 export const removeProductFromWishList =
   (userId, productId) => async (dispatch) => {
     try {
-      await fetch(`api/products/wishlist/remove/${userId}`, {
+      await fetch(`/api/products/wishlist/remove/${userId}`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",

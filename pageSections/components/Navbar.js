@@ -103,6 +103,7 @@ const Navbar = () => {
     >
       <div>
         <Link
+          mr={2}
           as={NextLink}
           href="/"
           sx={{
@@ -111,11 +112,15 @@ const Navbar = () => {
             },
             p: 2,
             fontWeight: "bold",
+            fontSize: "2xl",
+            fontStyle: "italic",
+            marginRight: 10,
           }}
         >
           Ihsan
         </Link>
         <Link
+          mr={2}
           as={NextLink}
           href="/Quran"
           sx={{
@@ -141,6 +146,7 @@ const Navbar = () => {
           <MenuList>
             <MenuItem>
               <Link
+                mr={2}
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -156,6 +162,7 @@ const Navbar = () => {
             <MenuItem>
               {" "}
               <Link
+                mr={2}
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -171,6 +178,7 @@ const Navbar = () => {
             <MenuItem>
               {" "}
               <Link
+                mr={2}
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -187,6 +195,7 @@ const Navbar = () => {
         </Menu>
 
         <Link
+          mr={2}
           as={NextLink}
           href="/accessories"
           sx={{
@@ -200,6 +209,7 @@ const Navbar = () => {
           Accessories
         </Link>
         <Link
+          mr={2}
           as={NextLink}
           href="/about"
           sx={{
@@ -253,6 +263,7 @@ const Navbar = () => {
                 <MenuItem>
                   {" "}
                   <Link
+                    mr={2}
                     width={"100%"}
                     sx={{
                       "&:hover": {
@@ -268,6 +279,7 @@ const Navbar = () => {
                 <MenuItem>
                   {" "}
                   <Link
+                    mr={2}
                     width={"100%"}
                     sx={{
                       "&:hover": {
@@ -324,6 +336,7 @@ const Navbar = () => {
         </Modal>
 
         <Link
+          mr={2}
           as={NextLink}
           href="/contact"
           sx={{
@@ -338,6 +351,7 @@ const Navbar = () => {
         </Link>
         {user && user?.result?.role === "admin" ? (
           <Link
+            mr={2}
             as={NextLink}
             href="/admin"
             sx={{

@@ -18,6 +18,9 @@ const WishList = () => {
   useEffect(() => {
     dispatch(getProductsInWishList(userState?.result?.id));
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(getProductsInWishList(userState?.result?.id));
+  }, [userState]);
   return (
     <div className={styles.container}>
       <Box p={20}>

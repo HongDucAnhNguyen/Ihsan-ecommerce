@@ -66,6 +66,8 @@ const productReducer = (
           (product) => product._id !== action?.data
         ),
       };
+    case "CLEAR_WISH_LIST":
+      return { ...state, productWishlist: [] };
     default:
       return state;
   }

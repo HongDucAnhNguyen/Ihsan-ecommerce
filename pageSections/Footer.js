@@ -10,7 +10,9 @@ const Footer = () => {
       <div className={styles.footerSectionsContainer}>
         <div className={styles.footerInnerSectionsContainer}>
           <Box p={3}>
-            <Heading fontSize="3xl">Ihsan</Heading>
+            <Heading fontSize="3xl" fontStyle="italic">
+              Ihsan
+            </Heading>
             <Text maxW={400}>
               Inspiring Muslims with Authentic Islamic Products. Thoughtfully
               curated items crafted by Muslims, for Muslims.

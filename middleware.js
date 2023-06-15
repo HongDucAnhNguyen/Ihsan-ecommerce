@@ -38,6 +38,7 @@ export const config = {
     "/api/products/wishlist/:path*",
     "/api/products/[productId]",
     "/api/products/",
+    "/api/products/wishlist/:path*",
   ],
 };
 

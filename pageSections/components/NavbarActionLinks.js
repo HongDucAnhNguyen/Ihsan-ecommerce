@@ -14,8 +14,13 @@ import {
   Link,
   Modal,
   Input,
-  IconButton,
+  Text,
   Box,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 import { AiOutlineShopping } from "react-icons/ai";
 import {
@@ -38,46 +43,53 @@ const NavbarActionLinks = ({
   setIsSearching,
   searchQuery,
   setSearchQuery,
+  hamburgerNav,
 }) => {
   const router = useRouter();
   return (
-    <Box>
-      <IconButton
-        mr={4}
-        onClick={() => {
-          setIsSearching(true);
-          onOpen();
-        }}
-      >
-        <SearchIcon></SearchIcon>
-      </IconButton>
-
-      <Menu>
-        <MenuButton
+    <Box sx={hamburgerNav && { display: "flex", flexDirection: "column" }}>
+      {!hamburgerNav && (
+        <Button
+          mr={4}
           onClick={() => {
-            setIsSearching(false);
+            setIsSearching(true);
+            onOpen();
           }}
-          as={Button}
-          rightIcon={<ChevronDownIcon />}
         >
-          <Avatar name={user ? user?.result?.username : ""} size="xs"></Avatar>
-        </MenuButton>
-        <MenuList>
-          <MenuItem onClick={onOpen}>
-            {user ? (
-              <>
-                {user?.result?.username}{" "}
-                <InfoOutlineIcon ml={3}></InfoOutlineIcon>
-              </>
-            ) : (
-              "Log In/Register"
-            )}
-          </MenuItem>
-          {user && (
-            <>
-              <MenuItem>
+          <SearchIcon></SearchIcon>
+        </Button>
+      )}
+
+      {hamburgerNav ? (
+        <Accordion defaultIndex={[0]} allowMultiple>
+          <AccordionItem>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                <Text fontWeight="bold">Account Settings</Text>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Box mb={3}>
+                {user ? (
+                  <Text
+                    onClick={() => {
+                      setIsSearching(false), onOpen();
+                    }}
+                    _hover={{ color: "blue.600" }}
+                    cursor="pointer"
+                  >
+                    {user?.result?.username}{" "}
+                    <InfoOutlineIcon ml={3}></InfoOutlineIcon>
+                  </Text>
+                ) : (
+                  "Log In/Register"
+                )}
+              </Box>
+              <Box mb={3}>
                 {" "}
                 <Link
+                  _hover={hamburgerNav && { color: "blue.600" }}
                   mr={2}
                   width={"100%"}
                   sx={{
@@ -90,10 +102,10 @@ const NavbarActionLinks = ({
                 >
                   Account <SettingsIcon ml={3}></SettingsIcon>
                 </Link>
-              </MenuItem>
-              <MenuItem>
-                {" "}
+              </Box>
+              <Box mb={3}>
                 <Link
+                  _hover={hamburgerNav && { color: "blue.600" }}
                   mr={2}
                   width={"100%"}
                   sx={{
@@ -106,11 +118,78 @@ const NavbarActionLinks = ({
                 >
                   Wish List <StarIcon ml={3}></StarIcon>
                 </Link>
-              </MenuItem>
-            </>
-          )}
-        </MenuList>
-      </Menu>
+              </Box>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      ) : (
+        <Menu>
+          <MenuButton
+            onClick={() => {
+              setIsSearching(false);
+            }}
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+          >
+            <Avatar
+              name={user ? user?.result?.username : ""}
+              size="xs"
+            ></Avatar>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={onOpen}>
+              {user ? (
+                <>
+                  {user?.result?.username}{" "}
+                  <InfoOutlineIcon ml={3}></InfoOutlineIcon>
+                </>
+              ) : (
+                "Log In/Register"
+              )}
+            </MenuItem>
+            {user && (
+              <>
+                <MenuItem>
+                  {" "}
+                  <Link
+                    ml={hamburgerNav ? 2 : ""}
+                    _hover={hamburgerNav && { color: "blue.600" }}
+                    mr={2}
+                    width={"100%"}
+                    sx={{
+                      "&:hover": {
+                        textDecoration: "none",
+                      },
+                    }}
+                    as={NextLink}
+                    href="/account"
+                  >
+                    Account <SettingsIcon ml={3}></SettingsIcon>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  {" "}
+                  <Link
+                    ml={hamburgerNav ? 2 : ""}
+                    _hover={hamburgerNav && { color: "blue.600" }}
+                    mr={2}
+                    width={"100%"}
+                    sx={{
+                      "&:hover": {
+                        textDecoration: "none",
+                      },
+                    }}
+                    as={NextLink}
+                    href="/wishlist"
+                  >
+                    Wish List <StarIcon ml={3}></StarIcon>
+                  </Link>
+                </MenuItem>
+              </>
+            )}
+          </MenuList>
+        </Menu>
+      )}
 
       <Modal
         blockScrollOnMount={false}
@@ -151,6 +230,8 @@ const NavbarActionLinks = ({
       </Modal>
 
       <Link
+        ml={hamburgerNav ? 2 : ""}
+        _hover={hamburgerNav && { color: "blue.600" }}
         mr={2}
         as={NextLink}
         href="/contact"
@@ -166,6 +247,8 @@ const NavbarActionLinks = ({
       </Link>
       {user && user?.result?.role === "admin" ? (
         <Link
+          ml={hamburgerNav ? 2 : ""}
+          _hover={hamburgerNav && { color: "blue.600" }}
           mr={2}
           as={NextLink}
           href="/admin"
@@ -181,6 +264,19 @@ const NavbarActionLinks = ({
         </Link>
       ) : (
         <></>
+      )}
+
+      {hamburgerNav && (
+        <Button
+          mb={4}
+          onClick={() => {
+            setIsSearching(true);
+            onOpen();
+          }}
+        >
+          <Text mr={4}>Search The Store</Text>
+          <SearchIcon></SearchIcon>
+        </Button>
       )}
       <Button
         onClick={() => {

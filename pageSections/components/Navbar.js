@@ -26,6 +26,9 @@ import {
   DrawerBody,
   Flex,
   Box,
+  Heading,
+  Divider,
+  CloseButton,
 } from "@chakra-ui/react";
 import { AiOutlineShopping } from "react-icons/ai";
 import {
@@ -115,16 +118,15 @@ const Navbar = () => {
       width: window.innerWidth,
     });
     const checkInterval = setInterval(checkSession, 3600000);
-    if (windowSize.width > 880) {
-      window.addEventListener("scroll", handleNavbarStickyOnScroll);
-    }
+
+    window.addEventListener("scroll", handleNavbarStickyOnScroll);
 
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (windowSize.width > 880) {
-        window.removeEventListener("scroll", handleNavbarStickyOnScroll);
-      }
+
+      window.removeEventListener("scroll", handleNavbarStickyOnScroll);
+
       clearInterval(checkInterval);
     };
   }, []);
@@ -187,7 +189,8 @@ const Navbar = () => {
             <HamburgerIcon></HamburgerIcon>
           </IconButton>
           <Drawer
-            size="md"
+            blockScrollOnMount={false}
+            size="xs"
             zIndex={999999999}
             isOpen={isHamburgerOpen}
             placement="right"
@@ -196,10 +199,17 @@ const Navbar = () => {
             <DrawerOverlay />
 
             <DrawerContent>
-              <DrawerCloseButton />
-
+              <DrawerHeader>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Heading fontStyle="italic" color="blue.600">
+                    Ihsan
+                  </Heading>
+                  <CloseButton onClick={closeHamburgerMenu}></CloseButton>
+                </Flex>
+              </DrawerHeader>
+              <Divider></Divider>
               <DrawerBody>
-                <NavbarItemLinks></NavbarItemLinks>
+                <NavbarItemLinks hamburgerNav={hamburgerNav}></NavbarItemLinks>
                 <NavbarActionLinks
                   user={user}
                   onOpen={onOpen}
@@ -209,6 +219,7 @@ const Navbar = () => {
                   setIsSearching={setIsSearching}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
+                  hamburgerNav={hamburgerNav}
                 ></NavbarActionLinks>
               </DrawerBody>
             </DrawerContent>

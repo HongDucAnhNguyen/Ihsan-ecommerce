@@ -15,4 +15,4 @@
 
 ## Status
 
-- Currently under development
+- Deployment in 3 days

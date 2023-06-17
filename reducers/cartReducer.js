@@ -3,10 +3,15 @@ const cartReducer = (
     itemsInCart: [],
     itemsToCheckOut: [],
     checkOutSubTotal: 0,
+    isLoading: false,
   },
   action
 ) => {
   switch (action.type) {
+    case "IS_LOADING":
+      return { ...state, isLoading: true };
+    case "END_LOADING":
+      return { ...state, isLoading: false };
     case "GET_ITEMS_IN_CART":
       return { ...state, itemsInCart: action?.data };
     case "ADD_TO_CART":

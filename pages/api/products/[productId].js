@@ -78,6 +78,7 @@ const removeItemFromCart = async (user, productId) => {
         { $pull: { itemsInCart: { itemId: productId } } },
         { new: true }
       );
+      console.log("removed item from cart after item deletion");
     }
   } catch (error) {
     console.log(error);
@@ -85,16 +86,17 @@ const removeItemFromCart = async (user, productId) => {
 };
 const removeItemFromCheckOut = async (user, productId) => {
   try {
-    const itemIsInCart = await user.itemsForCheckOut.find(
+    const itemIsInCheckOut = await user.itemsToCheckOut.find(
       (item) => item.itemId === productId
     );
-    if (itemIsInCart) {
+    if (itemIsInCheckOut) {
       //update the user's cart
       await User.findByIdAndUpdate(
         user._id,
         { $pull: { itemsToCheckOut: { itemId: productId } } },
         { new: true }
       );
+      console.log("removed item from checkout after item deletion");
     }
   } catch (error) {
     console.log(error);

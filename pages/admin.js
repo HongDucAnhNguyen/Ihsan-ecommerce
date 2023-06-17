@@ -34,9 +34,13 @@ import {
 } from "@/actions/productsActions";
 // import Products from "@/pageSections/components/Products";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { adminAuthorizeAction } from "@/actions/authActions";
+import { adminVerifyAction } from "@/actions/authActions";
 //add password checker to authorize access to content of adminpage
 import { useDisclosure } from "@chakra-ui/react";
+import {
+  removeItemFromCheckOutAction,
+  removeItemInCartAction,
+} from "@/actions/cartActions";
 
 const Admin = () => {
   const authorizedStatus = useSelector(
@@ -82,7 +86,7 @@ const Admin = () => {
     });
   };
   useEffect(() => {
-    dispatch(getAllProductsAction());
+    dispatch(getAllProductsAction(userState?.result?.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -104,7 +108,7 @@ const Admin = () => {
   return (
     <div className={styles.container}>
       {isAuthorized ? (
-        <Box maxW="lg" mt={10}>
+        <Box maxW="lg" mt={20} p={5}>
           <Heading mb={5}>Inventory Management</Heading>
           {allProducts.length > 0 ? (
             <Box maxH="lg" overflow="auto">
@@ -185,7 +189,24 @@ const Admin = () => {
                       colorScheme="red"
                       onClick={() => {
                         setIsEditing(false);
-                        dispatch(deleteProductAction(product._id));
+                        dispatch(
+                          removeItemFromCheckOutAction(
+                            product._id,
+                            userState?.result?.id
+                          )
+                        );
+                        dispatch(
+                          removeItemInCartAction(
+                            product._id,
+                            userState?.result?.id
+                          )
+                        );
+                        dispatch(
+                          deleteProductAction(
+                            product._id,
+                            userState?.result?.id
+                          )
+                        );
                       }}
                     >
                       <DeleteIcon></DeleteIcon>
@@ -210,11 +231,18 @@ const Admin = () => {
                   updateProductAction(
                     productFormData._id,
                     productFormData,
-                    toast
+                    toast,
+                    userState?.result?.id
                   )
                 );
               } else {
-                dispatch(createProductAction(productFormData, toast));
+                dispatch(
+                  createProductAction(
+                    productFormData,
+                    toast,
+                    userState?.result?.id
+                  )
+                );
               }
 
               clearForm();
@@ -405,7 +433,7 @@ const Admin = () => {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    dispatch(adminAuthorizeAction(adminCreds, setMessage));
+                    dispatch(adminVerifyAction(adminCreds, setMessage));
                     setAdminCreds({ username: "", password: "" });
                   }}
                 >

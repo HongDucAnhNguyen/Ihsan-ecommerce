@@ -7,6 +7,8 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 const MensClothing = () => {
   const products = useSelector((state) => state.productReducer.products);
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -25,7 +27,6 @@ const MensClothing = () => {
   }
   return (
     <div className={styles.container}>
-      
       <Box
         sx={{
           width: "100%",
@@ -35,7 +36,7 @@ const MensClothing = () => {
         }}
       >
         <Box maxW="100%" width={1200} textAlign="center">
-        <Heading mb={6}>Men's Clothing Products</Heading>
+          <Heading mb={6}>Men's Clothing Products</Heading>
           <Products products={products}></Products>
         </Box>
       </Box>

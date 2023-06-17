@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
 const Clothing = () => {
   const products = useSelector((state) => state.productReducer.products);
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
+
   const dispatch = useDispatch();
   const router = useRouter();
 

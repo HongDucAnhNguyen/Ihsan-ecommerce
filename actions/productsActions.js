@@ -1,7 +1,15 @@
 export const createProductAction =
-  (productFormData, toast) => async (dispatch) => {
+  (productFormData, toast, userId) => async (dispatch) => {
     try {
       dispatch({ type: "LOADING" });
+      await fetch("/api/auth/admin/adminActionsAuthorize", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userId),
+      });
       const response = await fetch("/api/products", {
         method: "POST",
         headers: {
@@ -46,10 +54,17 @@ export const createProductAction =
     }
   };
 
-export const getAllProductsAction = () => async (dispatch) => {
+export const getAllProductsAction = (userId) => async (dispatch) => {
   try {
-    dispatch({ type: "LOADING" });
-
+    dispatch({ type: "IS_LOADING" });
+    await fetch("/api/auth/admin/adminActionsAuthorize", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userId),
+    });
     const response = await fetch("/api/products");
     const allProducts = await response.json();
     dispatch({ type: "GET_ALL_PRODUCTS", data: allProducts });
@@ -61,7 +76,7 @@ export const getAllProductsAction = () => async (dispatch) => {
 
 export const getRecommendedProductsAction = () => async (dispatch) => {
   try {
-    dispatch({ type: "LOADING" });
+    dispatch({ type: "IS_LOADING" });
 
     const response = await fetch("/api/products/recommendedProducts");
     const recommendedProducts = await response.json();
@@ -74,7 +89,7 @@ export const getRecommendedProductsAction = () => async (dispatch) => {
 };
 export const getFeaturedProductsAction = () => async (dispatch) => {
   try {
-    dispatch({ type: "LOADING" });
+    dispatch({ type: "IS_LOADING" });
 
     const response = await fetch("/api/products/featuredProducts");
     const featuredProducts = await response.json();
@@ -88,7 +103,7 @@ export const getFeaturedProductsAction = () => async (dispatch) => {
 export const getProductsOnSaleAction =
   (productCategory) => async (dispatch) => {
     try {
-      dispatch({ type: "LOADING" });
+      dispatch({ type: "IS_LOADING" });
 
       const response = await fetch(
         `/api/products/productsOnSale/${productCategory}`
@@ -101,8 +116,16 @@ export const getProductsOnSaleAction =
       console.log(error);
     }
   };
-export const deleteProductAction = (productId) => async (dispatch) => {
+export const deleteProductAction = (productId, userId) => async (dispatch) => {
   try {
+    await fetch("/api/auth/admin/adminActionsAuthorize", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userId),
+    });
     await fetch(`/api/products/${productId}`, { method: "DELETE" });
     await fetch(`/api/stripe/${productId}`, { method: "DELETE" });
     dispatch({ type: "DELETE_PRODUCT", data: productId });
@@ -111,8 +134,16 @@ export const deleteProductAction = (productId) => async (dispatch) => {
   }
 };
 export const updateProductAction =
-  (productId, productFormData, toast) => async (dispatch) => {
+  (productId, productFormData, toast, userId) => async (dispatch) => {
     try {
+      await fetch("/api/auth/admin/adminActionsAuthorize", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userId),
+      });
       const response = await fetch(`/api/products/${productId}`, {
         method: "PUT",
         headers: {
@@ -157,7 +188,7 @@ export const updateProductAction =
 
 export const getProductsByCategoryAction = (category) => async (dispatch) => {
   try {
-    dispatch({ type: "LOADING" });
+    dispatch({ type: "IS_LOADING" });
 
     const response = await fetch(`/api/products/categories/${category}`);
     const productsOfCategory = await response.json();
@@ -170,23 +201,27 @@ export const getProductsByCategoryAction = (category) => async (dispatch) => {
 };
 export const searchProductsAction = (searchTerm) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     const response = await fetch(
       `/api/products/search?searchQuery=${searchTerm}`
     );
     const data = await response.json();
 
     dispatch({ type: "GET_SEARCH_RESULTS", data: data });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
     console.log(error);
   }
 };
 export const getProductsInWishList = (userId) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     const response = await fetch(`/api/products/wishlist/${userId}`);
     const data = await response.json();
     //list of products that have been starred by user\
 
     dispatch({ type: "GET_WISH_LIST", data: data });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
     console.log(error);
   }

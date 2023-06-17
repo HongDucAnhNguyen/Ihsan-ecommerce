@@ -33,10 +33,12 @@ export const addItemToCartAction =
 
 export const getItemsInCartAction = (user_id) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     const response = await fetch(`/api/cart/${user_id}`);
     const data = await response.json();
 
     dispatch({ type: "GET_ITEMS_IN_CART", data: data });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
     console.log(error);
   }
@@ -116,10 +118,13 @@ export const removeItemFromCheckOutAction =
   };
 export const getItemsInCheckOutAction = (userId) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     const response = await fetch(`/api/checkout/${userId}`);
     const data = await response.json();
     dispatch({ type: "GET_ITEMS_IN_CHECKOUT", data: data });
+
     dispatch({ type: "CALCULATE_SUBTOTAL" });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
     console.log(error);
   }

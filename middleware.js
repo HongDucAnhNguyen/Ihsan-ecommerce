@@ -7,9 +7,9 @@ export function middleware(req) {
     const cookies = req.cookies;
     const token = cookies.get("token").value;
 
-    const decodedTokenInfo = verifyToken(token);
-    console.log(decodedTokenInfo);
+    verifyToken(token);
 
+    // req.userId = decodedTokenData;
     console.log("valid token");
   } catch (error) {
     // Invalid token, user is not authenticated
@@ -24,13 +24,13 @@ export function middleware(req) {
       })
     );
   }
-  console.log("hello from middleware");
 
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
+    "/api/auth/admin/adminVerify",
     "/api/auth/accountConfig/[userId]",
     "/api/cart/:path*",
     "/api/checkout/:path*",
@@ -43,7 +43,11 @@ export const config = {
 };
 
 const verifyToken = async (jwt) => {
-  await jwtVerify(jwt, new TextEncoder().encode(process.env.JWT_KEY));
+  const { payload } = await jwtVerify(
+    jwt,
+    new TextEncoder().encode(process.env.JWT_KEY)
+  );
+  return payload.id;
   //   if (userId !== payload.id) {
   //     return new NextResponse(
   //       JSON.stringify({

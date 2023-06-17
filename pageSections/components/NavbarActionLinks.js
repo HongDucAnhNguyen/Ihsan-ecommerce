@@ -33,6 +33,7 @@ import {
 import AuthForm from "./AuthForm";
 import { searchProductsAction } from "@/actions/productsActions";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 const NavbarActionLinks = ({
   user,
   onOpen,
@@ -46,6 +47,7 @@ const NavbarActionLinks = ({
   hamburgerNav,
 }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   return (
     <Box sx={hamburgerNav && { display: "flex", flexDirection: "column" }}>
       {!hamburgerNav && (
@@ -71,20 +73,16 @@ const NavbarActionLinks = ({
             </AccordionButton>
             <AccordionPanel>
               <Box mb={3}>
-                {user ? (
-                  <Text
-                    onClick={() => {
-                      setIsSearching(false), onOpen();
-                    }}
-                    _hover={{ color: "blue.600" }}
-                    cursor="pointer"
-                  >
-                    {user?.result?.username}{" "}
-                    <InfoOutlineIcon ml={3}></InfoOutlineIcon>
-                  </Text>
-                ) : (
-                  "Log In/Register"
-                )}
+                <Text
+                  onClick={() => {
+                    setIsSearching(false), onOpen();
+                  }}
+                  _hover={{ color: "blue.600" }}
+                  cursor="pointer"
+                >
+                  {user ? user?.result?.username : "Log In/Register"}
+                  {user && <InfoOutlineIcon ml={3}></InfoOutlineIcon>}
+                </Text>
               </Box>
               <Box mb={3}>
                 {" "}

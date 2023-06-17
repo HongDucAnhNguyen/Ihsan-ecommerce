@@ -9,6 +9,7 @@ const Recommendations = () => {
   const recommendedProducts = useSelector(
     (state) => state.productReducer.recommendedProducts
   );
+
   useEffect(() => {
     dispatch(getRecommendedProductsAction());
   }, []);

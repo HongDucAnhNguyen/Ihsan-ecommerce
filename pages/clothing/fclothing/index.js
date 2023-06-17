@@ -7,6 +7,8 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 const WomensClothing = () => {
   const products = useSelector((state) => state.productReducer.products);
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
+
   const dispatch = useDispatch();
   const router = useRouter();
 

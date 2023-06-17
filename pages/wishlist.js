@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "../styles/Layout.module.css";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
@@ -24,7 +24,7 @@ const WishList = () => {
   const productWishlist = useSelector(
     (state) => state.productReducer.productWishlist
   );
-
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const router = useRouter();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,6 +33,16 @@ const WishList = () => {
   useEffect(() => {
     dispatch(getProductsInWishList(userState?.result?.id));
   }, [userState]);
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        {" "}
+        <Text fontSize="2xl" fontWeight="bold">
+          Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
+        </Text>
+      </div>
+    );
+  }
   return (
     <div className={styles.container}>
       <Box p={20}>

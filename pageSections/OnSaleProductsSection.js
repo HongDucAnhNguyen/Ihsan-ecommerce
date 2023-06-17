@@ -28,6 +28,7 @@ const OnSaleProductsSection = () => {
   const productsOnSale = useSelector(
     (state) => state.productReducer.productsOnSale
   );
+
   const [selectedTab, setSelectedTab] = useState(0);
   const handleTabChange = (index) => {
     setSelectedTab(index);

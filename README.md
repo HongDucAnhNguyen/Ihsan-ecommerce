@@ -4,8 +4,8 @@
 
 - This repository contains source code for the Ihsan ecommerce Website. Ihsan is a gift shop providing Muslims/ Enthusiasts with Islamic products and gifts
 
-## Live Site
-https://ihsan-ecommerce.vercel.app/
+## Status
+deploy in 1 day
 
 
 ## Preview

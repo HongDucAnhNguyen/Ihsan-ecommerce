@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/Layout.module.css";
 import ProductDetails from "@/pageSections/components/ProductDetails";
-import { useSelector } from "react-redux";
+
 
 const Details = ({ product }) => {
   return (
@@ -12,6 +12,7 @@ const Details = ({ product }) => {
 };
 
 export default Details;
+
 
 export async function getServerSideProps({ query }) {
   const { productId } = query; // get the product ID from the URL parameters

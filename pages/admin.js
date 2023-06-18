@@ -89,7 +89,7 @@ const Admin = () => {
   };
   useEffect(() => {
     dispatch(getAllProductsAction(userState?.result?.id));
-  }, [dispatch, userState?.result?.id]);
+  }, [dispatch]);
 
   useEffect(() => {
     setIsAuthorized(authorizedStatus);

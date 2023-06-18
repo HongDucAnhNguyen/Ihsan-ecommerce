@@ -3,16 +3,6 @@ import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/Navbar.module.css";
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  ModalCloseButton,
-  ModalOverlay,
-  ModalContent,
-  Avatar,
-  Button,
-  Icon,
   Link,
   Modal,
   useDisclosure,
@@ -46,14 +36,14 @@ import { decode } from "jsonwebtoken";
 import { logoutAction } from "@/actions/authActions";
 import { useRouter } from "next/router";
 import { getItemsInCartAction } from "@/actions/cartActions";
-import { searchProductsAction } from "@/actions/productsActions";
+
 import NavbarItemLinks from "./NavbarItemLinks";
 import NavbarActionLinks from "./NavbarActionLinks";
 const Navbar = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+
   const toast = useToast();
   const [user, setUser] = useState(null);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -114,6 +104,9 @@ const Navbar = () => {
   };
   useEffect(() => {
     checkSession();
+    if (window.innerWidth < 900) {
+      setHamburgerNav(true);
+    } else setHamburgerNav(false);
     setWindowSize({
       width: window.innerWidth,
     });
@@ -133,7 +126,7 @@ const Navbar = () => {
 
   useEffect(() => {
     console.log(windowSize.width);
-    if (windowSize.width < 880) {
+    if (windowSize.width < 900) {
       setHamburgerNav(true);
     } else setHamburgerNav(false);
   }, [windowSize]);

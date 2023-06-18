@@ -4,20 +4,24 @@ import { Box, Button, Heading } from "@chakra-ui/react";
 import ReactConfetti from "react-confetti";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const SuccessPage = () => {
+  const userState = useSelector((state) => state.authReducer.authData);
   const [windowSize, setWindowSize] = useState({
     width: "",
     height: "",
   });
+  const router = useRouter();
   const handleResize = () => {
     setWindowSize({
-      width: window.innerWidth * 95/100,
+      width: (window.innerWidth * 95) / 100,
       height: window.innerHeight,
     });
   };
   useEffect(() => {
     setWindowSize({
-      width: window.innerWidth * 95/100,
+      width: (window.innerWidth * 95) / 100,
       height: window.innerHeight,
     });
     // Event listener callback for window resize
@@ -30,6 +34,7 @@ const SuccessPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+ 
   return (
     <div className={styles.container}>
       <ReactConfetti
@@ -38,7 +43,6 @@ const SuccessPage = () => {
       ></ReactConfetti>
       <Box textAlign="center">
         <Heading>Order Placed, thank you for shopping with Ihsan</Heading>
-       
       </Box>
     </div>
   );

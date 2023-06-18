@@ -34,13 +34,16 @@ export const createReviewAction = (reviewData, toast) => async (dispatch) => {
 };
 export const getReviewsAction = (productId) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     const response = await fetch(`/api/reviews/${productId}`);
     const data = await response.json();
     dispatch({ type: "GET_ALL_REVIEWS", data: data });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {}
 };
 export const deleteReviewAction = (reviewId, productId) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     await fetch(`/api/reviews/reviewConfig/${reviewId}`, { method: "DELETE" });
 
     dispatch({ type: "DELETE_REVIEW", data: reviewId });
@@ -51,6 +54,7 @@ export const deleteReviewAction = (reviewId, productId) => async (dispatch) => {
     const updatedProductData = await updatedProductRes.json();
 
     dispatch({ type: "UPDATE_PRODUCT", data: updatedProductData });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {}
 };
 export const updateReviewAction =

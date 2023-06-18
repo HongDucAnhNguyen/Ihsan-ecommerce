@@ -65,6 +65,7 @@ export const toggleSelectStatus =
 export const removeItemInCartAction =
   (productId, user_id) => async (dispatch) => {
     try {
+      dispatch({ type: "IS_LOADING" });
       await fetch(`/api/cart/remove/${user_id}`, {
         method: "PATCH",
         headers: {
@@ -74,6 +75,7 @@ export const removeItemInCartAction =
         body: JSON.stringify(productId),
       });
       dispatch({ type: "REMOVE_FROM_CART", data: productId });
+      dispatch({ type: "END_LOADING" });
     } catch (error) {
       console.log(error);
     }

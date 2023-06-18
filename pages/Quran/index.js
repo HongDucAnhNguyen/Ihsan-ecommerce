@@ -7,13 +7,15 @@ import { useRouter } from "next/router";
 import { Box, Heading } from "@chakra-ui/react";
 const Quran = () => {
   const products = useSelector((state) => state.productReducer.products);
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const dispatch = useDispatch();
   const router = useRouter();
   const category = router.pathname.split("/")[1];
+
   useEffect(() => {
     dispatch(getProductsByCategoryAction(category));
   }, []);
-  if (products.length === 0) {
+  if (!isLoading && products.length === 0) {
     return (
       <div className={styles.container}>
         <Heading>No Products Available</Heading>

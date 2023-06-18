@@ -35,9 +35,7 @@ const HeroSection = () => {
         <Image className={styles.heroImg} src={heroImg} alt="quran"></Image>
       </motion.div>
       <motion.div variants={textVariants} className={styles.heroDescription}>
-        <Heading fontSize={48} flexGrow={1}>
-          Islamic Gift Shop.
-        </Heading>
+        <Heading mt={12} size="2xl">Islamic Gift Shop.</Heading>
 
         <div
           style={{

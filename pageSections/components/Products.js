@@ -12,8 +12,6 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 
 const Products = ({ products }) => {
-  const isLoading = useSelector((state) => state.cartReducer.isLoading);
-
   const fadeInVariants = {
     initial: {
       opacity: 0,
@@ -25,13 +23,7 @@ const Products = ({ products }) => {
       },
     },
   };
-  if (isLoading) {
-    return (
-      <Text fontSize="2xl" fontWeight="bold">
-        Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
-      </Text>
-    );
-  }
+
   return (
     <motion.div variants={fadeInVariants} initial="initial" animate="animate">
       <Flex

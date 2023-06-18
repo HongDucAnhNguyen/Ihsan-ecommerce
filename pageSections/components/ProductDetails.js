@@ -10,6 +10,7 @@ import {
   IconButton,
   Image,
   Input,
+  Spinner,
   Tag,
   Text,
   Textarea,
@@ -34,6 +35,7 @@ const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
   );
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const userState = useSelector((state) => state.authReducer.authData);
   const toast = useToast();
   const dispatch = useDispatch();
@@ -140,8 +142,18 @@ const ProductDetails = ({ product }) => {
       <Divider></Divider>
       <Box p={6}>
         <Heading mb={5}>Reviews</Heading>
-
-        {allReviewsForProduct.length > 0 ? (
+        {isLoading && (
+          <Text fontSize="2xl" fontWeight="bold">
+            Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
+          </Text>
+        )}
+        {!isLoading && allReviewsForProduct.length === 0 && (
+          <Text color="red.600" mb={3}>
+            This Product has no reviews, be the first to leave a review!
+          </Text>
+        )}
+        {!isLoading &&
+          allReviewsForProduct.length > 0 &&
           allReviewsForProduct.map((review) => (
             <Box key={review._id} p={5}>
               <Flex justifyContent="space-between">
@@ -165,6 +177,7 @@ const ProductDetails = ({ product }) => {
               <Text maxW="70%" mt={3}>
                 {review.comment}
               </Text>
+
               <ReactStars
                 value={review.rating}
                 isHalf={true}
@@ -196,12 +209,7 @@ const ProductDetails = ({ product }) => {
                 </ButtonGroup>
               )}
             </Box>
-          ))
-        ) : (
-          <Text color="orange.700" p={4}>
-            This Product has no reviews, be the first to review this item!
-          </Text>
-        )}
+          ))}
         <Box mr={4} ml={4}>
           {user ? (
             <form
@@ -251,7 +259,7 @@ const ProductDetails = ({ product }) => {
                 required={true}
                 value={reviewData.rating}
                 type="number"
-                placeholder="rate this product*"
+                placeholder="rate this product* [1->5]"
                 onChange={(e) => {
                   setReviewData({ ...reviewData, rating: e.target.value });
                 }}

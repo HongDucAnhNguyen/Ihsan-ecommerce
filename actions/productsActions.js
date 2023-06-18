@@ -118,6 +118,7 @@ export const getProductsOnSaleAction =
   };
 export const deleteProductAction = (productId, userId) => async (dispatch) => {
   try {
+    dispatch({ type: "IS_LOADING" });
     await fetch("/api/auth/admin/adminActionsAuthorize", {
       method: "POST",
       headers: {
@@ -129,6 +130,7 @@ export const deleteProductAction = (productId, userId) => async (dispatch) => {
     await fetch(`/api/products/${productId}`, { method: "DELETE" });
     await fetch(`/api/stripe/${productId}`, { method: "DELETE" });
     dispatch({ type: "DELETE_PRODUCT", data: productId });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
     console.log(error);
   }

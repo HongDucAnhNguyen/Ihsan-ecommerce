@@ -1,6 +1,6 @@
 export const loginAction = (formData, setErrorMessage) => async (dispatch) => {
   try {
-    const response = await fetch("/api/auth/login", {
+    const response = await fetch("https://ihsan-ecommerce.vercel.app/api/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -21,7 +21,7 @@ export const loginAction = (formData, setErrorMessage) => async (dispatch) => {
 export const registerAction =
   (formData, setErrorMessage) => async (dispatch) => {
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("https://ihsan-ecommerce.vercel.app/api/auth/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -42,7 +42,7 @@ export const registerAction =
   };
 export const logoutAction = () => async (dispatch) => {
   try {
-    await fetch("/api/auth/logout");
+    await fetch("https://ihsan-ecommerce.vercel.app/api/auth/logout");
     dispatch({ type: "LOGOUT" });
     dispatch({ type: "CLEAR_CART" });
     dispatch({ type: "CLEAR_WISH_LIST" });
@@ -53,7 +53,7 @@ export const logoutAction = () => async (dispatch) => {
 export const updateAccountAction =
   (formData, userId, setMessage) => async (dispatch) => {
     try {
-      const response = await fetch(`/api/auth/accountConfig/${userId}`, {
+      const response = await fetch(`https://ihsan-ecommerce.vercel.app/api/auth/accountConfig/${userId}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",

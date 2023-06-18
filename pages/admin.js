@@ -22,6 +22,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   Textarea,
   useToast,
@@ -46,6 +47,7 @@ const Admin = () => {
   const authorizedStatus = useSelector(
     (state) => state.authReducer.isAuthorizedAsAdmin
   );
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const userState = useSelector((state) => state.authReducer.authData);
   const allProducts = useSelector((state) => state.productReducer.products);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -87,7 +89,7 @@ const Admin = () => {
   };
   useEffect(() => {
     dispatch(getAllProductsAction(userState?.result?.id));
-  }, [dispatch]);
+  }, [dispatch, userState?.result?.id]);
 
   useEffect(() => {
     setIsAuthorized(authorizedStatus);
@@ -105,12 +107,18 @@ const Admin = () => {
       </div>
     );
   }
+
   return (
     <div className={styles.container}>
       {isAuthorized ? (
         <Box maxW="lg" mt={20} p={5}>
           <Heading mb={5}>Inventory Management</Heading>
-          {allProducts.length > 0 ? (
+          {isLoading && (
+            <Text fontSize="2xl" fontWeight="bold">
+              Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
+            </Text>
+          )}
+          {!isLoading && allProducts.length > 0 ? (
             <Box maxH="lg" overflow="auto">
               {allProducts.map((product) => (
                 <Box

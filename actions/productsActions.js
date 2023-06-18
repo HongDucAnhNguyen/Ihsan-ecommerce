@@ -92,7 +92,7 @@ export const getFeaturedProductsAction = () => async (dispatch) => {
     dispatch({ type: "IS_LOADING" });
 
     const response = await fetch(
-      "http://localhost:3000//api/products/featuredProducts"
+      "/api/products/featuredProducts"
     );
     const featuredProducts = await response.json();
     console.log(featuredProducts);

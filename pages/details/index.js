@@ -15,7 +15,7 @@ export default Details;
 export async function getServerSideProps({ query }) {
   const { productId } = query; // get the product ID from the URL parameters
   const response = await fetch(
-    `http://localhost:3000/api/products/${productId}`
+    `https://ihsan-ecommerce.vercel.app/api/products/${productId}`
   );
   const product = await response.json();
   return {

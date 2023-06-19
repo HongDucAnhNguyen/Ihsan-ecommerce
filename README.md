@@ -4,6 +4,10 @@
 
 - This repository contains source code for the Ihsan ecommerce Website. Ihsan is a gift shop providing Muslims/ Enthusiasts with Islamic products and gifts
 
+## Status
+deploy in 1 day
+
+
 ## Preview
 ![image](https://github.com/HongDucAnhNguyen/Ihsan-ecommerce/assets/96758088/185b21ea-eebd-4fda-b836-ddc4d17f6421)
 ![image](https://github.com/HongDucAnhNguyen/Ihsan-ecommerce/assets/96758088/eb4e1570-986b-4269-906f-5b19394bdeed)
@@ -13,6 +17,3 @@
 ![image](https://github.com/HongDucAnhNguyen/Ihsan-ecommerce/assets/96758088/be29c57b-cb2f-4ccc-83e3-0fe793879e0b)
 
 
-## Status
-
-- Deployment in 3 days

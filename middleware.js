@@ -9,7 +9,6 @@ export function middleware(req) {
 
     verifyToken(token);
 
-    // req.userId = decodedTokenData;
     console.log("valid token");
   } catch (error) {
     // Invalid token, user is not authenticated
@@ -43,11 +42,11 @@ export const config = {
 };
 
 const verifyToken = async (jwt) => {
-  const { payload } = await jwtVerify(
+   await jwtVerify(
     jwt,
     new TextEncoder().encode(process.env.JWT_KEY)
   );
-  return payload.id;
+ 
   //   if (userId !== payload.id) {
   //     return new NextResponse(
   //       JSON.stringify({

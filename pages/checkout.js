@@ -14,6 +14,7 @@ import { getItemsInCheckOutAction } from "@/actions/cartActions";
 import payWithStripe from "@/actions/payment/payWithStripe";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import jwt from "jsonwebtoken";
 const CheckOutPage = ({ itemsToCheckOut }) => {
   // const itemsToCheckOutFromSlice = useSelector(
   //   (state) => state.cartReducer.itemsToCheckOut
@@ -123,9 +124,12 @@ const CheckOutPage = ({ itemsToCheckOut }) => {
   );
 };
 export default CheckOutPage;
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const token = context.req.cookies.token;
+  const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+
   const itemsToCheckOutRes = await fetch(
-    "https://ihsan-ecommerce.vercel.app/api/products/featuredProducts"
+    `https://ihsan-ecommerce.vercel.app/api/checkout/${decodedToken.id}`
   );
   const itemsToCheckOutData = await itemsToCheckOutRes.json();
 

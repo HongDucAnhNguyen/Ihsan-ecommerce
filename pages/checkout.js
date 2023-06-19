@@ -14,11 +14,10 @@ import { getItemsInCheckOutAction } from "@/actions/cartActions";
 import payWithStripe from "@/actions/payment/payWithStripe";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import jwt from "jsonwebtoken";
-const CheckOutPage = ({ itemsToCheckOut }) => {
-  // const itemsToCheckOutFromSlice = useSelector(
-  //   (state) => state.cartReducer.itemsToCheckOut
-  // );
+const CheckOutPage = () => {
+  const itemsToCheckOut = useSelector(
+    (state) => state.cartReducer.itemsToCheckOut
+  );
   const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const fadeInVariants = {
     initial: {
@@ -31,25 +30,16 @@ const CheckOutPage = ({ itemsToCheckOut }) => {
       },
     },
   };
-  const subTotal = () => {
-    let total = 0;
-
-    itemsToCheckOut.forEach((itemToCheckOut) => {
-      if (itemToCheckOut.isOnSale) {
-        total += itemToCheckOut.salePrice * itemToCheckOut.quantity;
-      } else total += itemToCheckOut.price * itemToCheckOut.quantity;
-    });
-    return total;
-  };
+  const subTotal = useSelector((state) => state.cartReducer.checkOutSubTotal);
   const userState = useSelector((state) => state.authReducer.authData);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (userState) {
-  //     dispatch(getItemsInCheckOutAction(userState?.result?.id));
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    if (userState) {
+      dispatch(getItemsInCheckOutAction(userState?.result?.id));
+    }
+  }, [dispatch]);
   if (isLoading) {
     return (
       <div className={styles.container}>
@@ -124,18 +114,3 @@ const CheckOutPage = ({ itemsToCheckOut }) => {
   );
 };
 export default CheckOutPage;
-export async function getServerSideProps(context) {
-  const token = context.req.cookies.token;
-  const decodedToken = jwt.verify(token, process.env.JWT_KEY);
-  const userId = decodedToken.id;
-  const itemsToCheckOutRes = await fetch(
-    `https://ihsan-ecommerce.vercel.app/api/checkout/${userId}`
-  );
-  const itemsToCheckOutData = await itemsToCheckOutRes.json();
-
-  return {
-    props: {
-      itemsToCheckOut: itemsToCheckOutData,
-    },
-  };
-}

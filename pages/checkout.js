@@ -127,9 +127,9 @@ export default CheckOutPage;
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
   const decodedToken = jwt.verify(token, process.env.JWT_KEY);
-
+  const userId = decodedToken.id;
   const itemsToCheckOutRes = await fetch(
-    `https://ihsan-ecommerce.vercel.app/api/checkout/${decodedToken.id}`
+    `https://ihsan-ecommerce.vercel.app/api/checkout/${userId}`
   );
   const itemsToCheckOutData = await itemsToCheckOutRes.json();
 

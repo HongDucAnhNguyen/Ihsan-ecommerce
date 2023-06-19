@@ -204,7 +204,7 @@ const NavbarActionLinks = ({
                 dispatch(searchProductsAction(searchQuery));
                 setSearchQuery("");
                 onClose();
-                router.push("/SearchResults");
+                router.push("/searchResults");
               }}
             >
               <Input

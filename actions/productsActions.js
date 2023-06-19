@@ -74,32 +74,32 @@ export const getAllProductsAction = (userId) => async (dispatch) => {
   }
 };
 
-export const getRecommendedProductsAction = () => async (dispatch) => {
-  try {
-    dispatch({ type: "IS_LOADING" });
+// export const getRecommendedProductsAction = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: "IS_LOADING" });
 
-    const response = await fetch("/api/products/recommendedProducts");
-    const recommendedProducts = await response.json();
+//     const response = await fetch("/api/products/recommendedProducts");
+//     const recommendedProducts = await response.json();
 
-    dispatch({ type: "GET_RECOMMENDED_PRODUCTS", data: recommendedProducts });
-    dispatch({ type: "END_LOADING" });
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const getFeaturedProductsAction = () => async (dispatch) => {
-  try {
-    dispatch({ type: "IS_LOADING" });
+//     dispatch({ type: "GET_RECOMMENDED_PRODUCTS", data: recommendedProducts });
+//     dispatch({ type: "END_LOADING" });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+// export const getFeaturedProductsAction = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: "IS_LOADING" });
 
-    const response = await fetch("/api/products/featuredProducts");
-    const featuredProducts = await response.json();
-    console.log(featuredProducts);
-    dispatch({ type: "GET_FEATURED_PRODUCTS", data: featuredProducts });
-    dispatch({ type: "END_LOADING" });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     const response = await fetch("/api/products/featuredProducts");
+//     const featuredProducts = await response.json();
+//     console.log(featuredProducts);
+//     dispatch({ type: "GET_FEATURED_PRODUCTS", data: featuredProducts });
+//     dispatch({ type: "END_LOADING" });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 export const getProductsOnSaleAction =
   (productCategory) => async (dispatch) => {
     try {
@@ -188,19 +188,19 @@ export const updateProductAction =
     }
   };
 
-export const getProductsByCategoryAction = (category) => async (dispatch) => {
-  try {
-    dispatch({ type: "IS_LOADING" });
+// export const getProductsByCategoryAction = (category) => async (dispatch) => {
+//   try {
+//     dispatch({ type: "IS_LOADING" });
 
-    const response = await fetch(`/api/products/categories/${category}`);
-    const productsOfCategory = await response.json();
+//     const response = await fetch(`/api/products/categories/${category}`);
+//     const productsOfCategory = await response.json();
 
-    dispatch({ type: "GET_PRODUCTS_BY_CATEGORY", data: productsOfCategory });
-    dispatch({ type: "END_LOADING" });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     dispatch({ type: "GET_PRODUCTS_BY_CATEGORY", data: productsOfCategory });
+//     dispatch({ type: "END_LOADING" });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 export const searchProductsAction = (searchTerm) => async (dispatch) => {
   try {
     dispatch({ type: "IS_LOADING" });

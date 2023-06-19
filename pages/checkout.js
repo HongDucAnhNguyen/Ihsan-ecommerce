@@ -14,10 +14,10 @@ import { getItemsInCheckOutAction } from "@/actions/cartActions";
 import payWithStripe from "@/actions/payment/payWithStripe";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-const CheckOutPage = () => {
-  const itemsToCheckOut = useSelector(
-    (state) => state.cartReducer.itemsToCheckOut
-  );
+const CheckOutPage = ({ itemsToCheckOut }) => {
+  // const itemsToCheckOutFromSlice = useSelector(
+  //   (state) => state.cartReducer.itemsToCheckOut
+  // );
   const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const fadeInVariants = {
     initial: {
@@ -30,26 +30,35 @@ const CheckOutPage = () => {
       },
     },
   };
-  const subTotal = useSelector((state) => state.cartReducer.checkOutSubTotal);
+  const subTotal = () => {
+    let total = 0;
+
+    itemsToCheckOut.forEach((itemToCheckOut) => {
+      if (itemToCheckOut.isOnSale) {
+        total += itemToCheckOut.salePrice * itemToCheckOut.quantity;
+      } else total += itemToCheckOut.price * itemToCheckOut.quantity;
+    });
+    return total;
+  };
   const userState = useSelector((state) => state.authReducer.authData);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    if (userState) {
-      dispatch(getItemsInCheckOutAction(userState?.result?.id));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (userState) {
+  //     dispatch(getItemsInCheckOutAction(userState?.result?.id));
+  //   }
+  // }, [dispatch]);
   if (isLoading) {
     return (
       <div className={styles.container}>
         {" "}
         <Flex gap={5}>
-            <Text fontSize="2xl" fontWeight="bold">
-              Loading...
-            </Text>
-            <Spinner ml={3} color="blue.600" size="md"></Spinner>
-          </Flex>
+          <Text fontSize="2xl" fontWeight="bold">
+            Loading...
+          </Text>
+          <Spinner ml={3} color="blue.600" size="md"></Spinner>
+        </Flex>
       </div>
     );
   }
@@ -114,3 +123,15 @@ const CheckOutPage = () => {
   );
 };
 export default CheckOutPage;
+export async function getServerSideProps() {
+  const itemsToCheckOutRes = await fetch(
+    "https://ihsan-ecommerce.vercel.app/api/products/featuredProducts"
+  );
+  const itemsToCheckOutData = await itemsToCheckOutRes.json();
+
+  return {
+    props: {
+      itemsToCheckOut: itemsToCheckOutData,
+    },
+  };
+}

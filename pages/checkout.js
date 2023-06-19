@@ -39,7 +39,7 @@ const CheckOutPage = () => {
     if (userState) {
       dispatch(getItemsInCheckOutAction(userState?.result?.id));
     }
-  }, [dispatch]);
+  }, []);
   if (isLoading) {
     return (
       <div className={styles.container}>

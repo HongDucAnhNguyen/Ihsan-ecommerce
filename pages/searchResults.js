@@ -1,19 +1,43 @@
-import { Box, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import styles from "../styles/Layout.module.css";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-const searchResults = () => {
+const SearchResults = () => {
   const productSearchResults = useSelector(
     (state) => state.productReducer.searchResults
   );
+  const isLoading = useSelector((state) => state.cartReducer.isLoading);
+
   const [searchResults, setSearchResults] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     setSearchResults(productSearchResults);
   }, [productSearchResults]);
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <Box mt={20} p={30}>
+          <Heading>Search Results</Heading>
+          <Flex gap={5}>
+            <Text fontSize="2xl" fontWeight="bold">
+              Loading...
+            </Text>
+            <Spinner ml={3} color="blue.600" size="md"></Spinner>
+          </Flex>
+        </Box>
+      </div>
+    );
+  }
   return (
     <div className={styles.container}>
       <Box mt={20} p={30}>
@@ -51,4 +75,4 @@ const searchResults = () => {
     </div>
   );
 };
-export default searchResults;
+export default SearchResults;

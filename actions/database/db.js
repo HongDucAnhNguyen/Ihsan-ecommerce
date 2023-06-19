@@ -1,6 +1,9 @@
 const connectMongo = async () => {
   try {
-    await fetch("https://ihsan-ecommerce.vercel.app/api/connectDB");
+    await fetch(
+      "https://ihsan-ecommerce.vercel.app/api/connectDB"
+      
+    );
   } catch (error) {
     console.log(error);
   }

@@ -40,10 +40,7 @@ import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 import {
   addProductToWishList,
-  getAllProductsAction,
-  getFeaturedProductsAction,
-  getProductsOnSaleAction,
-  getRecommendedProductsAction,
+ 
 } from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
 import AuthForm from "./AuthForm";
@@ -51,11 +48,7 @@ import ReactStars from "react-rating-stars-component";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
-
-  // const [user, setUser] = useState(null);
-  // useEffect(() => {
-  //   setUser(userState);
-  // }, [userState]);
+  
 
   const toast = useToast();
 
@@ -101,7 +94,6 @@ const Product = ({ product }) => {
                     )
                   );
                   setIsAddedToWishList(true);
-                  
                 }}
               >
                 <StarIcon
@@ -130,15 +122,15 @@ const Product = ({ product }) => {
           <Stack mt="6" spacing="3">
             <Heading size="md">{product.title}</Heading>
             <Text>{product.description}</Text>
-           
-              <ReactStars
-                value={product.rating}
-                isHalf={true}
-                edit={false}
-                size={24}
-                activeColor="#ffd700"
-              ></ReactStars>
-            
+
+            <ReactStars
+              value={product.rating}
+              isHalf={true}
+              edit={false}
+              size={24}
+              activeColor="#ffd700"
+            ></ReactStars>
+
             {product.availableStock === 1 && (
               <Text color="red.600">Only 1 left in stock!</Text>
             )}

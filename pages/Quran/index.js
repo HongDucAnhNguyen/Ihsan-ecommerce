@@ -5,16 +5,16 @@ import { getProductsByCategoryAction } from "@/actions/productsActions";
 import Products from "@/pageSections/components/Products";
 import { useRouter } from "next/router";
 import { Box, Heading } from "@chakra-ui/react";
-const Quran = () => {
-  const products = useSelector((state) => state.productReducer.products);
+const Quran = ({ products }) => {
+  // const products = useSelector((state) => state.productReducer.products);
   const isLoading = useSelector((state) => state.cartReducer.isLoading);
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const category = router.pathname.split("/")[1];
+  // const dispatch = useDispatch();
+  // const router = useRouter();
+  // const category = router.pathname.split("/")[1];
 
-  useEffect(() => {
-    dispatch(getProductsByCategoryAction(category));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getProductsByCategoryAction(category));
+  // }, []);
   if (!isLoading && products.length === 0) {
     return (
       <div className={styles.container}>
@@ -41,3 +41,17 @@ const Quran = () => {
   );
 };
 export default Quran;
+export async function getServerSideProps(context) {
+  // get the product ID from the URL parameters
+  const url = context.resolvedUrl.split("/");
+  const category = url[url.length - 1];
+  const productsByCategoryRes = await fetch(
+    `https://ihsan-ecommerce.vercel.app/api/products/categories/${category}`
+  );
+  const productsByCategoryData = await productsByCategoryRes.json();
+  return {
+    props: {
+      products: productsByCategoryData,
+    },
+  };
+}

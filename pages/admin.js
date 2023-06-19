@@ -114,9 +114,12 @@ const Admin = () => {
         <Box maxW="lg" mt={20} p={5}>
           <Heading mb={5}>Inventory Management</Heading>
           {isLoading && (
+            <Flex gap={5}>
             <Text fontSize="2xl" fontWeight="bold">
-              Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
+              Loading...
             </Text>
+            <Spinner ml={3} color="blue.600" size="md"></Spinner>
+          </Flex>
           )}
           {!isLoading && allProducts.length > 0 ? (
             <Box maxH="lg" overflow="auto">

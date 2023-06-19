@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 
 const Products = ({ products }) => {
+  
   const fadeInVariants = {
     initial: {
       opacity: 0,
@@ -48,6 +49,9 @@ const Products = ({ products }) => {
           products.map((product) => (
             <Product key={product._id} product={product}></Product>
           ))}
+        {/* {!isLoading && products.length === 0 && (
+          <Text fontSize="2xl">No Products availabled</Text>
+        )} */}
       </Flex>
     </motion.div>
   );

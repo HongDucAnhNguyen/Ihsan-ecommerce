@@ -70,7 +70,12 @@ const ProductDetails = ({ product }) => {
   return (
     <Box p={20} mt={20} mb={10}>
       <Flex justifyContent="space-around" gap={4} mb={6}>
-        <Image maxWidth="50%" height="50%" src={product.imgUrl}></Image>
+        <Image
+          alt="product Image"
+          maxWidth="50%"
+          height="50%"
+          src={product.imgUrl}
+        ></Image>
         <Flex flexDirection="column" alignItems="center" textAlign="center">
           <Heading maxW={500} mb={3}>
             {product.title}
@@ -143,9 +148,12 @@ const ProductDetails = ({ product }) => {
       <Box p={6}>
         <Heading mb={5}>Reviews</Heading>
         {isLoading && (
-          <Text fontSize="2xl" fontWeight="bold">
-            Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
-          </Text>
+          <Flex gap={5}>
+            <Text fontSize="2xl" fontWeight="bold">
+              Loading...
+            </Text>
+            <Spinner ml={3} color="blue.600" size="md"></Spinner>
+          </Flex>
         )}
         {!isLoading && allReviewsForProduct.length === 0 && (
           <Text color="red.600" mb={3}>

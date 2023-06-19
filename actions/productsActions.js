@@ -91,9 +91,7 @@ export const getFeaturedProductsAction = () => async (dispatch) => {
   try {
     dispatch({ type: "IS_LOADING" });
 
-    const response = await fetch(
-      "/api/products/featuredProducts"
-    );
+    const response = await fetch("/api/products/featuredProducts");
     const featuredProducts = await response.json();
     console.log(featuredProducts);
     dispatch({ type: "GET_FEATURED_PRODUCTS", data: featuredProducts });

@@ -3,13 +3,14 @@ import FeaturedProductsSection from "@/pageSections/FeaturedProductsSection";
 // import Image from "next/image";
 // import { Inter } from "next/font/google";
 import styles from "../styles/Home.module.css";
-import { Box, Divider } from "@chakra-ui/react";
+import { Box, Divider, Heading } from "@chakra-ui/react";
 import Testimonials from "@/pageSections/Testimonials";
 import OnSaleProductsSection from "@/pageSections/OnSaleProductsSection";
 import Recommendations from "@/pageSections/Recommendations";
 import { useEffect } from "react";
+import Products from "@/pageSections/components/Products";
 
-export default function Home() {
+export default function Home({ featuredProducts, recommendedProducts }) {
   return (
     <main className={styles.main}>
       <HeroSection></HeroSection>
@@ -22,15 +23,38 @@ export default function Home() {
         }}
       >
         <Box maxW="100%" width={1200}>
-          <FeaturedProductsSection></FeaturedProductsSection>
+          <Heading mb={4}>Featured Products</Heading>
+
+          {featuredProducts.length > 0 && (
+            <Products products={featuredProducts}></Products>
+          )}
           <Divider></Divider>
           <OnSaleProductsSection></OnSaleProductsSection>
           <Divider></Divider>
-          <Recommendations></Recommendations>
+          <Heading mb={4}>Recommendations</Heading>
+          {recommendedProducts.length > 0 && (
+            <Products products={recommendedProducts}></Products>
+          )}
           <Divider></Divider>
           <Testimonials></Testimonials>
         </Box>
       </Box>
     </main>
   );
+}
+export async function getServerSideProps() {
+  const featuredProductsRes = await fetch(
+    "https://ihsan-ecommerce.vercel.app/api/products/featuredProducts"
+  );
+  const featuredProductsData = await featuredProductsRes.json();
+  const recommendedProductsRes = await fetch(
+    "https://ihsan-ecommerce.vercel.app/api/products/recommendedProducts"
+  );
+  const recommendedProductsData = await recommendedProductsRes.json();
+  return {
+    props: {
+      featuredProducts: featuredProductsData,
+      recommendedProducts: recommendedProductsData,
+    },
+  };
 }

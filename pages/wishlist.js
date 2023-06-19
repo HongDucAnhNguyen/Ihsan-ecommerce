@@ -37,9 +37,12 @@ const WishList = () => {
     return (
       <div className={styles.container}>
         {" "}
-        <Text fontSize="2xl" fontWeight="bold">
-          Loading...<Spinner ml={3} color="blue.600" size="md"></Spinner>
-        </Text>
+        <Flex gap={5}>
+            <Text fontSize="2xl" fontWeight="bold">
+              Loading...
+            </Text>
+            <Spinner ml={3} color="blue.600" size="md"></Spinner>
+          </Flex>
       </div>
     );
   }

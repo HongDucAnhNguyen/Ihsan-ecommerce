@@ -37,7 +37,10 @@ const ItemsInCart = () => {
       dispatch(getItemsInCartAction(userState?.result?.id));
     }
   }, [dispatch]);
-
+  
+  if (!userState) {
+    return <Text fontSize="2xl">Please Login or Register</Text>;
+  }
   if (isLoading) {
     return (
       <Flex gap={5}>
@@ -48,6 +51,7 @@ const ItemsInCart = () => {
       </Flex>
     );
   }
+
   if (!isLoading && itemsInCart.length === 0) {
     return <Text fontSize="2xl">Currently Empty</Text>;
   }

@@ -12,14 +12,14 @@ const handler = async (req, res) => {
       }
       //get items in cart with the data of the productObjects
       const itemsToCheckOutPromises = itemsToCheckOut.map(async (item) => {
-        const { imgUrl, title, description, price, isOnSale, salePrice } =
+        const { imgUrl, title,  price, isOnSale, salePrice } =
           await getProduct(item.itemId);
         return {
           // _id: item._id,
           itemId: item.itemId,
           imgUrl,
           title,
-          description,
+         
           price,
           isOnSale,
           salePrice,
@@ -46,14 +46,14 @@ const handler = async (req, res) => {
         { $push: { itemsToCheckOut: { itemId: itemId, quantity: quantity } } },
         { new: true }
       );
-      const { imgUrl, title, description, price, isOnSale, salePrice } =
+      const { imgUrl, title,  price, isOnSale, salePrice } =
         getProduct(itemId);
 
       console.log("added item to check out");
       return res.status(200).json({
         imgUrl,
         title,
-        description,
+        
         price,
         isOnSale,
         salePrice,

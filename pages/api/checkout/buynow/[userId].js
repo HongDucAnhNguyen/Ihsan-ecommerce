@@ -1,12 +1,13 @@
+import Product from "@/models/Product";
 import User from "@/models/User";
 
 const handler = async (req, res) => {
   try {
     const { userId } = req.query; //get userid
-   
+
     if (req.method === "PATCH" || req.method === "PUT") {
       const { productId, quantity } = req.body;
-      const updatedUser = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         userId,
         {
           $set: {
@@ -15,7 +16,21 @@ const handler = async (req, res) => {
         },
         { new: true }
       );
-      return res.status(200).json(updatedUser.itemsToCheckOut);
+      const productToBuyNow = await Product.findById(productId);
+      const { _id, imgUrl, title, price, isOnSale, salePrice } =
+        productToBuyNow;
+      return res.status(200).json([
+        {
+          itemId: _id,
+          imgUrl,
+          title,
+          description,
+          price,
+          isOnSale,
+          salePrice,
+          quantity: quantity,
+        },
+      ]);
     } else return res.status(405).json({ message: "Invalid Method" });
   } catch (error) {
     return res

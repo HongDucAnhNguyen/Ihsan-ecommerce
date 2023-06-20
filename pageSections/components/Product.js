@@ -38,17 +38,13 @@ import {
 } from "@/actions/cartActions";
 import { useEffect, useState } from "react";
 import ItemsInCart from "./ItemsInCart";
-import {
-  addProductToWishList,
- 
-} from "@/actions/productsActions";
+import { addProductToWishList } from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
 import AuthForm from "./AuthForm";
 import ReactStars from "react-rating-stars-component";
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
-  
 
   const toast = useToast();
 
@@ -195,7 +191,7 @@ const Product = ({ product }) => {
                         );
                     });
 
-                    router.push("/checkout");
+                    onOpen();
                   }}
                 >
                   Buy Now

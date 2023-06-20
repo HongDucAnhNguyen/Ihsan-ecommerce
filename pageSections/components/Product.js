@@ -266,6 +266,7 @@ const Product = ({ product }) => {
                       <Button
                         mt={3}
                         onClick={() => {
+                          closeModal()
                           router.push("/checkout");
                         }}
                         colorScheme="yellow"

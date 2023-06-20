@@ -17,11 +17,11 @@ const handler = async (req, res) => {
         { new: true }
       );
       const productToBuyNow = await Product.findById(productId);
-      const { _id, imgUrl, title, price, isOnSale, salePrice } =
+      const { imgUrl, title, price, isOnSale, salePrice } =
         productToBuyNow;
       return res.status(200).json([
         {
-          itemId: _id,
+          itemId: productId,
           imgUrl,
           title,
           description,

@@ -61,7 +61,7 @@ const CheckOutPage = () => {
           <Box p={20} mt={20} mb={10}>
             {itemsToCheckOut.map((itemToCheckOut) => (
               <Box
-                key={itemToCheckOut._id}
+                key={itemToCheckOut.itemId}
                 mb={4}
                 borderWidth="2px"
                 borderRadius={10}

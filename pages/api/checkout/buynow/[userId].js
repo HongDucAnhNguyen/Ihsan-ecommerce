@@ -16,21 +16,8 @@ const handler = async (req, res) => {
         },
         { new: true }
       );
-      const productToBuyNow = await Product.findById(productId);
-      const { imgUrl, title, price, isOnSale, salePrice } =
-        productToBuyNow;
-      return res.status(200).json([
-        {
-          itemId: productId,
-          imgUrl,
-          title,
-          description,
-          price,
-          isOnSale,
-          salePrice,
-          quantity: quantity,
-        },
-      ]);
+      
+      return res.status(200).end()
     } else return res.status(405).json({ message: "Invalid Method" });
   } catch (error) {
     return res

@@ -40,7 +40,9 @@ const cartReducer = (
     case "GET_ITEMS_IN_CHECKOUT":
       return { ...state, itemsToCheckOut: action?.data };
     case "BUY_NOW":
-      return { ...state, itemsToCheckOut: action?.data };
+      return { ...state, itemsToCheckOut: state.itemsToCheckOut.filter(
+        (item) => item.itemId === action?.data
+      ), };
     case "ADD_ITEM_TO_CHECKOUT":
       return {
         ...state,

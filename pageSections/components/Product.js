@@ -24,6 +24,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
+  Img,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
@@ -33,6 +34,7 @@ import { useRouter } from "next/router";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
+  getItemsInCartAction,
   setCheckOutBuyNowAction,
   toggleSelectStatus,
 } from "@/actions/cartActions";
@@ -42,6 +44,7 @@ import { addProductToWishList } from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
 import AuthForm from "./AuthForm";
 import ReactStars from "react-rating-stars-component";
+
 const Product = ({ product }) => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
@@ -53,12 +56,14 @@ const Product = ({ product }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+  const [isBuyNowAction, setIsBuyNowAction] = useState(false);
   const openModal = () => {
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    setIsBuyNowAction(false);
   };
 
   return (
@@ -190,8 +195,8 @@ const Product = ({ product }) => {
                           )
                         );
                     });
-
-                    onOpen();
+                    setIsBuyNowAction(true);
+                    openModal();
                   }}
                 >
                   Buy Now
@@ -234,7 +239,43 @@ const Product = ({ product }) => {
                 <ModalOverlay />
                 <ModalContent>
                   <ModalCloseButton />
-                  <AuthForm></AuthForm>
+                  {userState && isBuyNowAction ? (
+                    <Box p={10}>
+                      <Flex gap={6}>
+                        <Img
+                          width="40%"
+                          height="40%"
+                          src={product.imgUrl}
+                        ></Img>
+                        <Box>
+                          {" "}
+                          <Text>{product.title}</Text>
+                          <Text
+                            fontSize="2xl"
+                            fontWeight="bold"
+                            color="orange.600"
+                          >
+                            $
+                            {product.isOnSale
+                              ? product.salePrice
+                              : product.price}
+                          </Text>
+                          <Text fontWeight="bold">Quantity: 1</Text>
+                        </Box>
+                      </Flex>
+                      <Button
+                        mt={3}
+                        onClick={() => {
+                          router.push("/checkout");
+                        }}
+                        colorScheme="yellow"
+                      >
+                        Proceed to Check Out
+                      </Button>
+                    </Box>
+                  ) : (
+                    <AuthForm></AuthForm>
+                  )}
                 </ModalContent>
               </Modal>
             </>

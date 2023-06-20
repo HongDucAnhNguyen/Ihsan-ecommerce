@@ -51,22 +51,25 @@ Welcome to ihsan! This is an e-commerce project built with Next.js, React, Chakr
 
 ### Clone the repository:
 
-git clone https://github.com/your-username/ihsan.git
+`git clone https://github.com/your-username/ihsan.git`
 
 ### Navigate to the project directory:
 
-cd {dirname}
+`cd {dirname}`
 
 ### Install the dependencies:
 
-npm install
+`npm install`
 
 ### Set up environment variables:
 
 Create a .env.local file in the project root directory.
 Add the necessary environment variables such as database connection URL, JWT secret, etc.
 
-### Start the development server:
+### Config & Start the development server:
 
-npm run dev
-Open your browser and access the application at http://localhost:{your-port}.
+- Use localhost instead of the deployed URL, either with an environment variable for base URL or copy-paste
+
+`npm run dev`
+
+- Open your browser and access the application at http://localhost:{your-port}.

@@ -154,7 +154,7 @@ export const setItemQuantityAction =
 export const setCheckOutBuyNowAction =
   (productId, userId) => async (dispatch) => {
     try {
-      const response = await fetch(`/api/checkout/buynow/${userId}`, {
+      await fetch(`/api/checkout/buynow/${userId}`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
@@ -162,8 +162,8 @@ export const setCheckOutBuyNowAction =
         },
         body: JSON.stringify({ productId, quantity: 1 }),
       });
-      const data = await response.json();
-      dispatch({ type: "BUY_NOW", data: data });
+     
+      dispatch({ type: "BUY_NOW", data: productId });
     } catch (error) {
       console.log(error);
     }

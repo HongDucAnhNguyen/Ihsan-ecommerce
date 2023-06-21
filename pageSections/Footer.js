@@ -118,7 +118,7 @@ const Footer = () => {
       </div>
       <Divider></Divider>
       <Box textAlign="center" p={4}>
-        © 2022 Hong Duc Anh Nguyen. All Rights Reserved.
+        © 2023 Hong Duc Anh Nguyen. All Rights Reserved.
       </Box>
     </>
   );

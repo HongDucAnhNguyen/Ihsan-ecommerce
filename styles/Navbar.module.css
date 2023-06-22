@@ -18,3 +18,31 @@
   transition: all 0.6s ease-in-out;
   transform: translateY(80px);
 }
+.hamburgerNavbar {
+  display: none;
+}
+.logoResponsive {
+  display: none;
+}
+.navbarItemLinksResponsive {
+  display: flex;
+  flex-direction: column;
+}
+.navbarActionLinksResponsive {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 890px) {
+  .navbarItemLinks {
+    display: none;
+  }
+  .navbarActionLinks {
+    display: none;
+  }
+  .hamburgerNavbar {
+    display: block;
+  }
+  .logoResponsive {
+    display: block;
+  }
+}

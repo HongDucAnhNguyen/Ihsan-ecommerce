@@ -64,7 +64,7 @@ Welcome to ihsan! This is an e-commerce project built with Next.js, React, Chakr
 ### Set up environment variables:
 
 - Create a .env.local file in the project root directory.
-Add the necessary environment variables such as database connection URL, JWT secret, etc.
+  Add the necessary environment variables such as database connection URL, JWT secret, etc.
 
 ### Config & Start the development server:
 

@@ -44,11 +44,11 @@ export default function Home({ featuredProducts, recommendedProducts }) {
 }
 export async function getServerSideProps() {
   const featuredProductsRes = await fetch(
-    "https://ihsan-ecommerce.vercel.app/api/products/featuredProducts"
+    `${process.env.BASE_URL}/api/products/featuredProducts`
   );
   const featuredProductsData = await featuredProductsRes.json();
   const recommendedProductsRes = await fetch(
-    "https://ihsan-ecommerce.vercel.app/api/products/recommendedProducts"
+    `${process.env.BASE_URL}/api/products/recommendedProducts`
   );
   const recommendedProductsData = await recommendedProductsRes.json();
   return {

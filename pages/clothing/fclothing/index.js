@@ -45,7 +45,7 @@ export async function getServerSideProps(context) {
   const url = context.resolvedUrl.split("/");
   const category = url[url.length - 1];
   const productsByCategoryRes = await fetch(
-    `https://ihsan-ecommerce.vercel.app/api/products/categories/${category}`
+    `${process.env.BASE_URL}/api/products/categories/${category}`
   );
   const productsByCategoryData = await productsByCategoryRes.json();
   return {

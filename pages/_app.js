@@ -7,9 +7,8 @@ import connectMongo from "@/actions/database/db";
 import { applyMiddleware, createStore, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "../reducers/combinedReducers";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import Head from "next/head";
-import { motion, AnimatePresence } from "framer-motion";
 
 connectMongo();
 

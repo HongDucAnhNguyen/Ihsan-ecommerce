@@ -10,14 +10,14 @@ import {
   Box,
 } from "@chakra-ui/react";
 import React from "react";
-
+import styles from '../styles/Testimonials.module.css'
 const Testimonials = () => {
   return (
     //pull data from backend
     //data that does not update frequently
     <>
       <Heading mb={4}>Testimonials</Heading>
-      <SimpleGrid spacing={4} templateColumns="repeat(3, 1fr)">
+      <Box className={styles.testimonialsContainer}>
         <Card>
           <CardHeader>
             <Flex spacing="4">
@@ -69,7 +69,7 @@ const Testimonials = () => {
             </Text>
           </CardBody>
         </Card>
-      </SimpleGrid>
+      </Box>
     </>
   );
 };

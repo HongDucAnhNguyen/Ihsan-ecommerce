@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        {" "}
+        
         <Navbar></Navbar>
         <Head>
           <title>Ihsan</title>

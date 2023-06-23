@@ -23,3 +23,39 @@
   right: 0;
   z-index: 10;
 }
+.productDetailsContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.itemToCheckOutImage {
+  width: 30%;
+  height: 30%;
+}
+.productDetailsImage {
+  width: 50%;
+  height: 50%;
+}
+.reviewHeader {
+  justify-content: space-between;
+}
+@media (max-width: 750px) {
+  .productDetailsContainer {
+    flex-direction: column;
+  }
+  .productDetailsImage {
+    width: 100%;
+  }
+  .reviewHeader {
+    flex-direction: column;
+    gap: 5px;
+    font-size: smaller;
+  }
+  .itemToCheckOutImage {
+    width: 100%;
+  }
+  .itemToCheckOutInnerContainer {
+    flex-direction: column;
+  }
+}

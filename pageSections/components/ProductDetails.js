@@ -31,6 +31,7 @@ import {
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 import ReactStars from "react-rating-stars-component";
+import styles from "../../styles/Product.module.css";
 const ProductDetails = ({ product }) => {
   const allReviewsForProduct = useSelector(
     (state) => state.reviewsReducer.reviews
@@ -69,11 +70,10 @@ const ProductDetails = ({ product }) => {
   };
   return (
     <Box p={20} mt={20} mb={10}>
-      <Flex justifyContent="space-around" gap={4} mb={6}>
+      <Box className={styles.productDetailsContainer}>
         <Image
+          className={styles.productDetailsImage}
           alt="product Image"
-          maxWidth="50%"
-          height="50%"
           src={product.imgUrl}
         ></Image>
         <Flex flexDirection="column" alignItems="center" textAlign="center">
@@ -143,9 +143,9 @@ const ProductDetails = ({ product }) => {
             )}
           </Box>
         </Flex>
-      </Flex>
+      </Box>
       <Divider></Divider>
-      <Box p={6}>
+      <Box p={5}>
         <Heading mb={5}>Reviews</Heading>
         {isLoading && (
           <Flex gap={5}>
@@ -163,8 +163,15 @@ const ProductDetails = ({ product }) => {
         {!isLoading &&
           allReviewsForProduct.length > 0 &&
           allReviewsForProduct.map((review) => (
-            <Box key={review._id} p={5}>
-              <Flex justifyContent="space-between">
+            <Box
+              key={review._id}
+              borderWidth="2px"
+              borderRadius={5}
+              p={5}
+              mb={3}
+              bgColor="whitesmoke"
+            >
+              <Flex className={styles.reviewHeader}>
                 <Flex>
                   <Box mr={4}>
                     <Avatar size="sm" name={review.username} />

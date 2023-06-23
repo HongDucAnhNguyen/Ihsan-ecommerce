@@ -14,6 +14,7 @@ import { getItemsInCheckOutAction } from "@/actions/cartActions";
 import payWithStripe from "@/actions/payment/payWithStripe";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import productCheckOutStyles from "../styles/Product.module.css";
 const CheckOutPage = () => {
   const itemsToCheckOut = useSelector(
     (state) => state.cartReducer.itemsToCheckOut
@@ -67,10 +68,12 @@ const CheckOutPage = () => {
                 borderRadius={10}
                 p={10}
               >
-                <Flex gap={6}>
+                <Flex
+                  gap={6}
+                  className={productCheckOutStyles.itemToCheckOutInnerContainer}
+                >
                   <Img
-                    width="10%"
-                    height="10%"
+                    className={productCheckOutStyles.itemToCheckOutImage}
                     src={itemToCheckOut.imgUrl}
                   ></Img>
                   <Box>

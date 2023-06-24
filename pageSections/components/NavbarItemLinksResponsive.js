@@ -25,7 +25,7 @@ const NavbarItemLinksResponsive = () => {
           color: "blue.600",
           transition: "all .3s ease-in-out",
         }}
-        mr={2}
+        ml={2}
         as={NextLink}
         href="/Quran"
         sx={{
@@ -54,7 +54,7 @@ const NavbarItemLinksResponsive = () => {
                   color: "blue.600",
                   transition: "all .5s ease-in-out",
                 }}
-                mr={2}
+                ml={2}
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -73,7 +73,7 @@ const NavbarItemLinksResponsive = () => {
                   color: "blue.600",
                   transition: "all .5s ease-in-out",
                 }}
-                mr={2}
+                ml={2}
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -92,7 +92,7 @@ const NavbarItemLinksResponsive = () => {
                   color: "blue.600",
                   transition: "all .5s ease-in-out",
                 }}
-                mr={2}
+                ml={2}
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -114,7 +114,7 @@ const NavbarItemLinksResponsive = () => {
           color: "blue.600",
           transition: "all .5s ease-in-out",
         }}
-        mr={2}
+        ml={2}
         as={NextLink}
         href="/accessories"
         sx={{
@@ -132,7 +132,7 @@ const NavbarItemLinksResponsive = () => {
           color: "blue.600",
           transition: "all .5s ease-in-out",
         }}
-        mr={2}
+        ml={2}
         as={NextLink}
         href="/about"
         sx={{

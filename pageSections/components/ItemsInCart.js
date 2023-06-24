@@ -21,7 +21,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-
+import itemsInCartStyles from "../../styles/Product.module.css";
 const ItemsInCart = () => {
   const userState = useSelector((state) => state.authReducer.authData);
   const itemsInCart = useSelector((state) => state.cartReducer.itemsInCart);
@@ -37,7 +37,7 @@ const ItemsInCart = () => {
       dispatch(getItemsInCartAction(userState?.result?.id));
     }
   }, [dispatch]);
-  
+
   if (!userState) {
     return <Text fontSize="2xl">Please Login or Register</Text>;
   }
@@ -73,8 +73,14 @@ const ItemsInCart = () => {
             borderWidth="2px"
             p={10}
           >
-            <Flex gap={6}>
-              <Img width="30%" height="30%" src={item.imgUrl}></Img>
+            <Flex
+              gap={6}
+              className={itemsInCartStyles.itemInCartInnerContainer}
+            >
+              <Img
+                className={itemsInCartStyles.itemInCartImage}
+                src={item.imgUrl}
+              ></Img>
               <Box>
                 <Flex gap={5} mb={3}>
                   <Checkbox
@@ -125,7 +131,9 @@ const ItemsInCart = () => {
                   </Heading>
                 </Flex>
 
-                <Text width="70%">{item.description}</Text>
+                <Text className={itemsInCartStyles.itemInCartDescription}>
+                  {item.description}
+                </Text>
 
                 {item.availableStock === 1 && (
                   <Text color="red.600">Only 1 left in stock!</Text>

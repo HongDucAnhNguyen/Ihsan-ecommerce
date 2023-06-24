@@ -1,3 +1,9 @@
+.itemsInCartPageContainer {
+  padding: 100px;
+}
+.itemToCheckOutPageContainer {
+  padding: 100px;
+}
 .productImgContainer {
   width: 100%;
   position: relative;
@@ -29,6 +35,13 @@
   margin-bottom: 10px;
   justify-content: center;
 }
+.itemInCartImage {
+  width: 30%;
+  height: 30%;
+}
+.itemInCartDescription {
+  width: 70%;
+}
 .itemToCheckOutImage {
   width: 30%;
   height: 30%;
@@ -52,10 +65,25 @@
     gap: 5px;
     font-size: smaller;
   }
+  .itemInCartImage {
+    width: 100%;
+  }
   .itemToCheckOutImage {
+    width: 100%;
+  }
+  .itemInCartInnerContainer {
+    flex-direction: column;
+  }
+  .itemInCartDescription {
     width: 100%;
   }
   .itemToCheckOutInnerContainer {
     flex-direction: column;
+  }
+  .itemsInCartPageContainer {
+    padding: 30px;
+  }
+  .itemToCheckOutPageContainer {
+    padding: 30px;
   }
 }

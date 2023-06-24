@@ -15,6 +15,7 @@ import payWithStripe from "@/actions/payment/payWithStripe";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import productCheckOutStyles from "../styles/Product.module.css";
+
 const CheckOutPage = () => {
   const itemsToCheckOut = useSelector(
     (state) => state.cartReducer.itemsToCheckOut
@@ -59,7 +60,12 @@ const CheckOutPage = () => {
     <div className={styles.container}>
       <motion.div variants={fadeInVariants} initial="initial" animate="animate">
         {itemsToCheckOut.length > 0 && !isLoading ? (
-          <Box p={20} mt={20} mb={10}>
+          <Box
+            className={productCheckOutStyles.itemToCheckOutPageContainer}
+            mt={20}
+            mb={10}
+          >
+            <Heading mb={3}>Check Out</Heading>
             {itemsToCheckOut.map((itemToCheckOut) => (
               <Box
                 key={itemToCheckOut.itemId}

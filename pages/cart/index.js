@@ -1,6 +1,6 @@
 import { Box, Heading } from "@chakra-ui/react";
 import styles from "../../styles/Layout.module.css";
-
+import itemsInCartStyles from "../../styles/Product.module.css";
 import ItemsInCart from "@/pageSections/components/ItemsInCart";
 import { motion } from "framer-motion";
 const Cart = () => {
@@ -18,7 +18,7 @@ const Cart = () => {
   return (
     <div className={styles.container}>
       <motion.div variants={fadeInVariants} initial="initial" animate="animate">
-        <Box p={20} mt={20}>
+        <Box mt={20} className={itemsInCartStyles.itemsInCartPageContainer}>
           <Heading>Your Cart</Heading>
           <ItemsInCart></ItemsInCart>
         </Box>

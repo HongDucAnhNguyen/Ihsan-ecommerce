@@ -73,3 +73,8 @@ Welcome to ihsan! This is an e-commerce project built with Next.js, React, Chakr
 `npm run dev`
 
 - Open your browser and access the application at http://localhost:{your-port}.
+
+### Upcoming features
+
+- Forgot credentials/ reset credentials
+- Shipping

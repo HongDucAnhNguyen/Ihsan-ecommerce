@@ -35,7 +35,7 @@ const HeroSection = () => {
         <Image className={styles.heroImg} src={heroImg} alt="quran"></Image>
       </motion.div>
       <motion.div variants={textVariants} className={styles.heroDescription}>
-        <Heading mt={12} size="2xl">Islamic Gift Shop.</Heading>
+        <Heading mt={12} >Islamic Gift Shop.</Heading>
 
         <div
           style={{
@@ -44,14 +44,14 @@ const HeroSection = () => {
             alignItems: "center",
           }}
         >
-          <Text fontSize="2xl" sx={{ maxWidth: 400 }}>
+          <Text fontSize="xl" sx={{ maxWidth: 400 }}>
             Providing the best products and gifts for Muslims, by Muslims.
           </Text>
         </div>
         <br></br>
 
         <Button
-          size="lg"
+          size="md"
           onClick={() => {
             router.push("/Quran");
           }}

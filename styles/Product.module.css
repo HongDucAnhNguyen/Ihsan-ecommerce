@@ -42,6 +42,9 @@
 .itemInCartDescription {
   width: 70%;
 }
+.itemInCartContentContainer {
+  width: 50%;
+}
 .itemToCheckOutImage {
   width: 30%;
   height: 30%;
@@ -85,5 +88,8 @@
   }
   .itemToCheckOutPageContainer {
     padding: 30px;
+  }
+  .itemInCartContentContainer {
+    width: 100%;
   }
 }

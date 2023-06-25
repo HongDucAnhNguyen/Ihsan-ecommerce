@@ -145,7 +145,7 @@ const ProductDetails = ({ product }) => {
         </Flex>
       </Box>
       <Divider></Divider>
-      <Box p={5}>
+      <Box>
         <Heading mb={5}>Reviews</Heading>
         {isLoading && (
           <Flex gap={5}>

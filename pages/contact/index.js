@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Input, Flex } from "@chakra-ui/react";
+import { Box, Button, Heading, Input, Textarea } from "@chakra-ui/react";
 import styles from "../../styles/Layout.module.css";
 const Contact = () => {
   return (
@@ -9,12 +9,7 @@ const Contact = () => {
           <Input mb={3} required type="text" placeholder="Your Name*"></Input>
           <Input mb={3} required type="text" placeholder="Your Email*"></Input>
           <Input mb={3} required type="text" placeholder="Subject*"></Input>
-          <Input
-            mb={3}
-            required
-            type="text"
-            placeholder="Your Message*"
-          ></Input>
+          <Textarea mb={3} required placeholder="Your Message*"></Textarea>
           <Button type="submit">Send Away!</Button>
         </form>
       </Box>

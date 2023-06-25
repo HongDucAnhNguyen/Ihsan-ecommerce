@@ -25,6 +25,7 @@ const WomensClothing = ({ products }) => {
     <div className={styles.container}>
       <Box
         sx={{
+          mt:20,
           width: "100%",
           p: 5,
           display: "flex",

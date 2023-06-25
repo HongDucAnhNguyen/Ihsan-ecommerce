@@ -26,7 +26,7 @@ const SearchResults = () => {
   if (isLoading) {
     return (
       <div className={styles.container}>
-        <Box mt={20} p={30}>
+        <Box mt={20} p={20}>
           <Heading>Search Results</Heading>
           <Flex gap={5}>
             <Text fontSize="2xl" fontWeight="bold">

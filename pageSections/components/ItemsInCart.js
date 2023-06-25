@@ -1,7 +1,6 @@
 import {
   addItemToCheckOutAction,
   getItemsInCartAction,
-  getItemsInCheckOutAction,
   removeItemFromCheckOutAction,
   removeItemInCartAction,
   setItemQuantityAction,
@@ -36,9 +35,9 @@ const ItemsInCart = () => {
     if (userState) {
       dispatch(getItemsInCartAction(userState?.result?.id));
     }
-  }, [dispatch]);
+  }, [dispatch, userState]);
 
-  if (!userState) {
+  if (!userState && !isLoading) {
     return <Text fontSize="2xl">Please Login or Register</Text>;
   }
   if (isLoading) {
@@ -52,7 +51,7 @@ const ItemsInCart = () => {
     );
   }
 
-  if (!isLoading && itemsInCart.length === 0) {
+  if (!isLoading && itemsInCart.length === 0 && userState) {
     return <Text fontSize="2xl">Currently Empty</Text>;
   }
   return (
@@ -81,7 +80,7 @@ const ItemsInCart = () => {
                 className={itemsInCartStyles.itemInCartImage}
                 src={item.imgUrl}
               ></Img>
-              <Box>
+              <Box className={itemsInCartStyles.itemInCartContentContainer}>
                 <Flex gap={5} mb={3}>
                   <Checkbox
                     isChecked={item.isSelectedForCheckOut}
@@ -160,6 +159,7 @@ const ItemsInCart = () => {
                   </Text>
                 ) : (
                   <Select
+                    maxW="70%"
                     onChange={(e) => {
                       //dispatch action to update quantity of item
                       console.log(e.target.value);
@@ -171,7 +171,6 @@ const ItemsInCart = () => {
                         )
                       );
                     }}
-                    maxW="50%"
                     required
                     mb={4}
                     value={

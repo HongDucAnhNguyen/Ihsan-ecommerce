@@ -1,0 +1,11 @@
+.wishlistProductTitle {
+  width: 50%;
+}
+@media (max-width: 600px) {
+  .wishlistContainer {
+    flex-direction: column;
+  }
+  .wishlistProductTitle {
+    width: 100%;
+  }
+}

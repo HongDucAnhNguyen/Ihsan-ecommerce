@@ -22,51 +22,42 @@ const About = () => {
   };
   return (
     <div className={styles.container}>
-      <Box mt={20} p={20}>
+      <Box maxW={1200} mt={20} p={20}>
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.div variants={itemVariants}>
-            <Heading>Our Story</Heading>
+            <Heading>Who we are</Heading>
           </motion.div>
           <motion.div variants={itemVariants}>
-            <Text fontSize="lg" lineHeight="tall" mt="8">
-              Welcome to Ihsan - Islamic Gift Shop, where the love for Islam and
-              the desire to share it with others come together! Our goal is to
-              provide you with the best products and gifts that represent the
-              beauty and richness of Islam.
+            <Text fontSize="lg" lineHeight="tall" mt="4">
+              We are a passionate team of individuals who share the same values
+              and beliefs as our customers. As a Muslim-owned and operated
+              business, we understand the importance of giving thoughtful and
+              meaningful gifts that represent the beauty of Islam.
             </Text>
           </motion.div>
           <motion.div variants={itemVariants}>
-            <Text fontSize="lg" lineHeight="tall" mt="8">
-              We understand the importance of giving thoughtful and meaningful
-              gifts, and that's why we've put together a collection of unique
-              and high-quality items that will surely make your loved ones feel
-              special. From stunning prayer mats to intricately designed Quran
-              holders, our products are carefully selected to cater to your
-              needs and to help you express your love for Islam in a truly
-              beautiful way.
+            <Heading mt={8}>What We do</Heading>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <Text fontSize="lg" lineHeight="tall" mt={4}>
+              We offer a wide range of products that cater to your needs and
+              help you express your love for Islam in a truly beautiful way. We
+              take pride in providing unique and high-quality products that will
+              make your loved ones feel special.
             </Text>
           </motion.div>
           <motion.div variants={itemVariants}>
-            <Text fontSize="lg" lineHeight="tall" mt="8">
-              At Ihsan, we take pride in being a Muslim-owned and operated
-              business. Our team is made up of passionate individuals who share
-              the same values and beliefs as our customers, and we're dedicated
-              to providing you with the best shopping experience possible. We
-              believe that by supporting each other, we can help build a
-              stronger and more connected Muslim community.
-            </Text>
-          </motion.div>
-          <motion.div variants={itemVariants}>
-            <Text fontSize="lg" lineHeight="tall" mt="8">
-              So why wait? Browse our selection today and let us help you find
-              the perfect gift that will be cherished for years to come. With
-              our fast shipping and easy return policy, you can shop with
-              confidence and peace of mind. Join us on our mission to spread
-              love and positivity through the beauty of Islam.
+            <motion.div variants={itemVariants}>
+              <Heading mt={8}>How we can help</Heading>
+            </motion.div>
+            <Text fontSize="lg" lineHeight="tall" mt={4}>
+              We are here to assist you in finding the perfect gift that will be
+              cherished for years to come. With our fast shipping and easy
+              return policy, you can shop with confidence and peace of mind.
             </Text>
           </motion.div>
         </motion.div>

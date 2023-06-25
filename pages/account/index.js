@@ -73,11 +73,13 @@ const Account = () => {
           ></CloseButton>
         </Alert>
       ) : (
-        <div>
+        <Box>
           {user ? (
             <>
-              <Heading mb={4}>My Account</Heading>
-              <Card minW="sm" maxW="md">
+              <Heading p={3} mb={4}>
+                My Account
+              </Heading>
+              <Card  minW="sm" maxW="md">
                 <CardHeader>
                   <Flex justifyContent="space-between">
                     <Flex gap={3}>
@@ -208,7 +210,7 @@ const Account = () => {
           ) : (
             <Heading>Please Log In or Register Account</Heading>
           )}
-        </div>
+        </Box>
       )}
     </div>
   );

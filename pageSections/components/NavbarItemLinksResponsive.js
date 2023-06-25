@@ -25,7 +25,7 @@ const NavbarItemLinksResponsive = () => {
           color: "blue.600",
           transition: "all .3s ease-in-out",
         }}
-        ml={2}
+        ml={4}
         as={NextLink}
         href="/Quran"
         sx={{
@@ -43,7 +43,9 @@ const NavbarItemLinksResponsive = () => {
         <AccordionItem>
           <AccordionButton>
             <Box as="span" flex="1" textAlign="left">
-              <Text fontWeight="bold">Clothing</Text>
+              <Text ml={2} fontWeight="bold">
+                Clothing
+              </Text>
             </Box>
             <AccordionIcon />
           </AccordionButton>

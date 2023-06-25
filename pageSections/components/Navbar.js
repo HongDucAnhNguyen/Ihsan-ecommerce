@@ -138,29 +138,26 @@ const Navbar = () => {
       id="navbar"
     >
       <Flex alignItems="center">
-        
-          <Link
-            // className={styles.logoResponsive}
-            mr={5}
-            mb={1}
-            as={NextLink}
-            href="/"
-            sx={{
-              "&:hover": {
-                textDecoration: "none",
-              },
-              p: 2,
-              fontWeight: "bold",
-              fontSize: "2xl",
-              fontStyle: "italic",
-            }}
-          >
-            Ihsan
-          </Link>
-        
+        <Link
+          // className={styles.logoResponsive}
+          mr={5}
+          mb={1}
+          as={NextLink}
+          href="/"
+          sx={{
+            "&:hover": {
+              textDecoration: "none",
+            },
+            p: 2,
+            fontWeight: "bold",
+            fontSize: "2xl",
+            fontStyle: "italic",
+          }}
+        >
+          Ihsan
+        </Link>
 
         <Box className={styles.navbarItemLinks}>
-        
           <Link
             mr={2}
             as={NextLink}
@@ -451,9 +448,7 @@ const Navbar = () => {
               <NavbarActionLinksResponsive
                 user={user}
                 onOpen={onOpen}
-               
                 setIsSearching={setIsSearching}
-                
               ></NavbarActionLinksResponsive>
             </DrawerBody>
           </DrawerContent>

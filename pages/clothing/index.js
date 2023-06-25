@@ -5,10 +5,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import Products from "@/pageSections/components/Products";
 import { useEffect } from "react";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
-const Clothing = ({products}) => {
-  
-  
-
+const Clothing = ({ products }) => {
   // const dispatch = useDispatch();
   // const router = useRouter();
 
@@ -28,6 +25,7 @@ const Clothing = ({products}) => {
     <div className={styles.container}>
       <Box
         sx={{
+          mt: 20,
           width: "100%",
           p: 5,
           display: "flex",

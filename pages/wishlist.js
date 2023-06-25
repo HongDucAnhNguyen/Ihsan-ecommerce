@@ -4,6 +4,7 @@ import { Box, Button, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import wishlistStyles from "../styles/Wishlist.module.css";
 import {
   getProductsInWishList,
   removeProductFromWishList,
@@ -38,17 +39,17 @@ const WishList = () => {
       <div className={styles.container}>
         {" "}
         <Flex gap={5}>
-            <Text fontSize="2xl" fontWeight="bold">
-              Loading...
-            </Text>
-            <Spinner ml={3} color="blue.600" size="md"></Spinner>
-          </Flex>
+          <Text fontSize="2xl" fontWeight="bold">
+            Loading...
+          </Text>
+          <Spinner ml={3} color="blue.600" size="md"></Spinner>
+        </Flex>
       </div>
     );
   }
   return (
     <div className={styles.container}>
-      <Box p={20}>
+      <Box mt={20} p={20}>
         <motion.div
           variants={fadeInVariants}
           initial="initial"
@@ -58,6 +59,7 @@ const WishList = () => {
           {productWishlist.length > 0 ? (
             productWishlist.map((product) => (
               <Flex
+                className={wishlistStyles.wishlistContainer}
                 key={product._id}
                 p={4}
                 mt={4}
@@ -66,8 +68,9 @@ const WishList = () => {
                 justifyContent="space-between"
               >
                 <Text
-                  maxW="50%"
+                  className={wishlistStyles.wishlistProductTitle}
                   cursor="pointer"
+                  mb={3}
                   _hover={{
                     color: "orange",
                     transition: "all .3s ease-in-out",

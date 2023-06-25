@@ -5,8 +5,7 @@ import { useRouter } from "next/router";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
 import { Box, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
-const MensClothing = ({products}) => {
-  
+const MensClothing = ({ products }) => {
   // const isLoading = useSelector((state) => state.cartReducer.isLoading);
 
   // const dispatch = useDispatch();
@@ -29,6 +28,7 @@ const MensClothing = ({products}) => {
     <div className={styles.container}>
       <Box
         sx={{
+          mt: 20,
           width: "100%",
           p: 5,
           display: "flex",

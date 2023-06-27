@@ -24,8 +24,7 @@ export const addItemToCartAction =
             isClosable: true,
           });
         return;
-      }
-      dispatch({ type: "ADD_TO_CART", data: data });
+      } else dispatch({ type: "ADD_TO_CART", data: data });
     } catch (error) {
       console.log(error);
     }
@@ -162,7 +161,7 @@ export const setCheckOutBuyNowAction =
         },
         body: JSON.stringify({ productId, quantity: 1 }),
       });
-     
+
       dispatch({ type: "BUY_NOW", data: productId });
     } catch (error) {
       console.log(error);

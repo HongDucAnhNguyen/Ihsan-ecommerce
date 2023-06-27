@@ -1,7 +1,7 @@
 export const createProductAction =
   (productFormData, toast, userId) => async (dispatch) => {
     try {
-      dispatch({ type: "LOADING" });
+      dispatch({ type: "IS_LOADING" });
       await fetch("/api/auth/admin/adminActionsAuthorize", {
         method: "POST",
         headers: {
@@ -268,6 +268,7 @@ export const addProductToWishList =
 export const removeProductFromWishList =
   (userId, productId) => async (dispatch) => {
     try {
+      dispatch({ type: "IS_LOADING" });
       await fetch(`/api/products/wishlist/remove/${userId}`, {
         method: "PATCH",
         headers: {
@@ -278,6 +279,7 @@ export const removeProductFromWishList =
       });
 
       dispatch({ type: "REMOVE_FROM_WISH_LIST", data: productId });
+      dispatch({ type: "END_LOADING" });
     } catch (error) {
       console.log(error);
     }

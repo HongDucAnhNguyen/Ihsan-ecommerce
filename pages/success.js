@@ -4,15 +4,14 @@ import { Box, Button, Heading } from "@chakra-ui/react";
 import ReactConfetti from "react-confetti";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+
 const SuccessPage = () => {
-  const userState = useSelector((state) => state.authReducer.authData);
+
   const [windowSize, setWindowSize] = useState({
     width: "",
     height: "",
   });
-  const router = useRouter();
+
   const handleResize = () => {
     setWindowSize({
       width: (window.innerWidth * 95) / 100,

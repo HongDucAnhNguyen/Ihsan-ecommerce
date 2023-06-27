@@ -50,6 +50,8 @@
   height: 30%;
 }
 .productDetailsImage {
+  border-radius: 10px;
+  filter: brightness(80%);
   width: 50%;
   height: 50%;
 }

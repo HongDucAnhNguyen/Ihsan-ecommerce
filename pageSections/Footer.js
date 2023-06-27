@@ -10,7 +10,7 @@ const Footer = () => {
       <Box className={styles.footerSectionsContainer}>
         <Box className={styles.footerInnerSectionsContainer}>
           <Box p={3}>
-            <Text Text fontSize="2xl" fontWeight="bold" fontStyle="italic">Ihsan</Text>
+            <Text  fontSize="2xl" fontWeight="bold" fontStyle="italic">Ihsan</Text>
             <Text maxW={400}>
               Inspiring Muslims with Authentic Islamic Products. Thoughtfully
               curated items crafted by Muslims, for Muslims.
@@ -29,7 +29,7 @@ const Footer = () => {
           <Box className={styles.footerLinksContainer}>
             <Box p={3}>
               {" "}
-              <Text Text fontSize="2xl" fontWeight="bold">Departments</Text>
+              <Text  fontSize="2xl" fontWeight="bold">Departments</Text>
               <Text
                 onClick={() => {
                   router.push("/Quran");

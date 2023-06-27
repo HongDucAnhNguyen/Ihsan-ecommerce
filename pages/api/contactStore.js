@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import sgMail from "@sendgrid/mail";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
@@ -12,24 +12,28 @@ const handler = async (req, res) => {
       return res.status(400).json({ message: "Bad Request" });
     }
 
-    console.log(contactFormData);
+   
     try {
-      const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        auth: {
-          user: process.env.SENDER_EMAIL,
-          pass: process.env.SENDER_EMAIL_PASS,
-        },
-      });
-      const mailOptions = {
-        from: process.env.SENDER_EMAIL,
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      await sgMail.send({
         to: process.env.SENDER_EMAIL,
-      };
-      await transporter.sendMail({
-        ...mailOptions,
+        from: process.env.SENDER_EMAIL,
         subject: contactFormData.contactSubject,
-        text: "Testing",
-        html: "<h1>Test title</h1><p>test body</p>",
+        text:
+          " A user named " +
+          contactFormData.contactName +
+          " wrote: " +
+          contactFormData.contactMessage,
+        html: "<h4>a visitor of the website has sent a contact message!</h4>",
+      });
+      await sgMail.send({
+        to: contactFormData.contactEmail,
+        from: process.env.SENDER_EMAIL,
+        subject: "Ticket Created",
+        text:
+          "Dear " +
+          contactFormData.contactName +
+          ". Thank you for reaching out to us at Your Shop Name. We have received your message and appreciate your interest in our products/services. Our team will review your inquiry and respond as soon as possible.",
       });
       return res.status(200).end();
     } catch (error) {

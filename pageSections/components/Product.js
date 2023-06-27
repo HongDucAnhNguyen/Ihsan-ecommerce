@@ -34,11 +34,11 @@ import { useRouter } from "next/router";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
-  getItemsInCartAction,
+  
   setCheckOutBuyNowAction,
   toggleSelectStatus,
 } from "@/actions/cartActions";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 import { addProductToWishList } from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
@@ -222,7 +222,13 @@ const Product = ({ product }) => {
                         userState?.result?.id
                       )
                     );
-
+                    dispatch(
+                      toggleSelectStatus(
+                        product._id,
+                        userState?.result?.id,
+                        true
+                      )
+                    );
                     onOpen();
                   }}
                 >
@@ -266,7 +272,7 @@ const Product = ({ product }) => {
                       <Button
                         mt={3}
                         onClick={() => {
-                          closeModal()
+                          closeModal();
                           router.push("/checkout");
                         }}
                         colorScheme="yellow"

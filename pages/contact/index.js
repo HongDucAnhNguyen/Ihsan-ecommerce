@@ -5,12 +5,15 @@ import {
   FormLabel,
   Heading,
   Input,
+  Text,
   Textarea,
 } from "@chakra-ui/react";
 import styles from "../../styles/Layout.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { contactStoreAction } from "@/actions/contact/contactStoreAction";
+import { useToast } from "@chakra-ui/react";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 const Contact = () => {
   const isLoading = useSelector((state) => state.cartReducer.isLoading);
   const dispatch = useDispatch();
@@ -29,15 +32,35 @@ const Contact = () => {
       contactMessage: "",
     });
   };
+  const [formLoading, setFormLoading] = useState(false);
+  const [isDoneLoading, setIsDoneLoading] = useState(false);
+  const toast = useToast();
+  useEffect(() => {
+    if (isLoading) {
+      setFormLoading(true);
+    } else setFormLoading(false);
+  }, [isLoading]);
   return (
     <div className={styles.container}>
       <Container maxW={500}>
         <Heading mb={3}>Contact Us</Heading>
         <form
-          isRequired
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
+            if (!isLoading) {
+              setIsDoneLoading(true);
+            }
+            setTimeout(() => setIsDoneLoading(false), 3000);
+            toast({
+              position: "bottom-left",
+              title: "Message Sent.",
+              status: "success",
+              description:
+                "Ihsan has sent you a message. Please check your inbox or spam folder.",
+              duration: 5000,
+              isClosable: true,
+            });
           }}
         >
           <FormLabel>Your Name</FormLabel>
@@ -96,7 +119,19 @@ const Contact = () => {
             }}
           ></Textarea>
 
-          <Button type="submit">Send Away!</Button>
+          <Button
+            isLoading={formLoading}
+            colorScheme={isDoneLoading ? "green" : "blue"}
+            type="submit"
+          >
+            {isDoneLoading ? (
+              <Text>
+                Sent <CheckCircleIcon ml={2}></CheckCircleIcon>
+              </Text>
+            ) : (
+              "Send Away!"
+            )}
+          </Button>
         </form>
       </Container>
     </div>

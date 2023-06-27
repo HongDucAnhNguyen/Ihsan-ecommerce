@@ -6,6 +6,14 @@ Welcome to ihsan! This is an e-commerce project built with Next.js, React, Chakr
 
 ## Live Site
 
+### Please read through! 👇
+
+Due to a limitation in response time Vercel's server might time out resulting in a 504 gateway error, if that happens use this alternate Link instead:
+
+<h2><a title="go to site" href="https://ihsan-ecommerce-git-main-hongducanhnguyen.vercel.app/">Ihsan Ecommerce Different Link</a></h2>
+
+Official Link:
+
 <h2><a title="go to site" href="https://ihsan-ecommerce.vercel.app/">Ihsan Ecommerce</a></h2>
 
 ## Preview

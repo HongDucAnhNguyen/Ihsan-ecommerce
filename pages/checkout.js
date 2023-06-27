@@ -59,7 +59,7 @@ const CheckOutPage = () => {
   return (
     <div className={styles.container}>
       <motion.div variants={fadeInVariants} initial="initial" animate="animate">
-        {itemsToCheckOut.length > 0 && !isLoading ? (
+        {userState && itemsToCheckOut.length > 0 && !isLoading ? (
           <Box
             className={productCheckOutStyles.itemToCheckOutPageContainer}
             mt={20}
@@ -113,10 +113,12 @@ const CheckOutPage = () => {
               </>
             )}
           </Box>
-        ) : (
+        ) : userState ? (
           <Text fontSize="2xl">
             Please select at least one item to check out
           </Text>
+        ) : (
+          <Text fontSize="2xl">Please Login or Register</Text>
         )}
       </motion.div>
     </div>

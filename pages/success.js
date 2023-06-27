@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "../styles/Layout.module.css";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import ReactConfetti from "react-confetti";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const SuccessPage = () => {
-
+  const userState = useSelector((state) => state.authReducer.authData);
   const [windowSize, setWindowSize] = useState({
     width: "",
     height: "",
@@ -33,7 +34,11 @@ const SuccessPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
- 
+  if (!userState) {
+    <div className={styles.container}>
+      <Text fontSize="2xl">404 | Page not found</Text>
+    </div>;
+  }
   return (
     <div className={styles.container}>
       <ReactConfetti

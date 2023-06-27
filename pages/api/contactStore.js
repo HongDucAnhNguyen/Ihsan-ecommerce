@@ -33,7 +33,7 @@ const handler = async (req, res) => {
         text:
           "Dear " +
           contactFormData.contactName +
-          ". Thank you for reaching out to us at Your Shop Name. We have received your message and appreciate your interest in our products/services. Our team will review your inquiry and respond as soon as possible.",
+          ". Thank you for reaching out to us at Ihsan. We have received your message and appreciate your interest in our products/services. Our team will review your inquiry and respond as soon as possible.",
       });
       return res.status(200).end();
     } catch (error) {

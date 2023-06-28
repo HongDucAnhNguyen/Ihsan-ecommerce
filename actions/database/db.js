@@ -1,6 +1,6 @@
 const connectMongo = async () => {
   try {
-    await fetch(`${process.env.BASE_APP_URL}/api/connectDB`);
+    await fetch("/api/connectDB");
   } catch (error) {
     console.log(error);
   }

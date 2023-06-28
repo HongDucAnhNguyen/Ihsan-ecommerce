@@ -41,11 +41,11 @@ export default function Home({ featuredProducts, recommendedProducts }) {
 }
 export async function getServerSideProps() {
   const featuredProductsRes = await fetch(
-    `${process.env.BASE_URL}/api/products/featuredProducts`
+    `${process.env.BASE_APP_URL}/api/products/featuredProducts`
   );
   const featuredProductsData = await featuredProductsRes.json();
   const recommendedProductsRes = await fetch(
-    `${process.env.BASE_URL}/api/products/recommendedProducts`
+    `${process.env.BASE_APP_URL}/api/products/recommendedProducts`
   );
   const recommendedProductsData = await recommendedProductsRes.json();
   return {

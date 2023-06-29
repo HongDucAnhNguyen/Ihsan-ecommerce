@@ -34,19 +34,22 @@ const SuccessPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  if (!userState) {
-    <div className={styles.container}>
-      <Text fontSize="2xl">404 | Page not found</Text>
-    </div>;
-  }
+
   return (
     <div className={styles.container}>
-      <ReactConfetti
-        width={windowSize.width}
-        height={windowSize.height}
-      ></ReactConfetti>
+      {userState && (
+        <ReactConfetti
+          width={windowSize.width}
+          height={windowSize.height}
+        ></ReactConfetti>
+      )}
+
       <Box textAlign="center">
-        <Heading>Order Placed, thank you for shopping with Ihsan</Heading>
+        <Heading>
+          {userState
+            ? "Order Placed, thank you for shopping with Ihsan"
+            : "No Purchase detected"}
+        </Heading>
       </Box>
     </div>
   );

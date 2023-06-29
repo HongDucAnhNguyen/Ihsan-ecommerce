@@ -9,11 +9,11 @@ export function middleware(req) {
 
     verifyToken(token);
 
-    console.log("valid token");
+    
   } catch (error) {
     // Invalid token, user is not authenticated
 
-    console.log(error);
+    
     return new NextResponse(
       JSON.stringify({
         success: false,
@@ -47,14 +47,5 @@ const verifyToken = async (jwt) => {
     new TextEncoder().encode(process.env.JWT_KEY)
   );
  
-  //   if (userId !== payload.id) {
-  //     return new NextResponse(
-  //       JSON.stringify({
-  //         success: false,
-  //         message: "authorization failed",
-  //         status: 401,
-  //         headers: { "content-type": "application/json" },
-  //       })
-  //     );
-  //   }
+  
 };

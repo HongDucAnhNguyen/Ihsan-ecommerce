@@ -114,11 +114,15 @@ const CheckOutPage = () => {
             )}
           </Box>
         ) : userState ? (
-          <Text fontSize="2xl">
-            Please select at least one item to check out
-          </Text>
+          <Box textAlign="center">
+            <Text fontSize="xl">
+              Please select at least one item to check out
+            </Text>
+          </Box>
         ) : (
-          <Text fontSize="2xl">Please Login or Register</Text>
+          <Box textAlign="center">
+            <Text fontSize="2xl">Please Login or Register</Text>
+          </Box>
         )}
       </motion.div>
     </div>

@@ -39,7 +39,9 @@ export const getReviewsAction = (productId) => async (dispatch) => {
     const data = await response.json();
     dispatch({ type: "GET_ALL_REVIEWS", data: data });
     dispatch({ type: "END_LOADING" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };
 export const deleteReviewAction = (reviewId, productId) => async (dispatch) => {
   try {
@@ -55,7 +57,9 @@ export const deleteReviewAction = (reviewId, productId) => async (dispatch) => {
 
     dispatch({ type: "UPDATE_PRODUCT", data: updatedProductData });
     dispatch({ type: "END_LOADING" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };
 export const updateReviewAction =
   (reviewId, reviewData) => async (dispatch) => {
@@ -77,5 +81,7 @@ export const updateReviewAction =
       const updatedProductData = await updatedProductRes.json();
 
       dispatch({ type: "UPDATE_PRODUCT", data: updatedProductData });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };

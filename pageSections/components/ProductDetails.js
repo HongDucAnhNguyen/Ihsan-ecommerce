@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
+  toggleSelectStatus,
 } from "@/actions/cartActions";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -121,6 +122,9 @@ const ProductDetails = ({ product }) => {
                       userState?.result?.id,
                       toast
                     )
+                  );
+                  dispatch(
+                    toggleSelectStatus(product._id, userState?.result?.id, true)
                   );
                   router.push("/cart");
                 }}

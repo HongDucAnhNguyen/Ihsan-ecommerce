@@ -1,11 +1,6 @@
 import NextLink from "next/link";
 import {
-  Button,
   Link,
-  MenuButton,
-  Menu,
-  MenuItem,
-  MenuList,
   Box,
   Accordion,
   AccordionItem,
@@ -25,7 +20,7 @@ const NavbarItemLinksResponsive = () => {
           color: "blue.600",
           transition: "all .3s ease-in-out",
         }}
-        ml={4}
+        ml={2}
         as={NextLink}
         href="/Quran"
         sx={{

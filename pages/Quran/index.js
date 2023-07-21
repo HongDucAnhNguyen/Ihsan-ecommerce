@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getProductsByCategoryAction } from "@/actions/productsActions";
 import Products from "@/pageSections/components/Products";
 import { useRouter } from "next/router";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 const Quran = ({ products }) => {
   // const products = useSelector((state) => state.productReducer.products);
   const isLoading = useSelector((state) => state.cartReducer.isLoading);
@@ -34,7 +34,10 @@ const Quran = ({ products }) => {
         }}
       >
         <Box maxW="100%" width={1200} textAlign="center">
-          <Heading mb={6}>Qur'an</Heading>
+          {" "}
+          <Heading mt={20} mb={6}>
+            Qur'an
+          </Heading>
           <Products products={products}></Products>
         </Box>
       </Box>

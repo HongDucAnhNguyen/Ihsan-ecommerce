@@ -34,11 +34,10 @@ import { useRouter } from "next/router";
 import {
   addItemToCartAction,
   addItemToCheckOutAction,
-  
   setCheckOutBuyNowAction,
   toggleSelectStatus,
 } from "@/actions/cartActions";
-import {  useState } from "react";
+import { useState } from "react";
 import ItemsInCart from "./ItemsInCart";
 import { addProductToWishList } from "@/actions/productsActions";
 import { useToast } from "@chakra-ui/react";
@@ -68,7 +67,7 @@ const Product = ({ product }) => {
 
   return (
     <>
-      <Card boxShadow="lg" minW="sm" maxW="sm" mb={4}>
+      <Card boxShadow="lg" className={styles.productCardContainer} mb={4}>
         <CardHeader className={styles.cardHeader}>
           <ButtonGroup>
             <Button

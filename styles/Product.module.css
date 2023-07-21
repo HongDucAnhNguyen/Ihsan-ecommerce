@@ -58,6 +58,9 @@
 .reviewHeader {
   justify-content: space-between;
 }
+.productCardContainer {
+  max-width: 400px;
+}
 @media (max-width: 750px) {
   .productDetailsContainer {
     flex-direction: column;
@@ -93,5 +96,24 @@
   }
   .itemInCartContentContainer {
     width: 100%;
+  }
+}
+.productsLayoutContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  gap: 10px;
+}
+@media (max-width: 1280px) {
+  .productsLayoutContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 400px);
+    gap: 10px;
+  }
+}
+@media (max-width: 870px) {
+  .productsLayoutContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 }

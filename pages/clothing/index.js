@@ -33,7 +33,7 @@ const Clothing = ({ products }) => {
         }}
       >
         <Box maxW="100%" width={1200} textAlign="center">
-          <Heading mb={6}>All Clothing Products</Heading>
+          <Heading mt={20} mb={6}>All Clothing Products</Heading>
           <Products products={products}></Products>
         </Box>
       </Box>

@@ -34,7 +34,9 @@ const Accessories = ({ products }) => {
         }}
       >
         <Box maxW="100%" width={1200} textAlign="center">
-          <Heading mb={6}>Accessories</Heading>
+          <Heading mt={20} mb={6}>
+            Accessories
+          </Heading>
           <Products products={products}></Products>
         </Box>
       </Box>

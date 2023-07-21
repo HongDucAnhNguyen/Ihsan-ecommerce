@@ -60,17 +60,8 @@ const Navbar = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [, set] = useState(false);
-  const [windowSize, setWindowSize] = useState({
-    width: "",
-    height: "",
-  });
-  const handleResize = () => {
-    setWindowSize({
-      width: (window.innerWidth * 95) / 100,
-      height: window.innerHeight,
-    });
-  };
+
+ 
 
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");

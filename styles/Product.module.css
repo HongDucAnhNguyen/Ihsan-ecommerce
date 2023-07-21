@@ -66,6 +66,7 @@
   display: grid;
   grid-template-columns: repeat(3, 400px);
   gap: 10px;
+  overflow-x: hidden;
 }
 @media (max-width: 800px) {
   .productsLayoutContainer {

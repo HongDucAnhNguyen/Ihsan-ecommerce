@@ -22,7 +22,7 @@ const About = () => {
   };
   return (
     <div className={styles.container}>
-      <Box maxW={1200} mt={20} p={20}>
+      <Box maxW="1000px" mt={20} p={20}>
         <motion.div
           variants={containerVariants}
           initial="hidden"

@@ -30,7 +30,6 @@ const Products = ({ products }) => {
     <motion.div variants={fadeInVariants} initial="initial" animate="animate">
       <Box
         className={productStyles.productsLayoutContainer}
-       
       >
         {products.length > 0 &&
           products.map((product) => (

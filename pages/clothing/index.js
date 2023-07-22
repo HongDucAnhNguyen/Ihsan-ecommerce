@@ -32,8 +32,10 @@ const Clothing = ({ products }) => {
           justifyContent: "center",
         }}
       >
-        <Box maxW="100%" width={1200} textAlign="center">
-          <Heading mt={20} mb={6}>All Clothing Products</Heading>
+        <Box maxW="100%" textAlign="center">
+          <Heading mt={20} mb={6}>
+            All Clothing Products
+          </Heading>
           <Products products={products}></Products>
         </Box>
       </Box>

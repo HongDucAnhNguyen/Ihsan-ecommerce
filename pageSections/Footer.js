@@ -10,13 +10,13 @@ const Footer = () => {
       <Box className={styles.footerSectionsContainer}>
         <Box className={styles.footerInnerSectionsContainer}>
           <Box p={3}>
-            <Text  fontSize="2xl" fontWeight="bold" fontStyle="italic">Ihsan</Text>
-            <Text maxW={400}>
+            <Text mt={2}  fontSize="2xl" fontWeight="bold" fontStyle="italic">Ihsan</Text>
+            <Text mt={2} maxW={400}>
               Inspiring Muslims with Authentic Islamic Products. Thoughtfully
               curated items crafted by Muslims, for Muslims.
             </Text>
 
-            <Text fontWeight="bold">Accepted Payments</Text>
+            <Text mt={2} mb={3} fontWeight="bold">Accepted Payments</Text>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ const Footer = () => {
             <Box p={3}>
               {" "}
               <Text  fontSize="2xl" fontWeight="bold">Departments</Text>
-              <Text
+              <Text mt={3}
                 onClick={() => {
                   router.push("/Quran");
                 }}
@@ -43,7 +43,7 @@ const Footer = () => {
               >
                 Qur'an
               </Text>
-              <Text
+              <Text mt={3}
                 onClick={() => {
                   router.push("/clothing");
                 }}
@@ -56,7 +56,7 @@ const Footer = () => {
               >
                 Clothing
               </Text>
-              <Text
+              <Text mt={3}
                 onClick={() => {
                   router.push("/accessories");
                 }}
@@ -73,7 +73,7 @@ const Footer = () => {
             <Box p={3}>
               {" "}
               <Text fontSize="2xl" fontWeight="bold">About Us</Text>
-              <Text
+              <Text mt={3}
                 onClick={() => {
                   router.push("/about");
                 }}
@@ -86,7 +86,7 @@ const Footer = () => {
               >
                 About Ihsan
               </Text>
-              <Text
+              <Text mt={3}
                 onClick={() => {
                   router.push("/contact");
                 }}
@@ -99,7 +99,7 @@ const Footer = () => {
               >
                 Contact
               </Text>
-              <Text
+              <Text mt={3}
                 onClick={() => {
                   router.push("https://hongducanhng.onrender.com/");
                 }}

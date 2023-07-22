@@ -33,7 +33,7 @@ const Quran = ({ products }) => {
           justifyContent: "center",
         }}
       >
-        <Box maxW="100%" width={1200} textAlign="center">
+        <Box maxW="100%" textAlign="center">
           {" "}
           <Heading mt={20} mb={6}>
             Qur'an

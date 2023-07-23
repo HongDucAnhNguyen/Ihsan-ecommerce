@@ -61,8 +61,6 @@ const Navbar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
- 
-
   const handleNavbarStickyOnScroll = () => {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > navbar.offsetHeight * 2) {
@@ -130,7 +128,7 @@ const Navbar = () => {
     >
       <Flex alignItems="center">
         <Link
-          // className={styles.logoResponsive}
+         
           mr={5}
           mb={1}
           as={NextLink}
@@ -427,7 +425,7 @@ const Navbar = () => {
           <DrawerContent>
             <DrawerHeader>
               <Flex justifyContent="space-between" alignItems="center">
-                <Heading fontStyle="italic" color="blue.600">
+                <Heading ml={4} fontStyle="italic" color="blue.600">
                   Ihsan
                 </Heading>
                 <CloseButton onClick={closeHamburgerMenu}></CloseButton>

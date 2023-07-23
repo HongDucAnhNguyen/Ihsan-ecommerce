@@ -38,7 +38,7 @@ const NavbarItemLinksResponsive = () => {
         <AccordionItem>
           <AccordionButton>
             <Box as="span" flex="1" textAlign="left">
-              <Text ml={2} fontWeight="bold">
+              <Text  fontWeight="bold">
                 Clothing
               </Text>
             </Box>
@@ -51,7 +51,7 @@ const NavbarItemLinksResponsive = () => {
                   color: "blue.600",
                   transition: "all .5s ease-in-out",
                 }}
-                ml={2}
+                
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -70,7 +70,7 @@ const NavbarItemLinksResponsive = () => {
                   color: "blue.600",
                   transition: "all .5s ease-in-out",
                 }}
-                ml={2}
+                
                 sx={{
                   "&:hover": {
                     textDecoration: "none",
@@ -89,7 +89,7 @@ const NavbarItemLinksResponsive = () => {
                   color: "blue.600",
                   transition: "all .5s ease-in-out",
                 }}
-                ml={2}
+               
                 sx={{
                   "&:hover": {
                     textDecoration: "none",

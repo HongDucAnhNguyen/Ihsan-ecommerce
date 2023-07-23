@@ -28,7 +28,9 @@ export default function Home({ featuredProducts, recommendedProducts }) {
           <Divider></Divider>
           <OnSaleProductsSection></OnSaleProductsSection>
           <Divider></Divider>
-          <Heading mb={4}>Recommendations</Heading>
+          <Heading mt={5} mb={4}>
+            Recommendations
+          </Heading>
           {recommendedProducts.length > 0 && (
             <Products products={recommendedProducts}></Products>
           )}

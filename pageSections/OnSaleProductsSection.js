@@ -51,7 +51,7 @@ const OnSaleProductsSection = () => {
 
   return (
     <>
-      <Heading mb={4}>Products On Sale!</Heading>
+      <Heading mt={5} mb={4}>Products On Sale!</Heading>
       <Tabs onChange={handleTabChange} index={selectedTab}>
         <TabList>
           <Tab>Quran</Tab>

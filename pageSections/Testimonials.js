@@ -16,7 +16,7 @@ const Testimonials = () => {
     //pull data from backend
     //data that does not update frequently
     <>
-      <Heading mb={4}>Testimonials</Heading>
+      <Heading mt={5} mb={4}>Testimonials</Heading>
       <Box className={styles.testimonialsContainer}>
         <Card>
           <CardHeader>

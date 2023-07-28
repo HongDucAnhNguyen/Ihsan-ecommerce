@@ -1,17 +1,9 @@
 import {
   Box,
-  Container,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  SimpleGrid,
-  Spinner,
-  Text,
+
 } from "@chakra-ui/react";
 import Product from "./Product";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
 import productStyles from "../../styles/Product.module.css";
 const Products = ({ products }) => {
   const fadeInVariants = {

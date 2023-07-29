@@ -19,7 +19,7 @@ export default function Home({ featuredProducts, recommendedProducts }) {
           justifyContent: "center",
         }}
       >
-        <Box maxW="100%" width={1200}>
+        <Box maxW="100%" width={1220}>
           <Heading mb={4}>Featured Products</Heading>
 
           {featuredProducts.length > 0 && (

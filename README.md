@@ -8,7 +8,7 @@ Welcome to ihsan! This is an e-commerce project built with Next.js, React, Chakr
 
 ### Please read through! 👇
 
-Due to a limitation in response time Vercel's server might time out resulting in a 504 gateway error, I am too broke to upgrade to a better plan so if that happens use this alternate Link instead:
+Due to a limitation in response time Vercel's server might time out resulting in a 504 gateway error, I am too broke to upgrade to a better plan so if that happens either try reloading the page or use this alternate Link instead:
 
 <h2><a title="go to site" href="https://ihsan-ecommerce-git-main-hongducanhnguyen.vercel.app/">Ihsan Ecommerce Different Link</a></h2>
 

@@ -79,7 +79,7 @@ const Account = () => {
               <Heading p={3} mb={4}>
                 My Account
               </Heading>
-              <Card  minW="sm" maxW="md">
+              <Card minW="sm" maxW="md">
                 <CardHeader>
                   <Flex justifyContent="space-between">
                     <Flex gap={3}>
@@ -208,7 +208,10 @@ const Account = () => {
               </Card>
             </>
           ) : (
-            <Heading>Please Log In or Register Account</Heading>
+            <Box textAlign="center">
+              {" "}
+              <Heading>Unauthorized</Heading>
+            </Box>
           )}
         </Box>
       )}

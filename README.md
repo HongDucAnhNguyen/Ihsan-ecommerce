@@ -51,10 +51,6 @@ Official Link:
 
 - Search for products based on keywords.
 
-### Responsive design (unfinished):
-
-- Still Developing Mobile-friendly user interface.
-
 ## Installation
 
 ### Clone the repository:
@@ -82,7 +78,3 @@ Official Link:
 
 - Open your browser and access the application at http://localhost:{your-port}.
 
-### Upcoming features
-
-- Forgot credentials/ reset credentials
-- Shipping
